@@ -1,0 +1,185 @@
+<div class="header">
+
+  <div class="header__baner">
+
+    <div   class="baner" [ngClass]="{show: !banerShow}">
+      <span>FREE SHIPPING ON ORDERS OVER £50</span>
+      <div  class="btn btn-close" (click)="banerShow=!banerShow"></div>
+    </div>
+    <!--  <div #baner   class="baner" [ngClass]="{show: !banerShow}">
+        <span>FREE SHIPPING ON ORDERS OVER £50</span>
+        <div  class="btn btn-close" (click)="baner.classList.toggle('show')"></div>
+      </div> -->
+  </div>
+
+  <div class="header__top-line">
+    <div class="top-line">
+      <div class="top-line__social-icons">
+        <div class="social-icons">
+          <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+          <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+
+        </div>
+      </div>
+      <div class="top-line__phone">
+        <a class="phone" href="tel:+442036218487">+44203 621 8487</a>
+      </div>
+
+      <div class="top-line__currency"></div>
+
+      <div class="top-line__login">
+        <a href="#" class="login">
+          <i class="fa fa-user-o" aria-hidden="true"></i>
+          <span>Login</span>
+        </a>
+      </div>
+
+      <div class="top-line__cart">
+        <div class="cart-dropdown dropdown">
+
+        <div class="cart-dropdown__rel">
+          <a href="#" class="cart-ref">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            <span class="count">2</span>
+          </a>
+        </div>
+
+        <div class="cart-dropdown__content data-dropdown animated fadeIn">
+          <app-cart-widget></app-cart-widget>
+        </div>
+      </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="header__nav">
+   <div class="main_menu">
+
+      <div class="main_menu__left">
+        <a href="#" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
+      </div>
+
+     <div class="main_menu__right">
+       <nav class="top-menu">
+
+         <ul >
+           <li class="dropdown-menu">
+             <a href="#">shiha</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+
+           </li>
+           <li class="dropdown-menu">
+             <a href="#">flavours</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+           </li>
+           <li class="dropdown-menu">
+             <a href="#">charcoal</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+           </li>
+           <li class="dropdown-menu">
+             <a href="#">accessories</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+           </li>
+           <li class="dropdown-menu">
+             <a href="#">vaping</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+           </li>
+           <li class="dropdown-menu">
+             <a href="#">e-liquid</a>
+
+             <ul class="data-dropdown">
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+               <li><a href="#">starbuzz</a></li>
+               <li><a href="#">KHALIL MAMOON</a></li>
+               <li><a href="#">SHISHAGEAR S&V</a></li>
+               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a href="#">GLASS HOOKAH</a></li>
+               <li><a href="#">STEMS ONLY</a></li>
+               <li><a href="#">SAHARA SMOKE</a></li>
+             </ul>
+           </li>
+           <li class="search-form">
+
+             <form action="#">
+               <label class="input-search">
+                 <input type="text" class="input-search" placeholder="Search">
+                 <i class="fa fa-search" aria-hidden="true"></i>
+
+               </label>
+             </form>
+           </li>
+           <li class="search-icon-link">
+             <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+
+           </li>
+         </ul>
+
+       </nav>
+
+     </div>
+   </div>
+  </div>
+
+
+
+
+</div>

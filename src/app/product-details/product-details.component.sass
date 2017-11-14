@@ -1,0 +1,267 @@
+
+
+.breadcrumbs
+  margin-top: 1rem
+  font-size: 14px
+  font-family: 'Roboto', sans-serif
+  text-transform: uppercase
+
+  ul
+    display: flex
+    li
+      text-transform: uppercase
+      line-height: 2.5rem
+      &+li:before
+        margin: 0 8px
+        color: #03a196
+        content: "/\00a0"
+  a
+    color: #03a196
+    font-size: 14px
+    &:hover
+      color: #03857c
+
+
+.product-details
+  .container
+    padding: 3rem 1rem
+  &__breadcrumbs
+    margin-bottom: 3rem
+
+
+
+.content
+  display: flex
+  &__slider
+    flex: 9.1
+    margin-right: 1rem
+  &__description
+    flex: 7
+    margin-left: 1rem
+
+
+.quantity
+  margin: 10px 0
+  top: 100%
+  left: 0
+  label
+    display: flex
+    align-items: center
+    .minus,.plus
+      display: flex
+      position: relative
+      padding: 2px
+      background: #f2f2f2
+      cursor: pointer
+      height: 42px
+      width: 42.5px
+      align-items: center
+      justify-content: center
+      border: #e2e2e2 1px solid
+      color: #000
+      &:hover
+        background: #d9d9d9
+    .minus
+      border-right: 0px
+      &:before
+        content: ''
+        position: relative
+        width: 16px
+        height: 1px
+        background: #000
+    .plus
+      border-left: 0px
+      span
+        width: 16px
+        height: 16px
+        position: relative
+        display: flex
+        &:after
+          /* horizontal line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+        &:before
+          /* Vertical line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+          transform: rotate(90deg)
+
+    input
+      padding: 0 5px
+      width: 50px
+      min-height: 42px
+      height: 42px
+      background: #fff
+      border: #e2e2e2 1px solid
+      font-weight: bold
+      font-size: 13px
+      letter-spacing: 1px
+      color: #000
+      line-height: 22px
+      touch-action: manipulation
+      -webkit-appearance: none
+      user-select: text
+      text-align: center
+
+
+
+.description
+  span
+    overflow-wrap: break-word
+    word-wrap: break-word
+    //word-break: break-word
+    font-size: 1.8rem
+    line-height: 2.8rem
+    font-family: 'Roboto',sans-serif
+  .price
+    font-size: 2rem
+    line-height: 3.2rem
+    margin-bottom: 1.8rem
+    display: inline-block
+  .product-name
+    font-family: 'Oswald',sans-serif
+    font-weight: normal
+    font-style: normal
+    text-transform: uppercase
+    color: #333333
+    display: block
+    letter-spacing: 3px
+    font-size: 2.2rem
+    line-height: 3rem
+    margin: 0 auto 15px
+    //padding-top: .4rem
+  label
+    display: flex
+    font-weight: bold
+    font-size: 13px
+    text-align: left
+    margin-bottom: .5rem
+    text-transform: uppercase
+    line-height: 2.5rem
+    font-family: 'Roboto',sans-serif
+  &__product-vendor
+    a
+      transition: color .1s linear
+      color: #03a196
+      font-size: 1.8rem
+      line-height: 2.9rem
+      margin-bottom: .5rem
+      &:hover,&:focus
+        color: #03857c
+  &__product-colors
+    max-width: 40rem
+    select
+      padding: .8rem 1.4rem .8rem
+      padding-right: 3.5rem
+      border-radius: 3px
+      border: 1px solid #d9dbdc
+      -webkit-appearance: none
+      width: 100%
+      min-height: 42px
+      font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  &__product-quantity
+    max-width: 40rem
+    display: flex
+    align-items: flex-end
+    margin-bottom: 2rem
+  &__product-info
+    margin-bottom: 2rem
+
+.quantity
+  margin-bottom: 0
+  label
+    margin-bottom: 0
+  &__qty
+    margin-right: 3rem
+  &__btn
+    flex: 1
+.select-wrapper
+  display: none
+  position: relative
+  margin-bottom: 1.5rem
+  &:before
+    content: ""
+    position: absolute
+    top: 50%
+    right: 1.3rem
+    width: 10px
+    height: 10px
+    border-right: 1px solid gray
+    border-bottom: 1px solid gray
+    transform: rotate(45deg) translate(-50%, -50%)
+
+// slider
+
+/* external css: flickity.css */
+
+.carousel-container
+  display: flex
+
+.carousel
+  background: white
+  margin-bottom: 40px
+  flex-grow: 1
+.carousel-cell
+  width: 100%
+  //overflow: hidden
+  background: white
+  //padding: 0 5rem
+.carousel-nav .carousel-cell
+  //width: 66%
+  //height: 300px
+  //margin-right: 10px
+  // background: #8C8
+  //border-radius: 5px
+  //counter-increment: carousel-cell
+
+/* cell number */
+.carousel-cell:before
+  //display: block
+  //text-align: center
+  //content: counter(carousel-cell)
+  //line-height: 300px
+  //font-size: 80px
+  //color: white
+.carousel-cell.is-selected
+  z-index: 99999
+.carousel-nav
+  width: 12%
+  margin-left: 3rem
+
+.carousel-nav .carousel-cell
+  //height: 80px
+  width: 100%
+  margin: 0 0 5px 0
+  cursor: pointer
+  opacity: .7
+  &.is-nav-selected
+    opacity: 1
+
+
+.carousel-nav .carousel-cell:before
+  //font-size: 50px
+  //line-height: 80px
+
+
+.carousel-nav .carousel-cell.is-nav-selected
+  background: #ED2
+
+.carousel-main
+  .carousel-cell
+    display: flex
+    align-items: center
+    justify-content: center
+    margin: 0 2rem
+

@@ -1,0 +1,267 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
+
+$default-font: "Source Sans Pro", sans-serif
+
+*
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+  outline: none
+  &:before, &:after
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+
+*::-webkit-input-placeholder
+  color: #cccccc
+  opacity: 1
+
+*:-moz-placeholder
+  color: #cccccc
+  opacity: 1
+
+*::-moz-placeholder
+  color: #cccccc
+  opacity: 1
+
+*:-ms-input-placeholder
+  color: #cccccc
+  opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+  color: #666
+body input:required:valid,
+body textarea:required:valid
+  color: #666
+
+html
+  font-size: 10px
+
+html, body
+  min-height: 100%
+
+body
+  min-width: 320px
+  position: relative
+  font-family: $default-font
+  overflow-x: hidden
+  opacity: 1
+  font-size: 1.6rem
+
+.img-responsive
+  display: block
+  max-width: 100%
+  height: auto
+
+
+
+
+ul
+  margin: 0
+  padding: 0
+  li
+    list-style-type: none
+
+a
+  display: inline-block
+  margin: 0
+  padding: 0
+  text-decoration: none
+  color: #f4f4f4
+  //letter-spacing: 1px
+  &:hover,&:focus
+    text-decoration: none
+    //color:  #191a1e
+    //color: #276fc9
+    //color: #2f2f2f
+    color: #f4f4f4
+    //letter-spacing: 1px
+
+.container
+  width: 1200px
+  margin: 0 auto
+
+input
+  display: block
+  width: 100%
+  height: 42px
+  min-height: 42px
+  padding: 0 10px
+  margin: 0
+  line-height: 22px
+  border: 1px solid #cccccc
+  outline: none
+  background: #fff
+  color: #5f6a7d
+  //font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  &:focus
+    border: 1px solid #aaa
+    //color: #cccccc
+
+
+.under-line
+  width: 100%
+  margin-bottom: 1.5rem
+  display: block
+  border: solid 1px
+  height: 1px
+  border-right: 0
+  border-left: 0
+  border-bottom: 0
+  border-color: #aaaaaa
+
+
+
+.btn
+  &-white
+    font-family: 'Josefin Sans', sans-serif
+    font-weight: normal
+    font-size: 15px
+    text-transform: uppercase
+    letter-spacing: 1px
+    cursor: pointer
+    position: relative
+    display: inline-block
+    border: 1px solid white
+    padding: 1.5rem 2.5rem
+    padding-top: 1.8rem
+    //margin-top: 2rem
+    color: #FFF
+    opacity: 0
+    pointer-events: all
+    transform: translate3d(0, 150%, 0)
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out,color 0.3s linear, background-color 0.3s linear
+    border-radius: 3px
+    z-index: 10
+    &:hover
+      color: #000
+      background-color: #FFF
+  &-green
+    background: #73af1b
+    color: #ffffff
+    border: 1px solid #73af1b
+    padding: 0 20px
+    text-align: center
+    cursor: pointer
+    min-height: 42px
+    height: 40px
+    line-height: 1.5rem
+    font-family: 'Josefin Sans', sans-serif
+    font-weight: normal
+    font-size: 15px
+    text-transform: uppercase
+    letter-spacing: 1px
+    transition: all 0.2s linear
+    border-radius: 3px
+    display: flex
+    align-items: center
+    justify-content: center
+    padding-top: 3px
+    &:hover
+      background: #04736b
+      border: 1px solid #04736b
+    &:active
+      transform: translate(0,3px)
+
+  &-close
+    position: absolute
+    top: 0
+    right: 0
+    display: block
+    overflow: visible
+    width: 35px
+    height: 35px
+    margin: 0
+    padding: 0
+    cursor: pointer
+    text-decoration: none
+    color: #333333
+    border: 0
+    outline: 0
+    background: transparent
+    z-index: 1000
+
+
+    &:before
+      font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important
+      font-size: 20px
+      line-height: 30px
+      position: absolute
+      top: 0
+      left: 0
+      display: block
+      width: 35px
+      content: "\00d7"
+      text-align: center
+
+
+.animated
+  animation-duration: 0.5s
+  animation-fill-mode: both
+
+.fadeIn
+  animation-name: fadeIn
+
+@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+
+.mat-input-container
+  min-width: 39rem
+  .ng-tns-c6-1
+    font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+.mat-form-field-underline
+  background: none
+.mat-input-underline
+  width: 0!important
+.mat-select,.mat-input-infix
+ // min-width: 39rem!important
+.mat-select-arrow
+  border: inherit!important
+  width: 10px!important
+  height: 10px!important
+  border-right: 1px solid gray!important
+  border-bottom: 1px solid gray!important
+  transform: rotate(45deg) translate(-50%, -50%)
+.mat-input-placeholder-wrapper, .mat-form-field-placeholder-wrapper
+  //min-width: 39rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  padding-left: .8rem
+.mat-select
+  padding: .8rem 1.4rem .8rem
+
+.mat-input-placeholder
+  padding-left: 1.7rem
+  padding-top: .8rem
+
+
+.flickity-prev-next-button
+  opacity: 0
+  transition: all 0.3s linear
+  display: block
+  background: transparent
+  &:hover
+    opacity: 1
+.carousel:hover
+  .flickity-prev-next-button
+    background: none
+    border: none
+    opacity: .3
+    width: 64px
+    height: 64px
+    transition: all .3s linear
+.flickity-prev-next-button.next:hover,.flickity-prev-next-button.previous:hover
+  opacity: 1
+  background: transparent
+  transition: all .3s linear

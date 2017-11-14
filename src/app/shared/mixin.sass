@@ -1,0 +1,18 @@
+
+=center()
+  transform: translate(-50%,-50%)
+=centerY()
+  transform: translate(0,-50%)
+=centerX()
+  transform: translate(-50%,0)
+
+=activBtn($color)
+  &:active
+    transform: translate(0,3px)
+    background: darken($color,5%)
+
+
+=trans25()
+  transition: all .25s ease
+=trans($time)
+  transition: all $time ease

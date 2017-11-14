@@ -1,0 +1,160 @@
+.cart-widget
+  display: block
+  overflow-y: auto
+  max-height: calc(100vh - 40px)
+  max-width: 420px
+  top: 0
+  right: 0
+  position: absolute
+  z-index: 2000
+  background-color: #ffffff
+  font-family: 'Roboto', sans-serif
+  font-weight: normal
+  font-size: smaller
+  text-transform: none
+  color: #333333
+  border: 1px solid #cccccc
+  border-top: 0
+  border-right: 0
+  width: 420px
+  padding-bottom: 15px
+  &__btn
+    padding: 0 30px
+    margin-bottom: 12px
+    .btn
+      width: 100%
+  &__sum
+    font-weight: bold
+    font-size: 15px
+    padding: 0 30px
+    margin-bottom: 12px
+    display: flex
+    justify-content: space-between
+    padding-top: 15px
+    line-height: 25px
+
+  .items
+    padding: 1.5rem 2rem
+    padding-bottom: 0
+  .item
+    padding: 0 0 1rem 0
+    margin-bottom: 1rem
+    border-bottom: 1px solid #cccccc
+    .title
+      line-height: 2.8rem
+    &:last-child
+      border: 0
+      padding-bottom: 0
+      margin-bottom: 0
+    &:first-child
+      margin-top: 1.5rem
+    a
+      display: flex
+      font-family: 'Roboto', sans-serif
+      font-weight: normal
+      font-size: 13px
+      text-transform: none
+      color: #333333
+      //display: flex
+      &:hover
+        color: #03a196
+    &__image
+      flex: 1
+      //width: 100px
+      padding-right: 20px
+      max-width: 100px
+      text-align: center
+      max-height: 100px
+      display: flex
+      align-items: center
+      justify-content: center
+      img
+        //width: 80px
+        max-height: 100px
+    &__price
+      padding-left: 10px
+      line-height: 2.8rem
+    &__name
+      position: relative
+      flex: 1
+    &__quantity
+      //position: absolute
+      margin: 10px 0
+      top: 100%
+      left: 0
+      label
+        display: flex
+        align-items: center
+        .minus,.plus
+          display: flex
+          position: relative
+          padding: 2px
+          background: #f2f2f2
+          cursor: pointer
+          height: 30px
+          width: 32.5px
+          align-items: center
+          justify-content: center
+          border: #e2e2e2 1px solid
+          color: #000
+          &:hover
+            background: #d9d9d9
+        .minus
+          border-right: 0px
+          &:before
+            content: ''
+            position: relative
+            width: 16px
+            height: 1px
+            background: #000
+        .plus
+          border-left: 0px
+          span
+            width: 16px
+            height: 16px
+            position: relative
+            display: flex
+            &:after
+              /* horizontal line */
+              content: ''
+              position: absolute
+              top: 50%
+              left: 0
+              width: 16px
+              height: 1px
+              margin-top: - .5px
+              background: #000
+            &:before
+              /* Vertical line */
+              content: ''
+              position: absolute
+              top: 50%
+              left: 0
+              width: 16px
+              height: 1px
+              margin-top: - .5px
+              background: #000
+              transform: rotate(90deg)
+
+        input
+          padding: 0 5px
+          width: 40px
+          min-height: 30px
+          height: 30px
+          background: #fff
+          border: #e2e2e2 1px solid
+          font-weight: bold
+          font-size: 13px
+          letter-spacing: 1px
+          color: #000
+          line-height: 22px
+          touch-action: manipulation
+          -webkit-appearance: none
+          user-select: text
+          text-align: center
+hr
+  border: solid #cccccc
+  border-width: 1px 0 0
+  clear: both
+  margin: 12px 0
+  height: 0
