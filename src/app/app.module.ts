@@ -12,6 +12,21 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import {MatSelectModule} from '@angular/material/select';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import {ProductService} from './services/product.service';
+import { ProductSliderComponent } from './product-slider/product-slider.component';
+import { QuickViewComponent } from './quick-view/quick-view.component';
+import {CartService} from './services/cart.service';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { OrderingComponent } from './ordering/ordering.component';
+import {NovaPoshtaService} from './services/nova-poshta.service';
+import {OrderService} from './services/order.service';
+import { AdminComponent } from './admin/admin.component';
+import { AdminProdsComponent } from './admin-prods/admin-prods.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import {CommonModule} from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -22,16 +37,31 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CartWidgetComponent,
     ShoppingListComponent,
     FooterComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductSliderComponent,
+    QuickViewComponent,
+    ShoppingCartComponent,
+    OrderingComponent,
+    AdminComponent,
+    AdminProdsComponent,
+    AdminOrdersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule,
+    HttpClientModule,
+    CommonModule
 
   ],
-  providers: [],
+  providers: [
+    ProductService,
+    CartService,
+    NovaPoshtaService,
+    OrderService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

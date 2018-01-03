@@ -1,53 +1,69 @@
-<div class="cart-widget">
+<div *ngIf="cart.length > 0; else empty" class="cart-widget">
   <div class="cart-widget__items">
+    <div  class="items">
 
-    <div class="items">
-      <div class="item">
-        <a href="#">
-          <div class="item__image"><img class="img-responsive" src="assets/img/DSC_6393_compact.jpg" alt=""></div>
+
+
+      <div *ngFor="let item of cart" class="item">
+        <a  [routerLink]="['/products', item.product.product_name]">
+          <div class="item__image"><img class="img-responsive" [src]="item.product.images_mini" alt=""></div>
+        </a>
           <div class="item__name">
-            <a href="#">
-              <span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>
-              <div class="item__price"><strong>£7.99</strong></div>
+            <a class="sb" [routerLink]="['/products', item.product.product_name]">
+              <!--<span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>-->
+              <span class="title">{{item.product.product_name}} <span *ngIf="item.product.product_color"> - {{item.product.product_color}}</span></span>
+              <div class="item__price"><strong>£{{item.product.product_price}}</strong></div>
             </a>
             <div class="item__quantity">
               <label>
-                <span class="minus"></span>
-                <input #number type="number" min="0" value="1">
-                <span class="plus"><span></span></span>
+                <span class="minus" (click)="decCount(item.product.product_id, number.value)"></span>
+                <input #number type="number" min="0" [value]="item.count">
+                <span class="plus" (click)="incCount(item.product.product_id, number.value)"><span></span></span>
               </label>
             </div>
           </div>
-        </a>
+        <!--</a>-->
 
       </div>
-      <div class="item">
-        <a href="#">
-          <div class="item__image"><img class="img-responsive" src="assets/img/1003648_compact.jpeg" alt=""></div>
-          <div class="item__name">
-            <a href="#">
-              <span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>
-              <div class="item__price"><strong>£7.99</strong></div>
-            </a>
-            <div class="item__quantity">
-              <label>
-                <span class="minus"></span>
-                <input #number type="number" min="0" value="1">
-                <span class="plus"><span></span></span>
-              </label>
-            </div>
-          </div>
-        </a>
 
-      </div>
+      <!--<div class="item">-->
+        <!--<a href="#">-->
+          <!--<div class="item__image"><img class="img-responsive" src="assets/img/1003648_compact.jpeg" alt=""></div>-->
+          <!--<div class="item__name">-->
+            <!--<a href="#">-->
+              <!--<span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>-->
+              <!--<div class="item__price"><strong>£7.99</strong></div>-->
+            <!--</a>-->
+            <!--<div class="item__quantity">-->
+              <!--<label>-->
+                <!--<span class="minus"></span>-->
+                <!--<input #number type="number" min="0" value="1">-->
+                <!--<span class="plus"><span></span></span>-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</a>-->
+
+      <!--</div>-->
     </div>
+
+
+
   </div>
   <hr>
   <div class="cart-widget__sum">
     <span>Subtotal</span>
-    <span><strong>£229.99</strong></span>
+    <span><strong>£{{allSumInCart}}</strong></span>
   </div>
   <div class="cart-widget__btn">
-    <a href="#" class="btn btn-green">checkout</a>
+    <a [routerLink]="['/ordering']" class="btn btn-green">Оформить заказ</a>
   </div>
 </div>
+
+<ng-template #empty>
+  <div class="cart-widget">
+    <div class="empty-cart">
+      <h2>Ваша корзина пуста</h2>
+    </div>
+  </div>
+</ng-template>

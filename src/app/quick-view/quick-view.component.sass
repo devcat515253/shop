@@ -1,0 +1,235 @@
+
+
+.breadcrumbs
+  margin-top: 1rem
+  font-size: 14px
+  font-family: 'Roboto', sans-serif
+  text-transform: uppercase
+
+  ul
+    display: flex
+    li
+      text-transform: uppercase
+      line-height: 2.5rem
+      &+li:before
+        margin: 0 8px
+        color: #03a196
+        content: "/\00a0"
+  a
+    color: #03a196
+    font-size: 14px
+    &:hover
+      color: #03857c
+
+
+a
+  transition: all 0.3s linear
+
+.product-details
+  display: flex
+  .container
+    padding: 3rem 1rem
+    padding-bottom: 0
+  &__breadcrumbs
+    margin-bottom: 3rem
+
+
+
+.content
+  display: flex
+  &__slider
+    flex: 9.1
+    margin-right: 1rem
+  &__description
+    flex: 7
+    margin-left: 1rem
+
+
+.quantity
+  margin: 10px 0
+  top: 100%
+  left: 0
+  label
+    display: flex
+    align-items: center
+    .minus,.plus
+      display: flex
+      position: relative
+      padding: 2px
+      background: #f2f2f2
+      cursor: pointer
+      height: 42px
+      width: 42.5px
+      align-items: center
+      justify-content: center
+      border: #e2e2e2 1px solid
+      color: #000
+      transition: all 0.3s linear
+      &:hover
+        background: #d9d9d9
+    .minus
+      border-right: 0px
+      &:before
+        content: ''
+        position: relative
+        width: 16px
+        height: 1px
+        background: #000
+    .plus
+      border-left: 0px
+      span
+        width: 16px
+        height: 16px
+        position: relative
+        display: flex
+        &:after
+          /* horizontal line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+        &:before
+          /* Vertical line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+          transform: rotate(90deg)
+
+    input
+      padding: 0 5px
+      width: 50px
+      min-height: 42px
+      height: 42px
+      background: #fff
+      border: #e2e2e2 1px solid
+      font-size: 13px
+      letter-spacing: 1px
+      color: #000
+      line-height: 22px
+      touch-action: manipulation
+      -webkit-appearance: none
+      user-select: text
+      text-align: center
+      font-weight: 400
+      font-family: HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+.goToFull
+  a
+    display: block
+    font-family: 'Josefin Sans' , sans-serif
+    font-weight: bold
+    font-size: 14px
+    text-transform: uppercase
+    letter-spacing: 1px
+    text-align: center
+    border-top: solid 1px #cccccc
+    border-bottom: solid 1px #cccccc
+    padding: 1.5rem 0
+    padding-top: 1.8rem
+    margin: 2rem 0
+    color: #333333
+    line-height: 2rem
+    &:hover
+      color: #03857c
+.mfp-close
+  transition: all 0.3s linear
+
+.description
+  span
+    overflow-wrap: break-word
+    word-wrap: break-word
+    //word-break: break-word
+    font-size: 1.8rem
+    line-height: 2.8rem
+    font-family: 'Roboto',sans-serif
+  .price
+    font-size: 2rem
+    line-height: 3.2rem
+    margin-bottom: 1.8rem
+    display: inline-block
+  .product-name
+    font-family: 'Oswald',sans-serif
+    font-weight: normal
+    font-style: normal
+    text-transform: uppercase
+    color: #333333
+    display: block
+    letter-spacing: 3px
+    font-size: 2.2rem
+    line-height: 3rem
+    margin: 0 auto 15px
+    a
+      color: #03a196
+      &:hover
+        color: #03857c
+  //padding-top: .4rem
+  label
+    display: flex
+    font-weight: bold
+    font-size: 13px
+    text-align: left
+    margin-bottom: .5rem
+    text-transform: uppercase
+    line-height: 2.5rem
+    font-family: 'Roboto',sans-serif
+  &__product-vendor
+    a
+      transition: color .2s linear
+      color: #03a196
+      font-size: 1.8rem
+      line-height: 2.9rem
+      margin-bottom: .5rem
+      &:hover,&:focus
+        color: #03857c
+  &__product-colors
+    max-width: 40rem
+    select
+      padding: .8rem 1.4rem .8rem
+      padding-right: 3.5rem
+      border-radius: 3px
+      border: 1px solid #d9dbdc
+      -webkit-appearance: none
+      width: 100%
+      min-height: 42px
+      font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  &__product-quantity
+    max-width: 40rem
+    display: flex
+    align-items: flex-end
+    margin-bottom: 2rem
+  &__product-info
+    margin-bottom: 2rem
+
+.quantity
+  margin-bottom: 0
+  label
+    margin-bottom: 0
+  &__qty
+    margin-right: 3rem
+  &__btn
+    flex: 1
+.select-wrapper
+  //display: none
+  position: relative
+  margin-bottom: 1.5rem
+  &:before
+    content: ""
+    position: absolute
+    top: 50%
+    right: 1.3rem
+    width: 10px
+    height: 10px
+    border-right: 1px solid gray
+    border-bottom: 1px solid gray
+    transform: rotate(45deg) translate(-50%, -50%)
+
+

@@ -1,12 +1,13 @@
 
-<div class="product-details">
+<div class="product-details " >
   <div class="container">
     <div class="product-details__breadcrumbs">
       <div class="breadcrumbs">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">sisha</a></li>
-          <li>khalil-mamon</li>
+          <li><a routerLink="/">Home</a></li>
+          <!--<li><a  routerLink="/collections/{{selectedProduct?.category_name}}">{{selectedProduct?.category_name}}</a></li>-->
+          <li><a routerLink="/collections/{{selectedProduct?.category_url}}/{{selectedProduct?.subcategory_name}}">{{selectedProduct?.category_name}} - {{selectedProduct?.subcategory_name}}</a></li>
+          <li>{{selectedProduct?.product_name}}</li>
         </ul>
       </div>
     </div>
@@ -15,45 +16,9 @@
       <div class="content">
         <div class="content__slider">
 
-            <!--<div class="slider">-->
-              <!--<div class="slider__main">-->
-                <!--<div class="carousel main-carousel">-->
-                  <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt=""></div>-->
-                  <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt=""></div>-->
-                  <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt=""></div>-->
-
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="slider__nav">-->
-                <!--<div class="carousel carousel-nav" >-->
-                  <!--<div class="carousel-cell"></div>-->
-                  <!--<div class="carousel-cell"></div>-->
-                  <!--<div class="carousel-cell"></div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <div class="carousel-container">
-            <!-- Flickity HTML init -->
-            <div class="carousel carousel-main">
-              <div class="carousel-cell"><a data-fancybox="galleryimg" href="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6678_1200x.jpg?v=1500642942"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6678_1200x.jpg?v=1500642942" alt=""></a></div>
-              <div class="carousel-cell"><a data-fancybox="galleryimg" href="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6664_1200x.jpg?v=1500642942"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6664_1200x.jpg?v=1500642942" alt=""></a></div>
-              <div class="carousel-cell"><a data-fancybox="galleryimg" href="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6689_1200x.jpg?v=1500642942"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6689_1200x.jpg?v=1500642942" alt=""></a></div>
-              <div class="carousel-cell"><a data-fancybox="galleryimg" href="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6676_1200x.jpg?v=1500642942"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6676_1200x.jpg?v=1500642942" alt=""></a></div>
-
-            </div>
-
-            <div class="carousel-nav">
-              <div class="carousel-cell is-nav-selected"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6678_1200x.jpg?v=1500642942" alt=""></div>
-              <div class="carousel-cell"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6664_1200x.jpg?v=1500642942" alt=""></div>
-              <div class="carousel-cell"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6689_1200x.jpg?v=1500642942" alt=""></div>
-              <div class="carousel-cell"><img class="img-responsive" src="//cdn.shopify.com/s/files/1/1154/2392/products/DSC_6676_1200x.jpg?v=1500642942" alt=""></div>
-
-            </div>
-
-          </div>
 
 
-
+          <app-product-slider *ngIf="products" [nameProduct]="products[0].product_name"></app-product-slider>
 
 
 
@@ -61,32 +26,32 @@
         </div>
         <div class="content__description">
           <div class="description">
-            <div class="description__product-vendor"><a href="#">Khalil Mamoon</a></div>
-            <div class="description__product-code"><span>1393083</span></div>
+            <div class="description__product-vendor"><a href="#">{{selectedProduct?.product_manufacturer}}</a></div>
+            <div class="description__product-code"><span>{{selectedProduct?.product_id}}</span></div>
             <div class="description__product-name">
-              <h1 class="product-name">Khalil Mamoon Cafe Style Hookah</h1>
+              <h1 class="product-name">{{selectedProduct?.product_name}}</h1>
               <div class="under-line"></div>
             </div>
             <div class="description__product-price">
-              <span class="price">£39.99</span>
+              <span class="price">£{{selectedProduct?.product_price}}</span>
             </div>
             <div class="description__product-colors">
               <label>Colors</label>
-              <mat-form-field>
-                <mat-select placeholder="Favorite color" [(value)]="selected" (click)="selectChange()">
-                  <mat-option>None</mat-option>
-                  <mat-option *ngFor="let option of options" [value]="option.value">
-                    {{ option.label }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <!--<p>You selected: {{selected}}</p>-->
+
+              <!--<mat-form-field>-->
+                <!--<mat-select [(value)]="selected" (change)="selectChange()">-->
+                  <!--<mat-option *ngFor="let option of options" [value]="option.value">-->
+                    <!--{{ option.label }}-->
+                  <!--</mat-option>-->
+                <!--</mat-select>-->
+              <!--</mat-form-field>-->
+
+
+              <!--<p>You selected: {{selectedProduct?.product_color}}</p>-->
               <div class="select-wrapper">
-                <select [(value)]="selected" (change)="selectChange()">
-                  <option value="Red">Red</option>
-                  <option value="Black">Black</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Green">Green</option>
+                <select  [(ngModel)]="selectedProduct"  (ngModelChange)="colorChange($event)">
+                  <option  *ngFor="let item of products"   [ngValue]="item">{{ item.product_color }}</option>
+
                 </select>
               </div>
             </div>
@@ -95,30 +60,35 @@
                   <label for="quantity">Qty</label>
                   <div class="quantity">
                     <label>
-                      <span class="minus"></span>
-                      <input id="quantity" type="number" min="0" value="1">
-                      <span class="plus"><span></span></span>
+                      <span class="minus" (click)="decCount()"></span>
+                      <input id="quantity" type="number" min="0" [value]="count">
+                      <span class="plus" (click)="incCount()"><span></span></span>
                     </label>
                   </div>
               </div>
               <div class="quantity__btn">
-                <a href="#" class="btn btn-green">add to card</a>
+                <a  (click)="addToCart()" class="btn btn-green">add to card</a>
               </div>
             </div>
             <div class="description__product-info">
-              <span>Khalil Mamoon Cafe Style Hookah</span>
+              <!--<span>Khalil Mamoon Cafe Style Hookah</span>-->
+              <span>{{selectedProduct?.product_name}}</span>
               <br><br>
-              <span>Features:</span>
+              <span>{{selectedProduct?.product_description}}</span>
+              <br><br>
+              <span><strong>Features:</strong></span>
               <br>
-              <span>Brand - Khalil Mamoon</span>
-              <br>
-              <span>Design - Cafe Style</span>
-              <br>
-              <span>Product - Complete Hookah</span>
-              <br>
-              <span>Material - High Grade Stainless Steel</span>
-              <br>
-              <span>Height - 28"</span>
+              <!--<span>Brand - Khalil Mamoon</span>-->
+
+              <span *ngFor=" let option of selectedProduct?.product_options">{{option.option_name}} - {{option.option_value}}<br></span>
+
+              <!--<span>Design - Cafe Style</span>-->
+              <!--<br>-->
+              <!--<span>Product - Complete Hookah</span>-->
+              <!--<br>-->
+              <!--<span>Material - High Grade Stainless Steel</span>-->
+              <!--<br>-->
+              <!--<span>Height - 28"</span>-->
             </div>
             <div class="under-line"></div>
             <div class="description__product-reviews"></div>

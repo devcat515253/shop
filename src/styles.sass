@@ -1,13 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'
 
-$default-font: "Source Sans Pro", sans-serif
+$default-font: 'Open Sans', sans-serif
 
 *
   -webkit-box-sizing: border-box
   -moz-box-sizing: border-box
   box-sizing: border-box
-  outline: none
+  outline: none!important
+  //user-select: none
   &:before, &:after
     -webkit-box-sizing: border-box
     -moz-box-sizing: border-box
@@ -38,9 +39,13 @@ body textarea:required:valid
 
 html
   font-size: 10px
+  // margin-left: calc(100vw - 100%)
 
 html, body
   min-height: 100%
+
+main
+  min-height: 50vh
 
 body
   min-width: 320px
@@ -83,7 +88,7 @@ a
   width: 1200px
   margin: 0 auto
 
-input
+.search-input
   display: block
   width: 100%
   height: 42px
@@ -100,6 +105,25 @@ input
     border: 1px solid #aaa
     //color: #cccccc
 
+.base-input
+  transition: all 0.2s ease-out
+  background-color: white
+  color: #333333
+  border-radius: 4px
+  display: block
+  width: 100%
+  padding: 1rem 2rem
+  border: none
+  box-shadow: 0 0 0 1px #d9d9d9
+  font-size: 14px
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+  &:focus
+    // box-shadow: 0 0 0 2px #03a196
+
+label
+  margin-bottom: 1.5rem
+  display: block
+
 
 .under-line
   width: 100%
@@ -115,6 +139,21 @@ input
 
 
 .btn
+  &-confirm
+    // font-family: 'Josefin Sans', sans-serif
+    font: 14px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+    transition: all 0.3s ease-in-out
+    font-weight: 500
+    padding: 2rem 3rem
+    background: #03a196
+    color: white
+    text-align: center
+    cursor: pointer
+    border-radius: 4px
+    &:hover
+      background: #026f67
+    &:active
+      transform: translate(0,3px)
   &-white
     font-family: 'Josefin Sans', sans-serif
     font-weight: normal
@@ -135,6 +174,7 @@ input
     transition: opacity 0.3s ease-out, transform 0.3s ease-out,color 0.3s linear, background-color 0.3s linear
     border-radius: 3px
     z-index: 10
+    margin-top: 2rem
     &:hover
       color: #000
       background-color: #FFF
@@ -204,46 +244,90 @@ input
 .fadeIn
   animation-name: fadeIn
 
+.fadeInRouter
+  animation-duration: 1s
+  //animation-fill-mode: both
+  animation-name: fadeIn
+
 @keyframes fadeIn
   0%
     opacity: 0
   100%
     opacity: 1
 
+@keyframes fadeOut
+  0%
+    opacity: 1
+  100%
+    opacity: 0
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
   -webkit-appearance: none
   margin: 0
 
-
 .mat-input-container
-  min-width: 39rem
-  .ng-tns-c6-1
-    font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
-.mat-form-field-underline
-  background: none
-.mat-input-underline
-  width: 0!important
-.mat-select,.mat-input-infix
- // min-width: 39rem!important
-.mat-select-arrow
-  border: inherit!important
-  width: 10px!important
-  height: 10px!important
-  border-right: 1px solid gray!important
-  border-bottom: 1px solid gray!important
-  transform: rotate(45deg) translate(-50%, -50%)
-.mat-input-placeholder-wrapper, .mat-form-field-placeholder-wrapper
-  //min-width: 39rem
-  border-radius: 3px
-  border: 1px solid #d9dbdc
-  padding-left: .8rem
-.mat-select
-  padding: .8rem 1.4rem .8rem
+  font: 14px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
 
-.mat-input-placeholder
-  padding-left: 1.7rem
-  padding-top: .8rem
+//.mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option
+
+.mat-option
+  display: flex
+  align-items: center
+  line-height: 2rem !important
+  height: auto !important
+  min-height: 4rem
+  word-break: break-all
+  white-space: normal
+  // padding: 5px 0 6px 1px
+  padding-top: 5px
+  padding-bottom: 5px
+  border-bottom: 1px solid #eaeaea
+  transition: all .2s ease-out
+  font: 14px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  &:hover
+    color: #fb3f4c
+  &:last-child
+    border-bottom: 1px solid transparent
+
+
+.mat-form-field
+  min-width: 100%
+.mat-select-value-text
+  padding-left: 1rem
+  font: 14px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+//.mat-input-container
+//  min-width: 39rem
+//  .ng-tns-c6-1
+//    font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+//.mat-form-field-underline
+//  background: none
+//.mat-input-underline
+//  width: 0!important
+//.mat-select,.mat-input-infix
+// // min-width: 39rem!important
+//.mat-select-arrow
+//  border: inherit!important
+//  width: 10px!important
+//  height: 10px!important
+//  border-right: 1px solid gray!important
+//  border-bottom: 1px solid gray!important
+//  transform: rotate(45deg) translate(0%, -36%)
+//
+//.mat-select
+//  padding: .8rem 1.4rem .8rem
+//  border-radius: 3px
+//  border: 1px solid #d9dbdc
+//
+//.mat-input-placeholder
+//  padding-left: 1.7rem
+//  padding-top: .8rem
+//.mat-select-value
+//  line-height: 2.4rem
+
+
+
 
 
 .flickity-prev-next-button
@@ -265,3 +349,137 @@ input[type=number]::-webkit-outer-spin-button
   opacity: 1
   background: transparent
   transition: all .3s linear
+
+
+
+// magnific
+
+/* start state
+
+#small-dialog
+  background: white
+  padding: 20px 30px
+  text-align: left
+  max-width: 47%
+  margin: 40px auto
+  position: relative
+
+
+.my-mfp-zoom-in
+  .zoom-anim-dialog
+    opacity: 0
+    -webkit-transition: all 0.2s ease-in-out
+    -moz-transition: all 0.2s ease-in-out
+    -o-transition: all 0.2s ease-in-out
+    transition: all 0.2s ease-in-out
+    -webkit-transform: scale(0.8)
+    -moz-transform: scale(0.8)
+    -ms-transform: scale(0.8)
+    -o-transform: scale(0.8)
+    transform: scale(0.8)
+  &.mfp-ready .zoom-anim-dialog
+    opacity: 1
+    -webkit-transform: scale(1)
+    -moz-transform: scale(1)
+    -ms-transform: scale(1)
+    -o-transform: scale(1)
+    transform: scale(1)
+  &.mfp-removing .zoom-anim-dialog
+    -webkit-transform: scale(0.8)
+    -moz-transform: scale(0.8)
+    -ms-transform: scale(0.8)
+    -o-transform: scale(0.8)
+    transform: scale(0.8)
+    opacity: 0
+  &.mfp-bg
+    opacity: 0
+    -webkit-transition: opacity 0.3s ease-out
+    -moz-transition: opacity 0.3s ease-out
+    -o-transition: opacity 0.3s ease-out
+    transition: opacity 0.3s ease-out
+  &.mfp-ready.mfp-bg
+    opacity: 0.8
+  &.mfp-removing.mfp-bg
+    opacity: 0
+
+/* animate in
+
+/* animate out
+
+/* Dark overlay, start state
+
+/* animate in
+
+/* animate out
+
+/**
+ * Fade-move animation for second dialog
+
+/* at start
+
+.my-mfp-slide-bottom
+  .zoom-anim-dialog
+    opacity: 0
+    -webkit-transition: all 0.2s ease-out
+    -moz-transition: all 0.2s ease-out
+    -o-transition: all 0.2s ease-out
+    transition: all 0.2s ease-out
+    -webkit-transform: translateY(-20px) perspective(600px) rotateX(10deg)
+    -moz-transform: translateY(-20px) perspective(600px) rotateX(10deg)
+    -ms-transform: translateY(-20px) perspective(600px) rotateX(10deg)
+    -o-transform: translateY(-20px) perspective(600px) rotateX(10deg)
+    transform: translateY(-20px) perspective(600px) rotateX(10deg)
+  &.mfp-ready .zoom-anim-dialog
+    opacity: 1
+    -webkit-transform: translateY(0) perspective(600px) rotateX(0)
+    -moz-transform: translateY(0) perspective(600px) rotateX(0)
+    -ms-transform: translateY(0) perspective(600px) rotateX(0)
+    -o-transform: translateY(0) perspective(600px) rotateX(0)
+    transform: translateY(0) perspective(600px) rotateX(0)
+  &.mfp-removing .zoom-anim-dialog
+    opacity: 0
+    -webkit-transform: translateY(-10px) perspective(600px) rotateX(10deg)
+    -moz-transform: translateY(-10px) perspective(600px) rotateX(10deg)
+    -ms-transform: translateY(-10px) perspective(600px) rotateX(10deg)
+    -o-transform: translateY(-10px) perspective(600px) rotateX(10deg)
+    transform: translateY(-10px) perspective(600px) rotateX(10deg)
+  &.mfp-bg
+    opacity: 0
+    -webkit-transition: opacity 0.3s ease-out
+    -moz-transition: opacity 0.3s ease-out
+    -o-transition: opacity 0.3s ease-out
+    transition: opacity 0.3s ease-out
+  &.mfp-ready.mfp-bg
+    opacity: 0.8
+  &.mfp-removing.mfp-bg
+    opacity: 0
+
+/* animate in
+
+/* animate out
+
+/* Dark overlay, start state
+
+/* animate in
+
+/* animate out
+
+
+
+
+.blockScroll
+  //margin-right: calc(100vw - 100%)
+  overflow: hidden
+.mr0
+  margin-right: 0
+
+.disabled
+  // pointer-events: none
+  cursor: not-allowed
+  opacity: .3
+
+
+.error-input
+  box-shadow: 0 0 0 2px #d8512d
+.success-input
+  box-shadow: 0 0 0 2px #03a196

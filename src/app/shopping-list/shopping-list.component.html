@@ -1,23 +1,26 @@
-<div class="shopping-list">
+<div class="shopping-list fadeInRouter">
   <div class="container">
     <div class="shopping-list__breadcrumbs">
           <div class="breadcrumbs">
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">sisha</a></li>
-              <li>khalil-mamon</li>
+              <li><a routerLink="/">Home</a></li>
+              <li *ngIf="!subCategory"><a  routerLink="/collections/{{category}}">{{category}}</a></li>
+              <li *ngIf="subCategory"><a  routerLink="/collections/{{category}}/{{subCategory}}">{{category}} - {{subCategory}}</a></li>
+              <li>Страница 1 из 4</li>
             </ul>
+
           </div>
     </div>
     <div class="shopping-list__title">
-      <h1 class="title">Shisha - Khalil Mamoon</h1>
+      <h1 *ngIf="!subCategory" class="title">{{category}}</h1>
+      <h1 *ngIf="subCategory" class="title">{{category}} - {{subCategory}}</h1>
       <div class="sort-method">
-        <div class="select-wrapper">
-          <select>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Date: New to Old</option>
-            <option>Date: Old to New</option>
+        <div  class="select-wrapper">
+          <select [(ngModel)]="sort"  (ngModelChange)="sortChange($event)">
+            <option value="Тип" selected disabled>Тип сортировки</option>
+            <option value="возростанию">По возрастанию цены</option>
+            <option value="убыванию">По убыванию цены</option>
+            <option value="названию">По названию</option>
           </select>
           <div class="select-arrow-1"></div>
         </div>
@@ -28,192 +31,212 @@
     <div class="shopping-list__items">
       <div class="items">
 
-          <div class="item">
+          <div *ngFor="let product of products" class="item">
             <div class="item__image">
               <div class="image">
                 <div class="image__img">
-                  <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
+                  <!--<img class="img-responsive" [src]="assets/img/DSC_6678_300x.jpg" alt="">-->
+                  <img class="img-responsive" [src]="product.images_middle" alt="">
                 </div>
                 <div class="image__overlay">
-                  <a href="#">
+                  <a (click)="overlayClick($event,product.product_name)" >
                     <div class="overlay">
-                      <a href="#" class="btn btn-white">Quick View</a>
+                      <a href="#small-dialog" class="popup-with-zoom-anim btn btn-white" (click)="showShortInfo(product.product_name)">Quick View</a>
+
                     </div>
                   </a>
 
                 </div>
               </div>
             </div>
-            <a href="#" class="item__description">
+            <a [routerLink]="['/products', product.product_name]" class="item__description">
                 <div class="item__name">
-                  <span class="title">Khalil Mamoon Cafe Style Hookah</span>
+                  <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+                  <span class="title">{{product.product_name}}</span>
                 </div>
-                <div class="item__price">
-                  <span class="price">£39.99</span>
+
+                <div *ngIf="!product.product_promo_price; else promoPrice" class="item__price">
+                  <!--<span class="price">£39.99</span>-->
+                  <span class="price">£{{product.product_price}}</span>
                 </div>
+              <ng-template #promoPrice>
+                <div class="item__price promo">
+                  <small> <em>От</em></small>
+                  <span class="price promo-price">£{{product.product_promo_price}}</span>
+                  <span class="price was-price">£{{product.product_price}}</span>
+                </div>
+              </ng-template>
+
             </a>
 
           </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--</div>-->
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--</div>-->
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--</div>-->
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--</div>-->
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
-        <div class="item">
-          <div class="item__image">
-            <div class="image">
-              <div class="image__img">
-                <img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">
-              </div>
-              <div class="image__overlay">
-                <a href="#">
-                  <div class="overlay">
-                    <a href="#" class="btn btn-white">Quick View</a>
-                  </div>
-                </a>
+        <!--</div>-->
+        <!--<div class="item">-->
+          <!--<div class="item__image">-->
+            <!--<div class="image">-->
+              <!--<div class="image__img">-->
+                <!--<img class="img-responsive" src="assets/img/DSC_6678_300x.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="image__overlay">-->
+                <!--<a href="#">-->
+                  <!--<div class="overlay">-->
+                    <!--<a href="#" class="btn btn-white">Quick View</a>-->
+                  <!--</div>-->
+                <!--</a>-->
 
-              </div>
-            </div>
-          </div>
-          <a href="#" class="item__description">
-            <div class="item__name">
-              <span class="title">Khalil Mamoon Cafe Style Hookah</span>
-            </div>
-            <div class="item__price">
-              <span class="price">£39.99</span>
-            </div>
-          </a>
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<a href="#" class="item__description">-->
+            <!--<div class="item__name">-->
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+            <!--</div>-->
+            <!--<div class="item__price">-->
+              <!--<span class="price">£39.99</span>-->
+            <!--</div>-->
+          <!--</a>-->
 
-        </div>
+        <!--</div>-->
 
       </div>
 
     </div>
     <div class="shopping-list__btn-load"></div>
   </div>
+</div>
+
+
+
+<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+  <app-quick-view *ngIf="quickNameProduct"   [nameProduct]="quickNameProduct"></app-quick-view>
 </div>

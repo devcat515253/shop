@@ -1,0 +1,125 @@
+<div class="shopping-list fadeInRouter">
+  <div class="container">
+    <div class="shopping-list__title">
+      <h1  class="title">Оформление заказа</h1>
+      <!--<span>Доставка осуществляется Новой Почтой</span>-->
+    </div>
+
+    <div class="shopping-list__under-title"> <div class="under-line"></div></div>
+    <div class="shopping-list__order" *ngIf="!hideForm">
+      <div class="order" *ngIf="cart.length > 0; else empty">
+              <div class="order__info">
+
+                <div class="info">
+
+                  <label>
+                    <input id="name" type="text" class="base-input" placeholder="Имя" [(ngModel)]="name">
+                  </label>
+
+                  <label>
+                    <input  id="phone" type="tel" class="base-input" placeholder="Телефон" [(ngModel)]="phone">
+                  </label>
+
+                  <label>
+                    <input type="email" class="base-input" placeholder="Email" [(ngModel)]="email"
+                           #emailCheck="ngModel"
+                           [ngClass]="{'error-input': emailCheck.invalid, 'success-input': !emailCheck.invalid }"
+                           required email>
+                  </label>
+
+                    <div class="city">
+                        <mat-form-field>
+                        <mat-select placeholder="Город" [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)">
+                            <mat-option *ngFor="let city of cities" [value]="city.DescriptionRu">
+                            {{ city.DescriptionRu }}
+                             </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                  <div class="office">
+                    <mat-form-field>
+                      <mat-select placeholder="Отделение Новой Почты" [(value)]="selectedOffice" (ngModelChange)="officeChange($event)">
+                        <mat-option *ngFor="let office of offices" [value]="office.DescriptionRu">
+                          {{ office.DescriptionRu }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="order_confirm">
+                    <a [class.disabled]="hasError || emailCheck.invalid"
+                       (click)="confirmOrder()" class=" btn btn-confirm">Заказ подтверждаю</a>
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="order__cart">
+                <div class="cart">
+                  <div class="cart__items">
+
+                    <div class="item" *ngFor="let item of cart">
+                      <div class="item__img">
+                        <img class="img-responsive" [src]="item.product.images_mini" alt="">
+                        <div class="count-item">{{ item.count }}</div>
+                      </div>
+                      <div class="item__name">
+                        <div class="name">
+                          <div class="name-prod">{{ item.product.product_name }}</div>
+                          <div *ngIf="item.product.product_color" class="color">{{item.product.product_color}}</div>
+                        </div>
+                      </div>
+                      <div class="item__price">£{{item.product.product_price * item.count}}</div>
+                    </div>
+
+
+                  </div>
+
+                  <div class="catr__total">
+                    <hr>
+                    <div class="cart-widget__sum">
+                      <span>К оплате</span>
+                      <span><strong>£{{allSumInCart}}</strong></span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+      </div>
+
+
+
+      <ng-template #empty>
+        <div class="cart-widget">
+          <div class="empty-cart">
+            <h2>Ваша корзина пуста</h2>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="cart-widget fadeInRouter" *ngIf="orderSuccess">
+      <div class="empty-cart">
+        <h2>Спасибо за заказ. Наш менеджер свяжется с Вами в ближайшее время</h2>
+      </div>
+    </div>
+
+
+      <div class="cart-widget fadeInRouter" *ngIf="orderError">
+        <div class="empty-cart">
+          <h2>Произошла неизвестная ошибка. Пожалуйста свяжитесь с нашим менеджером или попробуйте еще раз</h2>
+        </div>
+      </div>
+
+
+    <div class="shopping-list__btn-load">
+      <!--<a [routerLink]="['/ordering']" (click)="confirmOrder()" class="btn btn-confirm">Заказ подтверждаю</a>-->
+    </div>
+
+  </div>
+</div>
+
+
+

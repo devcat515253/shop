@@ -1,0 +1,105 @@
+
+<div class="product-details fadeInRouter">
+  <div class="container">
+    <!--<div class="product-details__breadcrumbs">-->
+      <!--<div class="breadcrumbs">-->
+        <!--<ul>-->
+          <!--<li><a routerLink="/">Home</a></li>-->
+          <!--<li><a  routerLink="/collections/{{selectedProduct?.category_name}}">{{selectedProduct?.category_name}}</a></li>-->
+          <!--<li><a routerLink="/collections/{{selectedProduct?.category_name}}/{{selectedProduct?.subcategory_name}}">{{selectedProduct?.subcategory_name}}</a></li>-->
+          <!--<li>{{selectedProduct?.product_name}}</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div class="product-details__content">
+      <div class="content">
+        <div class="content__slider">
+
+
+
+          <app-product-slider *ngIf="nameProduct" [nameProduct]="nameProduct"></app-product-slider>
+
+
+
+
+        </div>
+        <div class="content__description">
+          <div class="description">
+            <div class="description__product-vendor"><a href="#">{{selectedProduct?.product_manufacturer}}</a></div>
+            <!--<div class="description__product-code"><span>{{selectedProduct?.product_id}}</span></div>-->
+            <div class="description__product-name">
+              <h1 *ngIf="selectedProduct" class="product-name"><a [routerLink]="['/products', selectedProduct?.product_name]" (click)="closePopup()">{{selectedProduct?.product_name}}</a></h1>
+              <div class="under-line"></div>
+            </div>
+            <div class="description__product-price">
+              <span class="price">£{{selectedProduct?.product_price}}</span>
+            </div>
+            <div class="description__product-colors">
+              <label>Colors</label>
+
+              <!--<mat-form-field>-->
+              <!--<mat-select [(value)]="selected" (change)="selectChange()">-->
+              <!--<mat-option *ngFor="let option of options" [value]="option.value">-->
+              <!--{{ option.label }}-->
+              <!--</mat-option>-->
+              <!--</mat-select>-->
+              <!--</mat-form-field>-->
+
+
+              <!--<p>You selected: {{selectedProduct?.product_color}}</p>-->
+              <div class="select-wrapper">
+                <select  [(ngModel)]="selectedProduct"  (ngModelChange)="colorChange($event)">
+                  <option  *ngFor="let item of products"   [ngValue]="item">{{ item.product_color }}</option>
+
+                </select>
+              </div>
+            </div>
+            <div class="description__product-quantity">
+              <div class="quantity__qty">
+                <label for="quantity">Qty</label>
+                <div class="quantity">
+                  <label>
+                    <span class="minus" (click)="decCount()"></span>
+                    <input id="quantity" type="number" min="0" [value]="count">
+                    <span class="plus" (click)="incCount()"><span></span></span>
+                  </label>
+                </div>
+              </div>
+              <div class="quantity__btn">
+                <a (click)="addToCart()" class="btn btn-green">add to card</a>
+              </div>
+            </div>
+            <div class="description__product-info">
+              <!--<span>Khalil Mamoon Cafe Style Hookah</span>-->
+              <!--<span>{{selectedProduct?.product_name}}</span>-->
+              <!--<br><br>-->
+              <span>{{selectedProduct?.product_short_description}}</span>
+              <!--<br><br>-->
+              <!--<span><strong>Features:</strong></span>-->
+              <!--<br>-->
+              <!--<span>Brand - Khalil Mamoon</span>-->
+
+              <!--<span *ngFor=" let option of selectedProduct?.product_options">{{option.option_name}} - {{option.option_value}}<br></span>-->
+
+              <!--<div class="under-line"></div>-->
+              <span *ngIf="selectedProduct" class="goToFull"><a [routerLink]="['/products', selectedProduct?.product_name]" (click)="closePopup()">СМОТРЕТЬ ПОЛНОЕ ОПИСАНИЕ</a></span>
+              <span *ngIf="!selectedProduct" class="goToFull"><a>СМОТРЕТЬ ПОЛНОЕ ОПИСАНИЕ</a></span>
+
+              <!--<span>Design - Cafe Style</span>-->
+              <!--<br>-->
+              <!--<span>Product - Complete Hookah</span>-->
+              <!--<br>-->
+              <!--<span>Material - High Grade Stainless Steel</span>-->
+              <!--<br>-->
+              <!--<span>Height - 28"</span>-->
+            </div>
+            <!--<div class="under-line"></div>-->
+            <div class="description__product-reviews"></div>
+            <div class="description__product-social-buttons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

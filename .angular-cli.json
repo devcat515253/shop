@@ -23,12 +23,22 @@
         "../node_modules/normalize.css/normalize.css",
         "../node_modules/font-awesome/css/font-awesome.css",
         "../node_modules/flickity/dist/flickity.css",
-        "../node_modules/@fancyapps/fancybox/dist/jquery.fancybox.css"
+        "../node_modules/@fancyapps/fancybox/dist/jquery.fancybox.css",
+        "../node_modules/slick-carousel/slick/slick.css",
+        "../node_modules/slick-carousel/slick/slick-theme.css",
+        "../src/assets/js/magnific/magnific-popup.css"
+
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js",
         "../node_modules/flickity/dist/flickity.pkgd.min.js",
-        "../node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js"
+        "../node_modules/slick-carousel/slick/slick.min.js",
+        "../node_modules/jquery.maskedinput/src/jquery.maskedinput.js",
+        "../src/assets/js/magnific/jquery.magnific-popup.min.js"
+
+
+
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

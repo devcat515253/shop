@@ -1,0 +1,63 @@
+<div class="shopping-list fadeInRouter">
+  <div class="container">
+    <div class="shopping-list__title">
+      <h1  class="title">Корзина покупок</h1>
+    </div>
+
+    <div class="shopping-list__under-title"> <div class="under-line"></div></div>
+    <div class="shopping-list__items" *ngIf="cart.length > 0; else empty">
+      <div  class="items">
+
+        <div *ngFor="let item of cart" class="item">
+          <a  [routerLink]="['/products', item.product.product_name]">
+            <div class="item__image"><img class="img-responsive" [src]="item.product.images_middle" alt=""></div>
+          </a>
+          <div class="item__name">
+            <a class="sb" [routerLink]="['/products', item.product.product_name]">
+              <!--<span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>-->
+              <span class="title">{{item.product.product_name}} <span *ngIf="item.product.product_color"> - {{item.product.product_color}}</span></span>
+
+            </a>
+            <div class="item__price">£{{item.product.product_price}}</div>
+            <div class="item__quantity">
+              <label>
+                <span class="minus" (click)="decCount(item.product.product_id, number.value)"></span>
+                <input #number type="number" min="0" [value]="item.count">
+                <span class="plus" (click)="incCount(item.product.product_id, number.value)"><span></span></span>
+              </label>
+            </div>
+          </div>
+          <!--</a>-->
+
+        </div>
+
+      </div>
+
+      <div class="total">
+        <div class="total__sum">
+          <h2>всего на сумму</h2>
+          <span><strong>£{{allSumInCart}}</strong></span>
+        </div>
+        <div class="total__btn">
+          <a [routerLink]="['/ordering']" class="btn btn-green">оформить заказ</a>
+        </div>
+        <hr>
+      </div>
+
+    </div>
+
+    <ng-template #empty>
+      <div class="cart-widget">
+        <div class="empty-cart">
+          <h2>Ваша корзина пуста</h2>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <div class="shopping-list__btn-load"></div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,127 @@
+.title
+  font-family: 'Oswald', sans-serif
+  font-weight: normal
+
+  text-transform: uppercase
+  color: #333333
+  display: block
+  letter-spacing: 3px
+  font-size: 2.2rem
+  line-height: 2.5rem
+
+
+
+.table-base
+  table
+    border-collapse: separate
+    width: 100%
+    border-spacing: 0
+    tr:hover
+      td
+        background: darken(#f9f9f9, 5%)
+    td
+      vertical-align: middle
+      padding: 17px 12px
+      font-size: 14px
+
+    tr
+      &:nth-of-type(even)
+        background-color: #f9f9f9
+      td,th
+        border-bottom: 1px solid #cdcdcd
+        border-collapse: separate
+        text-align: center
+        position: relative
+        &:last-child
+          &:after
+            display: none
+        &:after
+          position: absolute
+          z-index: 1
+          content: ''
+          height: 80%
+          width: 1px
+          background-color: #cdcdcd
+          top: 50%
+          left: 100%
+          transform: translate(0,-50%)
+    tr:last-child
+      td
+        border-bottom: 1px solid transparent
+    tr
+      cursor: pointer
+      td
+        &:first-child
+          border-left: 1px solid #cdcdcd
+        &:last-child
+          border-right: 1px solid #cdcdcd
+      &:last-child
+        td
+          border-bottom: 1px solid #cdcdcd
+          &:first-child
+            border-radius: 0 0 0 5px
+
+          &:last-child
+            border-radius: 0 0 5px
+
+    thead
+      th
+        white-space: nowrap
+        color: white
+        font-size: 12px
+        font-weight: 700
+        line-height: 21px
+        text-transform: uppercase
+        padding: 15px 20px
+        background: #629a3f
+        &:after
+          background-color: white
+          z-index: 1
+        &:first-child
+          border-radius: 5px  0 0 0
+        &:last-child
+          border-radius:  0   5px 0 0
+
+
+
+.select-wrapper
+  //display: none
+  position: relative
+  margin-bottom: .5rem
+  &:before
+    content: ""
+    position: absolute
+    top: 50%
+    right: 1.3rem
+    width: 10px
+    height: 10px
+    border-right: 1px solid gray
+    border-bottom: 1px solid gray
+    transform: rotate(45deg) translate(-50%, -50%)
+
+.title-wr
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+
+select
+  padding: .8rem 1.4rem .8rem
+  padding-right: 3.5rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  -webkit-appearance: none
+  width: 100%
+  min-height: 42px
+  min-width: 200px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+
+.baseInp
+  padding: .8rem 1.4rem .8rem
+  padding-right: 3.5rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  min-width: 200px
+  min-height: 42px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  margin-bottom: .5rem

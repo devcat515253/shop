@@ -59,6 +59,7 @@
       justify-content: center
       border: #e2e2e2 1px solid
       color: #000
+      transition: all 0.3s linear
       &:hover
         background: #d9d9d9
     .minus
@@ -105,7 +106,6 @@
       height: 42px
       background: #fff
       border: #e2e2e2 1px solid
-      font-weight: bold
       font-size: 13px
       letter-spacing: 1px
       color: #000
@@ -114,6 +114,8 @@
       -webkit-appearance: none
       user-select: text
       text-align: center
+      font-weight: 400
+      font-family: HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
 
 
 
@@ -188,7 +190,7 @@
   &__btn
     flex: 1
 .select-wrapper
-  display: none
+  //display: none
   position: relative
   margin-bottom: 1.5rem
   &:before
@@ -201,67 +203,4 @@
     border-right: 1px solid gray
     border-bottom: 1px solid gray
     transform: rotate(45deg) translate(-50%, -50%)
-
-// slider
-
-/* external css: flickity.css */
-
-.carousel-container
-  display: flex
-
-.carousel
-  background: white
-  margin-bottom: 40px
-  flex-grow: 1
-.carousel-cell
-  width: 100%
-  //overflow: hidden
-  background: white
-  //padding: 0 5rem
-.carousel-nav .carousel-cell
-  //width: 66%
-  //height: 300px
-  //margin-right: 10px
-  // background: #8C8
-  //border-radius: 5px
-  //counter-increment: carousel-cell
-
-/* cell number */
-.carousel-cell:before
-  //display: block
-  //text-align: center
-  //content: counter(carousel-cell)
-  //line-height: 300px
-  //font-size: 80px
-  //color: white
-.carousel-cell.is-selected
-  z-index: 99999
-.carousel-nav
-  width: 12%
-  margin-left: 3rem
-
-.carousel-nav .carousel-cell
-  //height: 80px
-  width: 100%
-  margin: 0 0 5px 0
-  cursor: pointer
-  opacity: .7
-  &.is-nav-selected
-    opacity: 1
-
-
-.carousel-nav .carousel-cell:before
-  //font-size: 50px
-  //line-height: 80px
-
-
-.carousel-nav .carousel-cell.is-nav-selected
-  background: #ED2
-
-.carousel-main
-  .carousel-cell
-    display: flex
-    align-items: center
-    justify-content: center
-    margin: 0 2rem
 

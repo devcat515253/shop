@@ -44,9 +44,9 @@
         <div class="cart-dropdown dropdown">
 
         <div class="cart-dropdown__rel">
-          <a href="#" class="cart-ref">
+          <a [routerLink]="['/cart']" class="cart-ref">
             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            <span class="count">2</span>
+            <span class="count">{{allCountInCart}}</span>
           </a>
         </div>
 
@@ -72,13 +72,14 @@
 
          <ul >
            <li class="dropdown-menu">
-             <a href="#">shiha</a>
+             <a [routerLink]="['/collections', 'shisha' ]"   routerLinkActive="active" >shiha</a>
 
-             <ul class="data-dropdown">
+             <ul class="data-dropdown" #nav>
                <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
+               <li><a  routerLink="/products/Khalil Mamoon Cafe Style Hookah"  routerLinkActive="active">KHALIL MAMOON</a></li>
+               <li><a [routerLink]="['/collections', 'shisha', 'Khalil Mamoon']"  routerLinkActive="active" >KHALIL MAMOON</a></li>
+               <li><a href="#"  routerLinkActive="active">SHISHAGEAR S&V</a></li>
+               <li><a href="#"  routerLinkActive="active">APPLE ON TOP</a></li>
                <li><a href="#">GLASS HOOKAH</a></li>
                <li><a href="#">STEMS ONLY</a></li>
                <li><a href="#">SAHARA SMOKE</a></li>
@@ -86,7 +87,7 @@
 
            </li>
            <li class="dropdown-menu">
-             <a href="#">flavours</a>
+             <a  [routerLink]="['/collections', 'кальян1' ]"  routerLinkActive="active">flavours</a>
 
              <ul class="data-dropdown">
                <li><a href="#">starbuzz</a></li>
@@ -161,7 +162,7 @@
 
              <form action="#">
                <label class="input-search">
-                 <input type="text" class="input-search" placeholder="Search">
+                 <input type="text" class="input-search search-input" placeholder="Search">
                  <i class="fa fa-search" aria-hidden="true"></i>
 
                </label>

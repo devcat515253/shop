@@ -1,0 +1,114 @@
+.shopping-list
+  .container
+    padding: 3rem 1rem
+  &__title
+    .title
+      font-family: 'Oswald', sans-serif
+      font-weight: normal
+
+      text-transform: uppercase
+      color: #333333
+      display: block
+      letter-spacing: 3px
+      font-size: 2.2rem
+      line-height: 2.5rem
+  &__order
+    padding-top: 4rem
+
+
+
+.order
+  display: flex
+  &__info
+    flex: 5
+
+  &__cart
+    flex: 3
+    box-shadow: 1px 0 0 #e1e1e1 inset
+    padding-left: 4rem
+
+.info
+  padding-right: 5rem
+
+
+hr
+  border: solid #cccccc
+  border-width: 1px 0 0
+  clear: both
+  margin: 12px 0
+  height: 0
+
+.order_confirm
+  display: flex
+  justify-content: flex-end
+
+.cart-widget__sum
+  display: flex
+  justify-content: space-between
+  span
+    &:nth-child(1)
+      color: #4b4b4b
+      font-size: 16px
+    &:nth-child(2)
+      color: #4b4b4b
+      font-size: 2.4rem
+      font-weight: 500
+      letter-spacing: 2px
+      line-height: 3rem
+.cart
+  .item
+    display: flex
+    align-items: center
+    font-family: 'Helvetica Neue', sans-serif
+    margin-bottom: 2rem
+    .name-prod
+      word-wrap: break-word
+      font-size: 14px
+      color: #4b4b4b
+      line-height: 2rem
+    .color
+      color: #969696
+      font-size: 12px
+      line-height: 1.5rem
+    &__price
+      margin-left: auto
+      padding-left: .5rem
+      color: #4b4b4b
+      font-weight: 500
+    &__name
+      margin-left: 1.4rem
+    &__img
+      width: 64px
+      border-radius: 8px
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.1)
+      position: relative
+      display: flex
+      align-items: center
+      justify-content: center
+      img
+        max-height: 64px
+      .count-item
+        position: absolute
+        top: 0
+        right: 0
+        padding: 6px 9px
+        background-color: rgba(153,153,153,0.9)
+        border-radius: 50%
+        font-weight: 500
+        white-space: nowrap
+        color: white
+        transform: translate(+50%,-50%)
+        font-size: 12px
+
+
+.empty-cart
+  text-align: center
+  padding: 2rem
+  padding-top: calc(2rem + 15px)
+  font-family: 'Oswald', sans-serif
+  font-weight: normal
+  font-style: normal
+  text-transform: uppercase
+  h2
+    letter-spacing: 3px
+    font-weight: 400

@@ -1,0 +1,27 @@
+<div class="carousel-container">
+  <!-- Flickity HTML init -->
+
+  <div  class="carousel carousel-main" data-flickity>
+
+    <div *ngFor="let item of products; let i = index" [ngClass]="{'is-selected': i==0}" class="carousel-cell"><a data-fancybox="galleryimg" [href]="item.images_large"><img class="img-responsive" [src]="item.images_large" alt=""></a></div>
+    <!--<div class="carousel-cell"><a data-fancybox="galleryimg" href="assets/img/products/red_large.jpg"><img class="img-responsive" src="assets/img/products/red_large.jpg" alt=""></a></div>-->
+    <!--<div class="carousel-cell"><a data-fancybox="galleryimg" href="assets/img/products/blue_large.jpg"><img class="img-responsive" src="assets/img/products/blue_large.jpg" alt=""></a></div>-->
+    <!--<div class="carousel-cell"><a data-fancybox="galleryimg" href="assets/img/products/green_large.jpg"><img class="img-responsive" src="assets/img/products/green_large.jpg" alt=""></a></div>-->
+    <!--<div class="carousel-cell"><a data-fancybox="galleryimg" href="assets/img/products/black_large.jpg"><img class="img-responsive" src="assets/img/products/black_large.jpg" alt=""></a></div>-->
+
+  </div>
+
+  <div  class="carousel-nav">
+
+
+    <div *ngFor="let item of products; let i = index" [ngClass]="{'is-nav-selected': i==0}" class="carousel-cell">
+      <img class="img-responsive" [src]="item.images_middle" alt="">
+    </div>
+    <!--<div class="carousel-cell is-nav-selected"><img class="img-responsive" src="assets/img/products/red_middle.jpg" alt=""></div>-->
+    <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/products/blue_middle.jpg" alt=""></div>-->
+    <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/products/green_middle.jpg" alt=""></div>-->
+    <!--<div class="carousel-cell"><img class="img-responsive" src="assets/img/products/black_middle.jpg" alt=""></div>-->
+
+  </div>
+
+</div>
