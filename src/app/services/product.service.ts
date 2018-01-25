@@ -21,6 +21,61 @@ export class ProductService {
   getProdFromSubCategory(nameSubCategory: string) {
     return this.http.get<Product[]>(`${this.baseUrl}/api/getFromSubCategory/${nameSubCategory}` );
   }
+
+  getProdFromID(id_prod) {
+    let prod_id  = +id_prod;
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getProdFromID/${prod_id}` );
+  }
+  getProdFromIdNoImg(id_prod) {
+    let prod_id  = +id_prod;
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getProdFromIdNoImg/${prod_id}` );
+  }
+
+  getProdTypes() {
+    return this.http.get<any>(`${this.baseUrl}/api/getProdTypes` );
+  }
+
+  getLastProds() {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getLastProds` );
+  }
+
+  getProdsByType(type_prod: string) {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getProdsByType/${type_prod}` );
+  }
+
+
+  getProdsForSearch() {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getProdsForSearch` );
+  }
+
+  getOptionsByType(id_type: number) {
+    // console.log(id_type);
+    return this.http.get<any>(`${this.baseUrl}/api/getOptionsByType/${id_type}` );
+  }
+
+  getOptionsByIdProd(id_prod: number) {
+    // console.log(id_type);
+    return this.http.get<any>(`${this.baseUrl}/api/getOptionsByIdProd/${id_prod}` );
+  }
+
+
+  addNewProd(data) {
+     // console.log(data.getAll('photo'));
+     // console.log(data.getAll('data'));
+    return this.http.post<any>(`${this.baseUrl}/api/addNewProd`, data );
+  }
+
+  updateProd(data) {
+    // console.log(data.getAll('photo'));
+    // console.log(data.getAll('data'));
+    return this.http.post<any>(`${this.baseUrl}/api/updateProd`, data );
+  }
+
+  deleteProd(prod) {
+    return this.http.post<any>(`${this.baseUrl}/api/deleteProd`, prod );
+  }
+
+
 }
 
 

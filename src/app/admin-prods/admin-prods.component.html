@@ -1,3 +1,95 @@
-<p>
-  admin-prods works!
-</p>
+<div class="title-wr">
+  <h1  class="title">Список продуктов</h1>
+  <input class="baseInp focus-green-border" type="text" placeholder="Search by id" [(ngModel)]="searchInputById"  (ngModelChange)="inputByIdChange($event)">
+  <input class="baseInp search-name focus-green-border" type="text" placeholder="Search by name" [(ngModel)]="searchInputByName"  (ngModelChange)="inputByNameChange($event)">
+  <div class="select-wrapper">
+    <select  [(ngModel)]="selectedTypeProd"  (ngModelChange)="typeProdChange($event)">
+      <option  *ngFor="let item of prodTypes"   [ngValue]="item">{{ item.product_types_name }}</option>
+
+    </select>
+  </div>
+</div>
+
+<div class="under-line"></div>
+
+
+
+<div class="products">
+  <div class="table-base">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Наименование</th>
+        <th>Цвет</th>
+        <th>Дата add</th>
+        <th>Количество</th>
+        <th>Цена</th>
+        <th>Статус</th>
+        <th>В Наличии?</th>
+        <th>Акционный?</th>
+        <th>Опции</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor=" let product of products" >
+        <td data-label=""> {{ product.product_id }}</td>
+        <td data-label="">{{ product.product_name }}</td>
+        <!--<td data-label="дата">{{ order.order_date | date: 'dd-MM-yyyy HH:mm:ss ': '+0000' }}</td>-->
+        <td data-label="">{{ product.product_color }}</td>
+        <td data-label="">{{ product.product_date_add | date: 'dd-MM-yyyy' }}</td>
+        <td data-label="">{{product.product_count}}</td>
+        <td data-label="">{{ product.product_price }} <span class="rub">грн</span></td>
+        <td data-label="">{{ product.product_status }}
+          <!--<div class="select-wrapper status-select">-->
+
+            <!--<select  [(ngModel)]="product.product_status"  (ngModelChange)="statusProdChange(product)">-->
+              <!--<option value="Опубликован">Опубликован</option>-->
+              <!--<option value="Скрыт">Скрыт</option>-->
+
+            <!--</select>-->
+          <!--</div>-->
+        </td>
+
+        <td data-label="">
+          <label >
+            <input [(ngModel)]="product.product_available" (ngModelChange)="isPromoProdChange(product)" type="checkbox" disabled/>
+            <span class="checkbox__text"></span>
+          </label>
+        </td>
+        <td data-label="">
+          <label>
+            <input [(ngModel)]="product.product_ispromo" (ngModelChange)="isPromoProdChange(product)" type="checkbox" disabled/>
+            <span class="checkbox__text"></span>
+          </label>
+        </td>
+
+        <td data-label="">
+          <div class="options">
+            <i class="fa fa-pencil edit-pencil" aria-hidden="true" (click)="edit(product)"></i>
+            <div class="close-wr">
+              <!--<div  class="btn btn-close btn-center" (click)="delete(product)"></div>-->
+              <a href="#confirm" class="popup-with-zoom-anim btn btn-close btn-center" (click)="selectedProdForDelete = product"></a>
+
+            </div>
+          </div>
+        </td>
+      </tr>
+
+
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+<div id="confirm" class="zoom-anim-dialog mfp-hide">
+  <h3>Пдтвердите удаление продукта</h3>
+  <div class="btns">
+    <a href="#" (click)="delete($event)" >да</a>
+    <a  href="#" (click)="closePopup($event)">нет</a>
+  </div>
+</div>

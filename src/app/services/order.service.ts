@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Order} from '../entity/order';
 import {HttpClient} from '@angular/common/http';
+import {FullCartItem} from '../entity/full-cart-item';
 
 @Injectable()
 export class OrderService {
@@ -14,6 +15,13 @@ export class OrderService {
     // const body = {name: user.name, age: user.age};
     // console.log(order);
     return this.http.post(`${this.baseUrl}/api/addOrder`, order);
+
+  }
+
+  updateOrder(order: any) {
+    // const body = {name: user.name, age: user.age};
+    // console.log(order);
+    return this.http.post(`${this.baseUrl}/api/updateOrder`, order);
 
   }
 
@@ -42,4 +50,57 @@ export class OrderService {
     const body = { search: searchInput};
     return this.http.post(`${this.baseUrl}/api/getResSearch`, body);
   }
+
+  getResSearchByPhone(searchInput) {
+  // console.log(searchInput);
+  const body = { search: searchInput};
+  return this.http.post(`${this.baseUrl}/api/getResSearchByPhone`, body);
+  }
+
+
+  getOrder(order_id) {
+    return this.http.get<any>(`${this.baseUrl}/api/getOrder/${order_id}` );
+  }
+
+  getOrderProds(order_id) {
+    return this.http.get<any>(`${this.baseUrl}/api/getOrderProds/${order_id}` );
+  }
+
+  cartToServ(cart: FullCartItem[]) {
+    let cartRes = [];
+
+    for (let item of cart) {
+      let newItem = {
+        product: {
+          product_id: item.product.product_id,
+          product_price: item.product.product_price,
+          product_promo_price: item.product.product_promo_price
+        },
+        count: item.count
+      };
+      cartRes.push(newItem);
+    }
+
+    return cartRes;
+  }
+
+  cartToServUpdateProds(cart: any) {
+    let cartRes = [];
+
+    for (let item of cart) {
+
+      let newItem = {
+        product: {
+          product_id: item.product_id,
+          product_price: item.order_prod_price,
+          product_promo_price: item.order_prod_promo_price || null
+        },
+        count: item.order_prod_count
+      };
+      cartRes.push(newItem);
+    }
+
+    return cartRes;
+  }
+
 }

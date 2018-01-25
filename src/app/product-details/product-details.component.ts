@@ -71,10 +71,26 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         });
   }
 
+  countChange() {
+    if (this.count <= 0) {
+      this.count = 1;
+    }
+  }
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-
+          // let _this = this;
       $(document).ready(function() {
+
+        // $('#quantity' ).change(function () {
+        //   if ($(this).val() <= 0) {
+        //     $(this).val(1);
+        //     _this.count = 1;
+        //   }
+        //   else {
+        //     _this.count = parseInt($(this).val(), 10) || 1;
+        //   }
+        // });
+
         $().fancybox({
           selector : '[data-fancybox="galleryimg"]',
           loop     : true,
@@ -85,6 +101,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
     }
   }
+
+
 
   colorChange(color) {
     // console.log('select' + this.selectedProduct.product_color);

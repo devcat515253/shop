@@ -33,7 +33,27 @@
               <div class="under-line"></div>
             </div>
             <div class="description__product-price">
-              <span class="price">£{{selectedProduct?.product_price}}</span>
+              <!--<span class="price">£{{selectedProduct?.product_price}}</span>-->
+
+
+
+
+              <div *ngIf="!selectedProduct?.product_promo_price; else promoPrice" class="item__price">
+                <!--<span class="price">£39.99</span>-->
+                <span class="price">{{selectedProduct?.product_price}} грн</span>
+              </div>
+
+
+              <ng-template #promoPrice>
+                <div class="item__price promo">
+                  <span class="price promo-price">{{selectedProduct?.product_promo_price}} грн</span>
+                  <span class="price was-price">{{selectedProduct?.product_price}} грн</span>
+                </div>
+              </ng-template>
+
+
+
+
             </div>
             <div class="description__product-colors">
               <label>Colors</label>
@@ -55,13 +75,15 @@
                 </select>
               </div>
             </div>
-            <div class="description__product-quantity">
+
+            <span *ngIf="!selectedProduct?.product_available">Продано</span>
+            <div class="description__product-quantity" [class.disabled]="!selectedProduct?.product_available">
               <div class="quantity__qty">
                 <label for="quantity">Qty</label>
                 <div class="quantity">
                   <label>
                     <span class="minus" (click)="decCount()"></span>
-                    <input id="quantity" type="number" min="0" [value]="count">
+                    <input id="quantity" type="number" min="1" [value]="count" [(ngModel)]="count" (change)="countChange()">
                     <span class="plus" (click)="incCount()"><span></span></span>
                   </label>
                 </div>
@@ -74,7 +96,7 @@
               <!--<span>Khalil Mamoon Cafe Style Hookah</span>-->
               <!--<span>{{selectedProduct?.product_name}}</span>-->
               <!--<br><br>-->
-              <span>{{selectedProduct?.product_short_description}}</span>
+              <span class="white-space">{{selectedProduct?.product_short_description}}</span>
               <!--<br><br>-->
               <!--<span><strong>Features:</strong></span>-->
               <!--<br>-->

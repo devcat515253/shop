@@ -19,12 +19,14 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   order: Order;
 
+  allCities = [];
   cities = [];
   offices = [];
 
   selectedCity: string;
   selectedOffice: string;
   name: string;
+  famil: string;
   email: string;
   phone: string;
 
@@ -37,7 +39,17 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
   orderError: boolean = false;
 
 
+  citySearch: string;
 
+
+  selectedCustomAddress: boolean = false;
+  customAddress =  {
+    street: '',
+    houseNumber: '',
+    apartmentNumber: ''
+  };
+
+  panelOpenState: boolean;
 
   // cities1 = [
   //   {value: 'Киев', viewValue: 'Киев'},
@@ -55,10 +67,38 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getCart();
     this.getCities();
 
-
+    this.scrollToTop();
   }
   ngOnDestroy() {
     clearInterval(this.intervalId);
+  }
+
+  searchCity() {
+    this.cities = this.allCities.filter( (city) => {
+      return city.DescriptionRu.toLowerCase().indexOf(this.citySearch.toLowerCase()) === 0 ? true : false ;
+    });
+}
+
+  clearSelectCities() {
+    if ( this.cities.length != 0) {
+      return;
+    }
+    this.cities = this.allCities;
+    this.citySearch = '';
+  }
+
+  openCities() {
+    if (isPlatformBrowser(this.platformId)) {
+      $('#city').focus();
+    }
+  }
+
+  scrollToTop() {
+    if (isPlatformBrowser(this.platformId)) {
+      $(document).ready(function() {
+        $('html, body').animate({scrollTop: 0}, 500);
+      });
+    }
   }
 
   checkName() {
@@ -73,6 +113,20 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       name.css({'box-shadow': '0 0 0 2px #03a196'});
       name.removeClass('error');
+    }
+  }
+  checkFamil() {
+    let famil = $('#famil');
+
+    let length = famil.val().length;
+
+    if (length < 3) {
+      famil.css({'box-shadow': '0 0 0 2px #d8512d'});
+      famil.addClass('error');
+    }
+    else {
+      famil.css({'box-shadow': '0 0 0 2px #03a196'});
+      famil.removeClass('error');
     }
   }
 
@@ -97,6 +151,7 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.intervalId =  setInterval(() => {
         this.checkName();
+        this.checkFamil();
         this.checkPhone();
 
         // let sizeError;
@@ -112,12 +167,14 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
         // console.log(this.selectedOffice);
 
 
-        if (sizeError > 0 || this.selectedCity === undefined || this.selectedOffice === undefined || this.selectedOffice === '') {
+         if (sizeError > 0 || !this.selectedCity ||  (!this.selectedOffice &&  !this.selectedCustomAddress)) {
           this.hasError = true;
         }
         else{
           this.hasError = false;
         }
+
+
       }, 500);
 
 
@@ -128,14 +185,24 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.checkInputs();
       $(document).ready( () => {
 
-        $('#phone').mask('+3 (999) 999-99-99');
+        $('#phone').mask('+38 (999) 999-99-99');
 
         $( '#phone').blur(() => {
           this.phone =  $('#phone').val();
           // console.log( this.phone);
         });
+
+        $( '.custom-address .fields').hide();
       });
 
+    }
+  }
+
+
+  customAddrChange() {
+    if (isPlatformBrowser(this.platformId)) {
+      $( '.custom-address .fields').slideToggle(300);
+      $( '.info .office').slideToggle(300);
     }
   }
 
@@ -162,7 +229,14 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCities() {
     this.poshtaService.getCities().subscribe( (resp) => {
-      this.cities = resp.data;
+      this.cities = [
+        {DescriptionRu: 'Киев'},
+        {DescriptionRu: 'Днепр'},
+        {DescriptionRu: 'Запорожье'},
+        {DescriptionRu: 'Одесса'},
+        {DescriptionRu: 'Львов'}
+        ];
+      this.allCities = resp.data;
     },
        (error) => {
         console.log(error);
@@ -205,29 +279,30 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    let addr: any;
+    if (this.selectedCustomAddress) {
+      addr = `Курьер ул.${this.customAddress.street}, д.${this.customAddress.houseNumber}, кв.${this.customAddress.apartmentNumber}`;
+    }
+    else  {
+      addr = this.selectedOffice;
+    }
 
 
-
-    let cartToServ = this.cartToServ(this.cart);
+    let cartToServ = this.orderService.cartToServ(this.cart);
 
     this.order = {
       name : this.name,
+      famil : this.famil,
       phone : this.phone,
       email : this.email,
       selectedCity : this.selectedCity,
-      selectedOffice : this.selectedOffice,
+      selectedOffice : addr,
       address : '',
       cart : cartToServ,
       allSumInCart : this.allSumInCart
     };
 
-    // console.log(this.name);
-    // console.log(this.phone);
-    // console.log(this.email);
-    // console.log(this.selectedCity);
-    // console.log(this.selectedOffice);
-    // console.log(this.order);
-    // console.log('confirmOrder');
+
 
     this.orderService.addOrder(this.order).subscribe(
       (data: any) => {
@@ -239,10 +314,12 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.orderSuccess = true;
           this.cartService.clearCart();
           clearInterval(this.intervalId);
+          this.scrollToTop();
         }
         else {
-          this.orderError = true;
-          clearInterval(this.intervalId);
+          // this.orderError = true;
+          // clearInterval(this.intervalId);
+          alert('произошла ошибка добавления заказа, проверьте все поля или свяжитесь с менеджером');
           console.log('произошла ошибка добавления заказа');
         }
 
@@ -251,21 +328,6 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  cartToServ(cart: FullCartItem[]) {
-    let cartRes = [];
 
-    for (let item of cart) {
-      let newItem = {
-        product: {
-          product_id: item.product.product_id,
-          product_price: item.product.product_price
-        },
-        count: item.count
-      };
-      cartRes.push(newItem);
-    }
-
-    return cartRes;
-  }
 
 }

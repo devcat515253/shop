@@ -49,4 +49,15 @@ export class ShoppingCartComponent implements OnInit {
     new_count--;
     this.cartService.updateCount(prod_id, new_count);
   }
+
+
+  countChange(prod_id, new_count) {
+    if (new_count <= 0) {
+      this.cartService.deletItem(prod_id);
+      return;
+    }
+    this.cartService.updateCount(prod_id, +new_count);
+  }
+
+
 }

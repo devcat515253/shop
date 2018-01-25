@@ -46,9 +46,27 @@ export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
         });
   }
 
+  countChange() {
+    if (this.count <= 0) {
+      this.count = 1;
+    }
+  }
+
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      // this.initialSlider();
+      // let _this = this;
+      // $(document).ready(function() {
+      //
+      //     $('#quantity' ).change(function () {
+      //       if ($(this).val() <= 0) {
+      //         $(this).val(1);
+      //         _this.count = 1;
+      //       }
+      //       else {
+      //         _this.count = parseInt($(this).val(), 10) || 1;
+      //       }
+      //     });
+      // });
     }
   }
   colorChange(color) {

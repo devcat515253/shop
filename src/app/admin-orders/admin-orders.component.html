@@ -1,6 +1,7 @@
 <div class="title-wr">
   <h1  class="title">Список заказов</h1>
-  <input class="baseInp" type="text" placeholder="Search" [(ngModel)]="searchInput"  (ngModelChange)="searchChange($event)">
+  <input class="baseInp focus-green-border" type="text" placeholder="Search by id" [(ngModel)]="searchInput"  (ngModelChange)="searchChange($event)">
+  <input id="phone" class="baseInp focus-green-border" type="text" placeholder="Search by phone" [(ngModel)]="searchInputPhone"  (ngModelChange)="searchPhoneChange()">
   <div class="select-wrapper">
     <select  [(ngModel)]="selectedSort"  (ngModelChange)="sortChange($event)">
       <option  *ngFor="let item of sorting"   [ngValue]="item">{{ item }}</option>
@@ -23,6 +24,7 @@
         <th>Город</th>
         <th>Конечный адрес</th>
         <th>Имя</th>
+        <th>Фамилия</th>
         <th>Телефон</th>
         <th>К оплате</th>
         <th>Статус</th>
@@ -37,8 +39,9 @@
         <td data-label="Город">г. {{ order.order_city }}</td>
         <td data-label="конечный адрес">{{ order.order_office }}</td>
         <td>{{order.order_name_customer}}</td>
+        <td>{{order.order_famil_customer}}</td>
         <td>{{order.order_phone_customer}}</td>
-        <td data-label="к оплате">{{ order.order_sum }} <span class="rub">грн.</span></td>
+        <td data-label="к оплате">{{ order.order_sum }} <span class="rub">грн</span></td>
         <td data-label="статус">{{ order.order_status }}</td>
       </tr>
 

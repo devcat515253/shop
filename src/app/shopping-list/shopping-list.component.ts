@@ -54,10 +54,9 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       }
 
       if (isPlatformBrowser(this.platformId)) {
-        $(document).ready(function() {
+        $(document).ready(() => {
           $('html, body').animate({scrollTop: 0}, 500);
-          $('.container').css({'opacity' : '0'});
-          $('.container').animate({opacity: 1}, 800);
+         this.fadeIn();
         });
       }
 
@@ -66,10 +65,19 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   }
 
+  fadeIn() {
+    if (isPlatformBrowser(this.platformId)) {
+      $('.container').css({'opacity' : '0'});
+      $('.container').animate({opacity: 1}, 800);
+    }
+
+  }
+
   getProdFromCategory() {
     this.productService.getProdFromCategory(this.categoryUrl)
       .subscribe(
         (resp) => {
+          this.fadeIn();
           this.products = resp;
           setTimeout(() => {
             if (isPlatformBrowser(this.platformId)) {
@@ -88,6 +96,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     this.productService.getProdFromSubCategory(this.nameSubCategory)
       .subscribe(
         (resp) => {
+          this.fadeIn();
           this.products = resp;
 
           setTimeout(() => {
@@ -127,7 +136,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         mainClass: 'my-mfp-zoom-in',
         callbacks: {
           beforeOpen: () => { $('body').css({marginRight: this.scrollbarWidth() + 'px' });  $('body').addClass('blockScroll'); },
-          close: () => {  $('body').css({marginRight: this.scrollbarWidth() + 'px' }); $('body').removeClass('blockScroll'); }
+          // close: () => {  $('body').css({marginRight: this.scrollbarWidth() + 'px' }); $('body').removeClass('blockScroll'); }
+          close: () => {  $('body').removeAttr( 'style' ); $('body').removeClass('blockScroll'); }
         }
       });
       // $('body').on('click', '.mfp-close', function () {

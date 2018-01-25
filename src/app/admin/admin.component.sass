@@ -3,26 +3,44 @@
   display: flex
   &__content
     padding: 0 3rem
-    padding-bottom: 3rem
+    padding-bottom: 10rem
+    width: 100%
 
 
 
 
 nav
   height: 100%
-  ul
-    background-color: #1b1f23
+  .dropdown-data
+    li
+      a
+        font-size: 14px
+        color: white
+        display: block
+        padding: 1rem 3rem
+        &.active
+          background: darken(#1b1f23, 1%)
+      &:hover
+        a
+          background: darken(#1b1f23, 1%)
+  >ul
+    //background-color: #1b1f23
+    background-color: #242627
+    //background-color: lighten(#1b1f23,5%)
     padding: 3rem 0
     min-width: 250px
     height: 100%
     min-height: 50vh
-    li
-      a
+    >li
+      >a
         font-size: 16px
         color: white
         display: block
         padding: 1rem 2rem
-
-      &:hover
-        a
+        &.active
           background: darken(#1b1f23, 3%)
+      &:hover
+        >a
+          background: darken(#1b1f23, 3%)
+
+

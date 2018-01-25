@@ -70,6 +70,10 @@ export class CartService {
   getAllSum() {
     this.allSum = 0;
     for (let item of this.fullCart) {
+      if ( item.product.product_promo_price) {
+        this.allSum += item.product.product_promo_price * item.count;
+        continue;
+      }
       this.allSum += item.product.product_price * item.count;
     }
   }

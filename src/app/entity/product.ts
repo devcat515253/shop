@@ -9,7 +9,7 @@ export class Product {
   product_keywords_seo: string;
   product_description_seo: string;
   product_manufacturer: string;
-  product_type: string;
+  product_type: number;
   category_name: string;
   category_url: string;
   subcategory_id:  number;

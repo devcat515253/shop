@@ -17,6 +17,10 @@
                   </label>
 
                   <label>
+                    <input id="famil" type="text" class="base-input" placeholder="Фамилия" [(ngModel)]="famil">
+                  </label>
+
+                  <label>
                     <input  id="phone" type="tel" class="base-input" placeholder="Телефон" [(ngModel)]="phone">
                   </label>
 
@@ -28,8 +32,13 @@
                   </label>
 
                     <div class="city">
-                        <mat-form-field>
-                        <mat-select placeholder="Город" [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)">
+                        <mat-form-field  >
+
+                        <mat-select placeholder="Город" [(ngModel)]="selectedCity" (ngModelChange)="cityChange($event)"  (opened)="openCities()" (closed)="clearSelectCities()" >
+                          <label>
+                             <input id="city"  type="text"  class="base-input input-s" placeholder="Поиск города"  [(ngModel)]="citySearch" (ngModelChange)="searchCity()" autofocus>
+                          </label>
+
                             <mat-option *ngFor="let city of cities" [value]="city.DescriptionRu">
                             {{ city.DescriptionRu }}
                              </mat-option>
@@ -45,6 +54,30 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                  </div>
+
+
+                  <div class="custom-address">
+                    <label>
+                      <input [(ngModel)]="selectedCustomAddress" (ngModelChange)="customAddrChange()" type="checkbox"/>
+                      <span class="checkbox__text">Доставка курьером</span>
+                    </label>
+
+                    <div  class="fields" >
+
+
+                        <label>
+                          <input  type="text" class="base-input" placeholder="Улица" [(ngModel)]="customAddress.street">
+                        </label>
+
+                        <label>
+                          <input  type="text" class="base-input" placeholder="Дом" [(ngModel)]="customAddress.houseNumber">
+                        </label>
+
+                        <label>
+                          <input  type="text" class="base-input" placeholder="Квартира" [(ngModel)]="customAddress.apartmentNumber">
+                        </label>
+                        </div>
                   </div>
 
                   <div class="order_confirm">
@@ -70,7 +103,29 @@
                           <div *ngIf="item.product.product_color" class="color">{{item.product.product_color}}</div>
                         </div>
                       </div>
-                      <div class="item__price">£{{item.product.product_price * item.count}}</div>
+                      <!--<div class="item__price">£{{item.product.product_price * item.count}}</div>-->
+
+
+
+
+                      <div *ngIf="!item.product.product_promo_price; else promoPrice" class="item__price">
+                        <!--<span class="price">£39.99</span>-->
+                        <span class="price">{{item.product.product_price * item.count}} грн</span>
+                      </div>
+
+
+                      <ng-template #promoPrice>
+                        <div class="item__price promo">
+                          <span class="price promo-price">{{item.product.product_promo_price * item.count}} грн</span>
+                          <span class="price was-price">{{item.product.product_price * item.count}} грн</span>
+                        </div>
+                      </ng-template>
+
+
+
+
+
+
                     </div>
 
 
@@ -80,7 +135,7 @@
                     <hr>
                     <div class="cart-widget__sum">
                       <span>К оплате</span>
-                      <span><strong>£{{allSumInCart}}</strong></span>
+                      <span><strong>{{allSumInCart}} грн</strong></span>
                     </div>
                   </div>
 

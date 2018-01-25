@@ -26,6 +26,10 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminProdsComponent } from './admin-prods/admin-prods.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import {CommonModule} from '@angular/common';
+import { AdminOrderDelailComponent } from './admin-order-delail/admin-order-delail.component';
+import { AdminProdAddComponent } from './admin-prod-add/admin-prod-add.component';
+import {CategoryService} from './services/category.service';
+import { AdminProdUpdateComponent } from './admin-prod-update/admin-prod-update.component';
 
 
 @NgModule({
@@ -44,7 +48,10 @@ import {CommonModule} from '@angular/common';
     OrderingComponent,
     AdminComponent,
     AdminProdsComponent,
-    AdminOrdersComponent
+    AdminOrdersComponent,
+    AdminOrderDelailComponent,
+    AdminProdAddComponent,
+    AdminProdUpdateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),
@@ -60,7 +67,8 @@ import {CommonModule} from '@angular/common';
     ProductService,
     CartService,
     NovaPoshtaService,
-    OrderService
+    OrderService,
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })

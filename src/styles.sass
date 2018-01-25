@@ -61,7 +61,9 @@ body
   height: auto
 
 
-
+input[type=checkbox]
+  height: 20px
+  width: 20px
 
 ul
   margin: 0
@@ -118,7 +120,7 @@ a
   font-size: 14px
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
   &:focus
-    // box-shadow: 0 0 0 2px #03a196
+     box-shadow: 0 0 0 2px #03a196
 
 label
   margin-bottom: 1.5rem
@@ -222,8 +224,11 @@ label
     outline: 0
     background: transparent
     z-index: 1000
-
-
+    transition: all 0.25s linear
+    &:hover
+      color: black
+    &:focus
+      color: #333333
     &:before
       font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important
       font-size: 20px
@@ -235,6 +240,16 @@ label
       width: 35px
       content: "\00d7"
       text-align: center
+      transition: all 0.25s ease-out
+
+.btn-center
+  top: 50%
+  left: 50%
+  right: inherit
+  transform: translate(-50%,-50%)
+  &:hover
+    &:before
+      font-size: 30px
 
 
 .animated
@@ -365,6 +380,27 @@ input[type=number]::-webkit-outer-spin-button
   position: relative
 
 
+#confirm
+  background: white
+  padding: 20px 30px
+  text-align: center
+  max-width: 500px
+  margin: 40px auto
+  position: relative
+  a
+    padding: 1.3rem 4rem
+    background: #73af1b
+    color: #ffffff
+    transition: all 0.2s linear
+    text-transform: uppercase
+    &:hover
+      background: #04736b
+  .btns
+    display: flex
+    justify-content: space-around
+
+
+
 .my-mfp-zoom-in
   .zoom-anim-dialog
     opacity: 0
@@ -480,6 +516,297 @@ input[type=number]::-webkit-outer-spin-button
 
 
 .error-input
-  box-shadow: 0 0 0 2px #d8512d
+  box-shadow: 0 0 0 2px #d8512d!important
 .success-input
-  box-shadow: 0 0 0 2px #03a196
+  box-shadow: 0 0 0 2px #03a196!important
+
+
+table
+  border-spacing: 0
+
+
+.table-base
+  table
+    border-collapse: separate
+    width: 100%
+    border-spacing: 0
+    tr:hover
+      td
+        background: darken(#f9f9f9, 5%)
+    td
+      vertical-align: middle
+      padding: 17px 12px
+      font-size: 14px
+
+    tr
+      &:nth-of-type(even)
+        background-color: #f9f9f9
+      td,th
+        border-bottom: 1px solid #cdcdcd
+        border-collapse: separate
+        text-align: center
+        position: relative
+        &:last-child
+          &:after
+            display: none
+        &:after
+          position: absolute
+          z-index: 1
+          content: ''
+          height: 80%
+          width: 1px
+          background-color: #cdcdcd
+          top: 50%
+          left: 100%
+          transform: translate(0,-50%)
+    tr:last-child
+      td
+        border-bottom: 1px solid transparent
+    tr
+      cursor: pointer
+      td
+        &:first-child
+          border-left: 1px solid #cdcdcd
+        &:last-child
+          border-right: 1px solid #cdcdcd
+      &:last-child
+        td
+          border-bottom: 1px solid #cdcdcd
+          &:first-child
+            border-radius: 0 0 0 5px
+
+          &:last-child
+            border-radius: 0 0 5px
+
+    thead
+      th
+        white-space: nowrap
+        color: white
+        font-size: 12px
+        font-weight: 700
+        line-height: 21px
+        text-transform: uppercase
+        padding: 15px 20px
+        background: #629a3f
+        &:after
+          background-color: white
+          z-index: 1
+        &:first-child
+          border-radius: 5px  0 0 0
+        &:last-child
+          border-radius:  0   5px 0 0
+
+
+
+
+.table-product
+
+    td
+      padding: 17px 30px
+      &:not(:nth-of-type(2))
+        white-space: nowrap
+      &:nth-of-type(2)
+        width: 100%
+      &:nth-of-type(1)
+        display: flex
+        align-items: center
+        justify-content: center
+        min-width: 135px
+        a
+          display: flex
+          align-items: center
+          justify-content: center
+        //width: 60px
+        //height: 85px
+        img
+          max-height: 85px
+
+.table-not-hover
+  table
+    tr
+      cursor: default
+      &:hover
+        td
+          background: inherit
+
+.focus-green-border
+  transition: all 0.2s linear
+  &:focus
+    // box-shadow: 0 0 0 2px #03a196
+    border: 1px solid #03a196 !important
+
+
+.close-wr
+  position: relative
+  width: 35px
+  height: 35px
+  margin-left: 10px
+.edit-pencil
+  display: flex !important
+  align-items: center
+  justify-content: center
+  color: #333
+  width: 35px
+  height: 35px
+  transition: all 0.25s ease-out
+  &:before
+    margin-bottom: 3px
+  &:hover
+    color: black
+    font-size: 22px!important
+
+
+.options
+  display: flex
+  align-items: center
+  justify-content: center
+
+
+.table-info
+  border-collapse: separate
+  //border: 1px solid #cdcdcd
+  border-radius: 5px
+  width: 100%
+  tr:last-child
+    td
+      border-bottom: 1px solid transparent
+
+  tr
+
+    &:nth-of-type(odd)
+      td
+        background-color: #f9f9f9
+  td
+    position: relative
+    padding: 17px 20px
+    border-bottom: 1px solid #cdcdcd
+    &:nth-of-type(1)
+      text-align: center
+      padding: 17px 40px
+      white-space: nowrap
+      color: #1d2f29
+      font-size: 12px
+      font-weight: 700
+      line-height: 21px
+      text-transform: uppercase
+    &:nth-of-type(2)
+      width: 100%
+      color: #1d2f29
+      font-size: 14px
+      font-weight: 400
+      line-height: 20px
+      &:after
+        display: none
+    &:after
+      position: absolute
+      content: ''
+      height: 80%
+      width: 1px
+      background-color: #cdcdcd
+      top: 50%
+      left: 100%
+      transform: translate(0,-50%)
+      z-index: 1
+  tr
+    &:first-child
+      td
+        border-top: 1px solid #cdcdcd
+        &:first-child
+          border-radius: 5px 0 0 0
+
+        &:last-child
+          border-radius: 0  5px 0 0
+    td
+      &:first-child
+        border-left: 1px solid #cdcdcd
+      &:last-child
+        border-right: 1px solid #cdcdcd
+    &:last-child
+      td
+        border-bottom: 1px solid #cdcdcd
+        &:first-child
+          border-radius: 0 0 0 5px
+
+        &:last-child
+          border-radius: 0 0 5px
+
+
+textarea
+  resize: vertical
+
+.mb0
+  margin-bottom: 0 !important
+.select-wrapper-inline
+  display: inline-block
+  min-width: 300px
+
+.thumb
+  max-width: 200px
+
+.aic
+  display: flex
+  align-items: center
+
+.white-space
+  white-space: pre-wrap
+
+.disabled
+  pointer-events: none
+  opacity: 0.4
+  cursor: not-allowed
+
+label
+  input[type='checkbox']
+    position: absolute
+    z-index: -1
+    opacity: 0
+    margin: 10px 0 0 20px
+  .checkbox__text
+    position: relative
+    padding: 0 0 0 60px
+    cursor: pointer
+
+    &:before
+      content: ''
+      position: absolute
+      top: -4px
+      left: 0
+      width: 50px
+      height: 26px
+      border-radius: 13px
+      background: #CDD1DA
+      box-shadow: inset 0 2px 3px rgba(0,0,0,.2)
+      transition: .2s
+
+    &:after
+      content: ''
+      position: absolute
+      top: -2px
+      left: 2px
+      width: 22px
+      height: 22px
+      border-radius: 10px
+      background: #FFF
+      box-shadow: 0 2px 5px rgba(0,0,0,.3)
+      transition: .2s
+
+  input:checked + .checkbox__text:before
+    background: #9FD468
+
+  input:checked + .checkbox__text:after
+    left: 26px
+
+  input:focus + .checkbox__text:before
+    box-shadow: inset 0 2px 3px rgba(0,0,0,.2), 0 0 0 3px rgba(255,255,0,.7)
+
+
+
+
+.input-s
+  box-shadow: inherit
+  border-radius: 0
+  border: 1px solid rgba(255,255,0,.7)
+  transition: .2s
+  &:focus
+    box-shadow: inherit
+    border: 1px solid #9FD468

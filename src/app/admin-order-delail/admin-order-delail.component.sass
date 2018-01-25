@@ -1,0 +1,240 @@
+.title
+  font-family: 'Oswald', sans-serif
+  font-weight: normal
+
+  text-transform: uppercase
+  color: #333333
+  display: block
+  letter-spacing: 3px
+  font-size: 2.2rem
+  line-height: 2.5rem
+
+
+
+.table-info
+  border-collapse: separate
+  //border: 1px solid #cdcdcd
+  border-radius: 5px
+  width: 100%
+  tr:last-child
+    td
+      border-bottom: 1px solid transparent
+
+  tr
+
+    &:nth-of-type(odd)
+      td
+        background-color: #f9f9f9
+  td
+    position: relative
+    padding: 17px 20px
+    border-bottom: 1px solid #cdcdcd
+    &:nth-of-type(1)
+      text-align: center
+      padding: 17px 40px
+      white-space: nowrap
+      color: #1d2f29
+      font-size: 12px
+      font-weight: 700
+      line-height: 21px
+      text-transform: uppercase
+    &:nth-of-type(2)
+      width: 100%
+      color: #1d2f29
+      font-size: 14px
+      font-weight: 400
+      line-height: 20px
+      &:after
+        display: none
+    &:after
+      position: absolute
+      content: ''
+      height: 80%
+      width: 1px
+      background-color: #cdcdcd
+      top: 50%
+      left: 100%
+      transform: translate(0,-50%)
+      z-index: 1
+  tr
+    &:first-child
+      td
+        border-top: 1px solid #cdcdcd
+        &:first-child
+          border-radius: 5px 0 0 0
+
+        &:last-child
+          border-radius: 0  5px 0 0
+    td
+      &:first-child
+        border-left: 1px solid #cdcdcd
+      &:last-child
+        border-right: 1px solid #cdcdcd
+    &:last-child
+      td
+        border-bottom: 1px solid #cdcdcd
+        &:first-child
+          border-radius: 0 0 0 5px
+
+        &:last-child
+          border-radius: 0 0 5px
+
+
+.total
+  display: flex
+  justify-content: flex-end
+  align-items: flex-end
+  margin: 5rem 0
+  span
+    &:nth-of-type(1)
+      color: #1d2f29
+      font-size: 16px
+      font-weight: 700
+      line-height: 21px
+      text-transform: uppercase
+      margin-right: 40px
+      &.rub
+        text-transform: none
+        margin-right: 0
+        color: #ff7422
+        font-size: 26px
+        font-weight: 700
+        line-height: 31px
+    &:nth-of-type(2)
+      color: #ff7422
+      font-size: 36px
+      font-weight: 700
+      line-height: 31px
+      text-transform: uppercase
+.info
+  margin-bottom: 5rem
+
+.select-wrapper
+  //display: none
+  position: relative
+  // margin-bottom: .5rem
+  &:before
+    content: ""
+    position: absolute
+    top: 50%
+    right: 1.3rem
+    width: 10px
+    height: 10px
+    border-right: 1px solid gray
+    border-bottom: 1px solid gray
+    transform: rotate(45deg) translate(-50%, -50%)
+
+
+
+select
+  padding: .8rem 1.4rem .8rem
+  padding-right: 3.5rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  -webkit-appearance: none
+  width: 100%
+  min-height: 42px
+  min-width: 200px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+
+label
+  margin-bottom: 0
+
+.table-info
+  td
+    padding: 12px 20px
+
+.order_confirm
+  display: flex
+  justify-content: flex-end
+
+
+.quantity
+  margin: 10px 0
+  top: 100%
+  left: 0
+  label
+    display: flex
+    align-items: center
+    .minus,.plus
+      display: flex
+      position: relative
+      padding: 2px
+      background: #f2f2f2
+      cursor: pointer
+      height: 42px
+      width: 42.5px
+      align-items: center
+      justify-content: center
+      border: #e2e2e2 1px solid
+      color: #000
+      transition: all 0.3s linear
+      &:hover
+        background: #d9d9d9
+    .minus
+      border-right: 0px
+      &:before
+        content: ''
+        position: relative
+        width: 16px
+        height: 1px
+        background: #000
+    .plus
+      border-left: 0px
+      span
+        width: 16px
+        height: 16px
+        position: relative
+        display: flex
+        &:after
+          /* horizontal line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+        &:before
+          /* Vertical line */
+          content: ''
+          position: absolute
+          top: 50%
+          left: 0
+          width: 16px
+          height: 1px
+          margin-top: - .5px
+          background: #000
+          transform: rotate(90deg)
+
+    input
+      padding: 0 5px
+      width: 50px
+      min-height: 42px
+      height: 42px
+      background: #fff
+      border: #e2e2e2 1px solid
+      font-size: 13px
+      letter-spacing: 1px
+      color: #000
+      line-height: 22px
+      touch-action: manipulation
+      -webkit-appearance: none
+      user-select: text
+      text-align: center
+      font-weight: 400
+      font-family: HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+
+
+.baseInp
+  padding: .8rem 1.4rem .8rem
+  padding-right: 1.4rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  min-width: 250px
+  min-height: 42px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  margin-bottom: .5rem

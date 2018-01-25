@@ -1,0 +1,71 @@
+.title
+  font-family: 'Oswald', sans-serif
+  font-weight: normal
+
+  text-transform: uppercase
+  color: #333333
+  display: block
+  letter-spacing: 3px
+  font-size: 2.2rem
+  line-height: 2.5rem
+  span
+    color: #03a196
+
+.title-wr
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+
+.select-wrapper
+  //display: none
+  position: relative
+  margin-bottom: .5rem
+  &:before
+    content: ""
+    position: absolute
+    top: 50%
+    right: 1.3rem
+    width: 10px
+    height: 10px
+    border-right: 1px solid gray
+    border-bottom: 1px solid gray
+    transform: rotate(45deg) translate(-50%, -50%)
+
+
+
+select
+  padding: .8rem 1.4rem .8rem
+  padding-right: 3.5rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  -webkit-appearance: none
+  width: 100%
+  min-height: 42px
+  min-width: 200px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+
+.baseInp
+  padding: .8rem 1.4rem .8rem
+  padding-right: 1.4rem
+  border-radius: 3px
+  border: 1px solid #d9dbdc
+  min-width: 250px
+  min-height: 42px
+  font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif
+  margin-bottom: .5rem
+
+label
+  margin-bottom: 0
+
+.order_confirm
+  display: flex
+  justify-content: flex-end
+
+
+.content
+  &__btn
+    margin-top: 5rem
+
+.success-add
+  color: #03a196

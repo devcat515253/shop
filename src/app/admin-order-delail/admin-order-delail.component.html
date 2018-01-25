@@ -1,0 +1,146 @@
+<div class="title-wr">
+  <h1  class="title">Заказ номер #{{ order?.order_id }}</h1>
+
+</div>
+
+<div class="under-line"></div>
+
+<div class="info">
+<table class="table-info">
+  <tbody>
+  <tr>
+    <td  >Дата заказа</td>
+    <td >{{ order?.order_date }}</td>
+  </tr>
+  <tr>
+    <td >Город</td>
+    <td >
+      <label *ngIf="order">
+        <input type="text" class="base-input" placeholder="Город" [(ngModel)]="order.order_city">
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td >Адрес</td>
+    <td  >
+      <label *ngIf="order">
+        <input type="text" class="base-input" placeholder="Адрес" [(ngModel)]="order.order_office">
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td >Имя</td>
+    <td >
+      <label *ngIf="order">
+        <input type="text" class="base-input" placeholder="Имя" [(ngModel)]="order.order_name_customer">
+      </label>
+    </td>
+  </tr>
+
+  <tr>
+    <td >Фамилия</td>
+    <td >
+      <label *ngIf="order">
+        <input type="text" class="base-input" placeholder="Фамилия" [(ngModel)]="order.order_famil_customer">
+      </label>
+    </td>
+  </tr>
+
+  <tr>
+    <td >Телефон</td>
+    <td >
+      <label *ngIf="order">
+        <input id="phone" type="text" class="base-input" placeholder="Телефон" [(ngModel)]="order.order_phone_customer">
+      </label>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td >Email</td>
+    <td >
+      <label *ngIf="order">
+        <input type="text" class="base-input" placeholder="email" [(ngModel)]="order.order_email_customer">
+      </label>
+    </td>
+  </tr>
+
+  <tr>
+    <td >Статус</td>
+    <td >
+      <div *ngIf="order" class="select-wrapper">
+        <!--<select  [(ngModel)]="order.order_status"  (ngModelChange)="statusChange($event)">-->
+        <select  [(ngModel)]="order.order_status">
+          <option  *ngFor="let status of statuses"   [ngValue]="status">{{ status }}</option>
+
+        </select>
+      </div>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+</div>
+
+
+<div class="add-new-prod">
+  <p>Добавить новый продукт в заказ по ID</p>
+  <input #newProdId class="baseInp" placeholder="Search prod" type="text" (keydown.enter)="addNewProdInOrd(newProdId.value)">
+  <span *ngIf="addNewProdError">Произошла ошибка или продукт не найден</span>
+</div>
+
+<div class="table-base table-not-hover">
+<table class="table-product ">
+  <thead>
+  <tr>
+    <th>Фото</th>
+    <th>название</th>
+    <th>ID</th>
+    <th>Цвет</th>
+    <th>цена</th>
+    <th>promo цена</th>
+    <th>количество</th>
+    <th>сумма</th>
+    <th>опции</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let prod of order_prods; let i = index">
+    <td data-label="Фото"><img class="img-responsive" [src]="prod.images_middle" alt=""></td>
+    <td data-label="название">{{prod.product_name}}</td>
+    <td data-label="product_id">{{prod.product_id}}</td>
+    <td data-label="Цвет">{{prod.product_color}}</td>
+    <td data-label="цена">{{prod.order_prod_price}} <span class="rub">грн</span></td>
+    <td data-label="цена">{{prod.order_prod_promo_price}} <span class="rub">грн</span></td>
+    <td data-label="количество">
+      <div class="quantity">
+        <label>
+          <span class="minus" (click)="decCount(i)"></span>
+          <input id="quantity" type="number" min="1" [(ngModel)]="prod.order_prod_count"  (change)="countChange(i)">
+          <span class="plus" (click)="incCount(i)"><span></span></span>
+        </label>
+      </div>
+    </td>
+    <td data-label="сумма" *ngIf="!prod.order_prod_promo_price">{{prod.order_prod_price * prod.order_prod_count}} <span class="rub">грн</span></td>
+    <td data-label="сумма" *ngIf="prod.order_prod_promo_price">{{prod.order_prod_promo_price * prod.order_prod_count}} <span class="rub">грн</span></td>
+    <td data-label="опции"> <div class="btn btn-close btn-center" (click)="deleteItem(prod)"></div> </td>
+  </tr>
+
+
+
+  </tbody>
+</table>
+
+</div>
+
+<div class="total">
+  <span>Всего к оплате:</span>
+  <span>{{order?.order_sum}} <span class="rub">грн</span></span>
+
+</div>
+
+
+<div class="order_confirm">
+  <a (click)="saveOrder()" class=" btn btn-confirm">Сохранить заказ</a>
+
+</div>

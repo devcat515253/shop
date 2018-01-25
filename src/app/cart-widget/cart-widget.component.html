@@ -12,12 +12,22 @@
             <a class="sb" [routerLink]="['/products', item.product.product_name]">
               <!--<span class="title">Starbuzz Lightning Washable Hose - Dark Blue</span>-->
               <span class="title">{{item.product.product_name}} <span *ngIf="item.product.product_color"> - {{item.product.product_color}}</span></span>
-              <div class="item__price"><strong>£{{item.product.product_price}}</strong></div>
+              <!--<div class="item__price"><strong>£{{item.product.product_price}}</strong></div>-->
+              <div *ngIf="!item.product.product_promo_price; else promoPrice" class="item__price">
+                <!--<span class="price">£39.99</span>-->
+                <span class="price">{{item.product.product_price}} грн</span>
+              </div>
+              <ng-template #promoPrice>
+                <div class="item__price promo">
+                  <span class="price promo-price">{{item.product.product_promo_price}} грн</span>
+                  <span class="price was-price">{{item.product.product_price}} грн</span>
+                </div>
+              </ng-template>
             </a>
             <div class="item__quantity">
               <label>
                 <span class="minus" (click)="decCount(item.product.product_id, number.value)"></span>
-                <input #number type="number" min="0" [value]="item.count">
+                <input #number type="number" min="0" [value]="item.count" [(ngModel)]="item.count" (change)="countChange(item.product.product_id,number.value)">
                 <span class="plus" (click)="incCount(item.product.product_id, number.value)"><span></span></span>
               </label>
             </div>
@@ -52,8 +62,8 @@
   </div>
   <hr>
   <div class="cart-widget__sum">
-    <span>Subtotal</span>
-    <span><strong>£{{allSumInCart}}</strong></span>
+    <span>Всего на сумму</span>
+    <span><strong>{{allSumInCart}} грн</strong></span>
   </div>
   <div class="cart-widget__btn">
     <a [routerLink]="['/ordering']" class="btn btn-green">Оформить заказ</a>

@@ -41,6 +41,8 @@ hr
 .order_confirm
   display: flex
   justify-content: flex-end
+  margin-top: 6rem
+  margin-bottom: 3rem
 
 .cart-widget__sum
   display: flex
@@ -75,6 +77,9 @@ hr
       padding-left: .5rem
       color: #4b4b4b
       font-weight: 500
+      span
+        white-space: nowrap
+        display: block
     &__name
       margin-left: 1.4rem
     &__img
@@ -112,3 +117,23 @@ hr
   h2
     letter-spacing: 3px
     font-weight: 400
+
+
+.custom-address
+  margin-top: 1rem
+  .fields
+    display: flex
+    label
+      width: 200px
+      margin-right: 1rem
+      &:nth-child(2),&:nth-child(3)
+        width: 110px
+
+
+.promo-price
+  color: #d54d4d
+.was-price
+  text-decoration: line-through
+  color: #8c8b8b
+  //text-shadow: none
+  //font-weight: normal

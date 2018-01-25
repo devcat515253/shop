@@ -1,0 +1,209 @@
+<div class="title-wr">
+  <h1  class="title">Редактировать продукт с ID <span>#{{product.product_id}}</span></h1>
+
+
+  <!--<input class="baseInp focus-green-border" type="text" placeholder="Search by id" [(ngModel)]="searchInput"  (ngModelChange)="searchChange($event)">-->
+
+  <!--<div class="select-wrapper">-->
+    <!--<select  [(ngModel)]="selectedTypeProd"  (ngModelChange)="typeProdChange($event)">-->
+      <!--<option  *ngFor="let item of prodTypes"   [ngValue]="item">{{ item.product_types_name }}</option>-->
+
+    <!--</select>-->
+  <!--</div>-->
+</div>
+
+<div class="under-line"></div>
+
+
+<div class="content">
+  <div class="content__generally">
+    <h3>Основные характеристики</h3>
+    <table class="table-info">
+      <tbody>
+
+      <tr>
+        <td >Картинка</td>
+        <td >
+          <label class="aic">
+            <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".png,.jpg,.jpeg">
+            <img *ngIf="selectImg" class="thumb" [src]="selectImg" alt="">
+            <!--<input type="file" multiple (change)="fileChange($event)" placeholder="Upload file" accept=".png,.jpg,.jpeg">-->
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Категория и подкатегория</td>
+        <td >
+          <div class="select-wrapper mb0 select-wrapper-inline">
+            <select  [(ngModel)]="selectedCategory"  (ngModelChange)="categoryChange($event)">
+              <option  *ngFor="let category of categories"   [ngValue]="category">{{ category.category_name }}</option>
+
+            </select>
+          </div>
+
+          <div class="select-wrapper mb0 select-wrapper-inline">
+            <select  [(ngModel)]="selectedSubCategory"  >
+              <option  *ngFor="let subCategory of subCategories"   [ngValue]="subCategory">{{ subCategory.subcategory_name }}</option>
+
+            </select>
+          </div>
+
+        </td>
+      </tr>
+
+
+      <tr>
+        <td >Имя продукта</td>
+        <td >
+          <label >
+            <input type="text" class="base-input" placeholder="Имя продукта" [(ngModel)]="product.product_name">
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td >Производитель</td>
+        <td  >
+          <label >
+            <input type="text" class="base-input" placeholder="Производитель" [(ngModel)]="product.product_manufacturer">
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td >Цвет</td>
+        <td >
+          <label >
+            <input type="text" class="base-input" placeholder="Цвет" [(ngModel)]="product.product_color">
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Количество</td>
+        <td >
+          <label >
+            <input type="number" min="0" class="base-input" placeholder="Количество" [(ngModel)]="product.product_count">
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Цена</td>
+        <td >
+          <label >
+            <input type="number" min="0" class="base-input" placeholder="Цена" [(ngModel)]="product.product_price">
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Акционная цена</td>
+        <td >
+          <label >
+            <input type="number" min="0" class="base-input" placeholder="Акционная цена" [(ngModel)]="product.product_promo_price">
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Короткое описание</td>
+        <td >
+          <label >
+            <textarea class="base-input" placeholder="Короткое описание" [(ngModel)]="product.product_short_description" maxlength="255" rows="5"> </textarea>
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Длинное описание</td>
+        <td >
+          <label >
+            <textarea class="base-input" placeholder="Длинное описание"  [(ngModel)]="product.product_description"  rows="7"> </textarea>
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Keywords seo</td>
+        <td >
+          <label >
+            <textarea class="base-input" placeholder="Keywords seo"  [(ngModel)]="product.product_keywords_seo" maxlength="255" rows="5"> </textarea>
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >Description seo</td>
+        <td >
+          <label >
+            <textarea class="base-input" placeholder="Description seo"  [(ngModel)]="product.product_description_seo" maxlength="255" rows="5"> </textarea>
+          </label>
+        </td>
+      </tr>
+
+      <tr>
+        <td >В наличии?</td>
+        <td >
+          <label >
+            <input [(ngModel)]="product.product_available" type="checkbox"/>
+            <span class="checkbox__text"></span>
+          </label>
+        </td>
+      </tr>
+
+      <tr *ngIf="product.product_available">
+        <td >Акционный?</td>
+        <td >
+          <label >
+            <input [(ngModel)]="product.product_ispromo" type="checkbox"/>
+            <span class="checkbox__text"></span>
+          </label>
+        </td>
+      </tr>
+
+
+
+
+      <tr>
+        <td >Статус</td>
+        <td >
+          <div class="select-wrapper">
+            <select  [(ngModel)]="product.product_status" >
+              <option value="Опубликован">Опубликован</option>
+              <option value="Скрыт">Скрыт</option>
+
+            </select>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="content__additional">
+    <h3>Дополнительные характеристики</h3>
+    <table class="table-info">
+      <tbody>
+
+      <tr *ngFor="let option of product_options">
+        <td >{{option.option_name}}</td>
+        <td >
+          <label >
+            <input type="text" class="base-input" [placeholder]="option.option_name" [(ngModel)]="option.value">
+          </label>
+        </td>
+      </tr>
+
+
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="content__btn">
+    <div class="order_confirm">
+      <a (click)="updateProduct()" class=" btn btn-confirm">Изменить продукт</a>
+
+    </div>
+  </div>
+</div>
