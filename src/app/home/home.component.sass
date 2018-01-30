@@ -1,2 +1,118 @@
-p
-  color: red
+@import '../shared/mixin'
+
+
+.header
+  font-family: "Open Sans", sans-serif
+  position: relative
+  &__info
+    position: absolute
+    top: 55%
+    left: 50%
+    +center()
+
+
+
+.info
+  color: #ffffff
+  font-weight: normal
+  text-transform: uppercase
+  font-style: normal
+  text-align: center
+  font-family: 'Oswald' , sans-serif
+
+  .sub-title
+    display: block
+    font-size: 3rem
+    letter-spacing: 5px
+    margin-bottom: 1rem
+    line-height: 5.2rem
+  .title
+    display: block
+    text-shadow: 0px 0px 5rem #000
+    letter-spacing: 3px
+    font-size: 5rem
+    line-height: 7.2rem
+    margin-bottom: 1rem
+
+
+.description
+  padding-top: 6rem
+  padding-bottom: 7rem
+  .container
+    padding: 0 1rem
+  p
+    font-family: 'Roboto', sans-serif
+    line-height: 3rem
+  &__title
+    font-family: 'Oswald', sans-serif
+    text-transform: uppercase
+    color: #333333
+    display: block
+    letter-spacing: 3px
+    font-size: 2.2rem
+    line-height: 2.5rem
+    margin: 0 auto 1.5rem
+    padding-top: 4px
+
+
+
+
+.image-menu
+  .items
+    display: flex
+  .item
+    width: 25%
+    margin: 0
+    position: relative
+    .item__details
+      display: none
+    .details
+      opacity: 0
+      // transition: all 11.3s linear
+      text-align: center
+      font-family: 'Roboto', sans-serif
+      &__description
+        font-size: 1.8rem
+        line-height: 2.2rem
+    a
+      position: absolute
+      top: 0
+      left: 0
+      height: 100%
+      width: 100%
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      transition: background-color 0.25s linear
+    &:hover
+      a
+        background-color: rgba(0,0,0,0.5)
+      .title
+        transition: all 0.3s linear
+        &:after
+          width: 50%
+          background: #FFF
+
+    .title
+      transition: all 0.3s linear
+      font-family: 'Oswald', sans-serif
+      font-weight: normal
+      font-style: normal
+      text-transform: uppercase
+      text-align: center
+      display: block
+      letter-spacing: 3px
+      color: #ffffff
+      font-size: 2.2rem
+      line-height: 2.5rem
+      margin-bottom: 1.5rem
+      &:after
+        content: ''
+        display: block
+        height: 1px
+        width: 0
+        background: transparent
+        transition: width .5s ease, background-color .5s ease
+        margin: 1.5rem auto auto auto
+

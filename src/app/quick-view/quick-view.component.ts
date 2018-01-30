@@ -36,6 +36,10 @@ export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
       .subscribe(
         (resp) => {
           this.products = resp;
+
+          if (this.products.length == 0)
+            return;
+
           this.selectedProduct = this.products[0];
           // console.log(this.nameProduct);
           // console.log(this.products);
@@ -74,7 +78,7 @@ export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
     // console.log(color);
     this.products.forEach( (prod, index) => {
       if (prod.product_color === this.selectedProduct.product_color) {
-        $('.carousel').flickity( 'select', index);
+        $('.carousel-container.quick-view .carousel').flickity( 'select', index);
       }
     });
   }

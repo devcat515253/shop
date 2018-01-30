@@ -180,6 +180,30 @@ label
     &:hover
       color: #000
       background-color: #FFF
+  &-white-base
+    font-weight: normal
+    font-size: 15px
+    text-transform: uppercase
+    letter-spacing: 1px
+    cursor: pointer
+    position: relative
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    padding: 1rem 2.5rem
+    transition: all 0.3s linear
+    min-height: 42px
+    font-family: "Open Sans", sans-serif
+    background-color: rgba(255,255,255,0)
+    color: #ffffff
+    border: 1px solid #ffffff
+    border-radius: 3px
+    min-width: 205px
+    &:hover
+      background-color: #ffffff
+      border-color: #ffffff
+      color: #333
+
   &-green
     background: #73af1b
     color: #ffffff
@@ -206,6 +230,22 @@ label
       border: 1px solid #04736b
     &:active
       transform: translate(0,3px)
+    &-base
+      background: #73af1b
+      color: #ffffff
+      border: 1px solid #73af1b
+      padding: .5rem 2rem
+      text-align: center
+      cursor: pointer
+      min-height: 42px
+      line-height: 2.2rem
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      border-radius: 3px
+      text-transform: uppercase
+      margin-top: 1.5rem
+      font-family: "Open Sans", sans-serif
 
   &-close
     position: absolute
@@ -223,7 +263,7 @@ label
     border: 0
     outline: 0
     background: transparent
-    z-index: 1000
+    z-index: 22
     transition: all 0.25s linear
     &:hover
       color: black
@@ -251,6 +291,8 @@ label
     &:before
       font-size: 30px
 
+.m10
+  margin: 10px
 
 .animated
   animation-duration: 0.5s
@@ -372,6 +414,14 @@ input[type=number]::-webkit-outer-spin-button
 /* start state
 
 #small-dialog
+  background: white
+  padding: 20px 30px
+  text-align: left
+  max-width: 47%
+  margin: 40px auto
+  position: relative
+
+.small-dialog-product
   background: white
   padding: 20px 30px
   text-align: left
@@ -810,3 +860,43 @@ label
   &:focus
     box-shadow: inherit
     border: 1px solid #9FD468
+
+.banner
+  &__rt-wr
+    position: absolute
+    top: 0
+    right: 0
+    z-index: 9
+  &__sale
+    background: #d54d4d
+    font-family: 'Josefin Sans', sans-serif
+    font-weight: bold
+    font-size: 14px
+    text-transform: uppercase
+    letter-spacing: 1px
+    padding: 8px 12px
+    text-align: center
+    color: #fff
+    opacity: 0
+    animation: fadeIn 0.5s 1.5s forwards
+    line-height: 20px
+    padding-top: 11px
+    cursor: pointer
+
+
+
+
+.sold
+  margin-bottom: 1.8rem
+  line-height: 3.2rem!important
+  display: block
+  font-size: 2rem!important
+  font-weight: bold
+  color: #333333
+
+.posr
+  position: relative
+  display: inline-block
+  margin-bottom: 1rem
+  .banner__sale
+    animation: fadeIn 0.5s 0s forwards

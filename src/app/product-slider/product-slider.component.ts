@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: './product-slider.component.html',
   styleUrls: ['./product-slider.component.sass'],
   // encapsulation: ViewEncapsulation.None
-  encapsulation: ViewEncapsulation.Emulated
+  // encapsulation: ViewEncapsulation.Emulated
 })
 export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges {
   @Input() nameProduct: string;
@@ -38,11 +38,11 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
       $(document).ready(() => {
        // this.initialSlider();
 
-        setTimeout( () => {
-          // $('.carousel').flickity( 'select', 0 );
-          // $('.carousel-nav').find('.carousel-cell').addClass('is-nav-selected');
-            this.initialSlider();
-        }, 600);
+        // setTimeout( () => {
+        //   // $('.carousel').flickity( 'select', 0 );
+        //   // $('.carousel-nav').find('.carousel-cell').addClass('is-nav-selected');
+        //     this.initialSlider();
+        // }, 600);
       });
     }
   }
@@ -52,9 +52,13 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
       .subscribe(
         (resp) => {
           this.products = resp;
-          if (isPlatformBrowser(this.platformId)) {
-            this.initialSlider();
-          }
+
+          setTimeout( () => {
+            if (isPlatformBrowser(this.platformId)) {
+              this.initialSlider();
+            }
+          }, 50);
+
 
         },
         (err) => {
@@ -68,7 +72,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
         (resp) => {
           this.products = resp;
           setTimeout(() => {
-              $('.carousel').flickity('destroy');
+              $('.carousel-container.prod .carousel').flickity('destroy');
               this.initialSlider();
               console.log('reload2');
           }, 50);
@@ -84,7 +88,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
   ngAfterContentInit1() {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(() => {
-        $('.carousel').flickity('reloadCells');
+        $('.carousel-container.prod .carousel').flickity('reloadCells');
         console.log('reload2');
       }, 50);
     }
@@ -95,14 +99,14 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
 
         if ( this.isFlickity ) {
           // destroy Flickity
-          $('.carousel').flickity('destroy');
+          $('.carousel-container.prod .carousel').flickity('destroy');
         }
 
-    const $carousel = $('.carousel').flickity({
+    const $carousel = $('.carousel-container.prod .carousel').flickity({
       // options...
       cellAlign: 'left',
       contain: false,
-      // autoPlay: 3000,
+       autoPlay: 4000,
       // freeScroll: true,
       wrapAround: true,
       pageDots: false,
@@ -114,7 +118,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
 
     // const $carousel = $('.carousel').flickity();
 
-    const $carouselNav = $('.carousel-nav');
+    const $carouselNav = $('.carousel-container.prod .carousel-nav');
     const $carouselNavCells = $carouselNav.find('.carousel-cell');
     $carouselNav.on( 'click', '.carousel-cell', function( event ) {
       const index = $( event.currentTarget ).index();
@@ -140,12 +144,12 @@ export class ProductSliderComponent implements OnInit, AfterViewInit , OnChanges
       // });
     });
         $carousel.flickity( 'select', 0 );
-    setTimeout(() => {
-      $carousel.flickity('reloadCells');
-      // console.log('reload slider');
-      $carousel.flickity( 'select', 0 );
-
-    }, 100);
+    // setTimeout(() => {
+    //   $carousel.flickity('reloadCells');
+    //   // console.log('reload slider');
+    //   $carousel.flickity( 'select', 0 );
+    //
+    // }, 100);
       this.isFlickity = true;
 
     }

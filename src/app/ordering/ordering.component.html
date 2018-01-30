@@ -7,6 +7,10 @@
 
     <div class="shopping-list__under-title"> <div class="under-line"></div></div>
     <div class="shopping-list__order" *ngIf="!hideForm">
+      <p class="delivery-info">Доставка осуществляется Новой Почтой, наложеным платежем <br>
+        при закасе свыше 200 грн доставка бесплатно,
+        при закасе менее 200 грн стоимость доставки 50 грн, Одесса и Киев бесплатно
+      </p>
       <div class="order" *ngIf="cart.length > 0; else empty">
               <div class="order__info">
 
@@ -28,7 +32,7 @@
                     <input type="email" class="base-input" placeholder="Email" [(ngModel)]="email"
                            #emailCheck="ngModel"
                            [ngClass]="{'error-input': emailCheck.invalid, 'success-input': !emailCheck.invalid }"
-                           required email>
+                            email>
                   </label>
 
                     <div class="city">
@@ -81,7 +85,8 @@
                   </div>
 
                   <div class="order_confirm">
-                    <a [class.disabled]="hasError || emailCheck.invalid"
+                    <!--<a [class.disabled]="hasError || emailCheck.invalid"-->
+                    <a [class.disabled]="hasError"
                        (click)="confirmOrder()" class=" btn btn-confirm">Заказ подтверждаю</a>
 
                   </div>

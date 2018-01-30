@@ -10,6 +10,7 @@ import 'rxjs/add/observable/from';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {logger} from 'codelyzer/util/logger';
 import {isPlatformBrowser} from '@angular/common';
+import {ProductService} from './product.service';
 declare var $: any;
 
 @Injectable()
@@ -26,6 +27,7 @@ export class CartService {
   // observableFullCart = new Subject<FullCartItem[]>();
 
   constructor(private http: HttpClient,
+              private productService: ProductService,
               @Inject(PLATFORM_ID) private platformId: string) {
 
     this.getCart();
@@ -50,9 +52,9 @@ export class CartService {
   }
 
 
-  getAllProducts() {
-    return this.http.get<Product[]>(`${this.baseUrl}/api/getAllProduct` );
-  }
+  // getAllProducts() {
+  //   return this.http.get<Product[]>(`${this.baseUrl}/api/getAllProduct` );
+  // }
   getShortCart() {
     if (isPlatformBrowser(this.platformId)) {
       return JSON.parse(localStorage.getItem('shortCart')) || [];
@@ -62,7 +64,7 @@ export class CartService {
 
   getAllCount() {
     this.allCount = 0;
-    for (let item of this.shortCart) {
+    for (let item of this.fullCart) {
       this.allCount += item.count;
     }
   }
@@ -147,6 +149,11 @@ export class CartService {
 
     for (let shortItem of this.shortCart) {
       const prodInProducts = this.products.filter((prod) => prod.product_id === shortItem.product_id );
+
+      if (prodInProducts.length == 0 || !prodInProducts[0].product_available) {
+        continue;
+      }
+
       const fullItemCart = {
             product: prodInProducts[0],
             count: shortItem.count
@@ -156,7 +163,7 @@ export class CartService {
   }
 
   getCart() {
-    this.getAllProducts().subscribe((resp) => {
+    this.productService.getAllProducts().subscribe((resp) => {
         this.products = resp;
         // console.log(this.products);
         this.shortCart = this.getShortCart();
@@ -173,13 +180,13 @@ export class CartService {
   openQuickCart() {
     if (isPlatformBrowser(this.platformId)) {
 
-      let vidgetCart = $('.cart-dropdown .data-dropdown');
-      let vidgetLink = $('.cart-dropdown .cart-ref');
+      let vidgetCart = $('.main .cart-dropdown .data-dropdown');
+      let vidgetLink = $('.main .cart-dropdown .cart-ref');
 
       vidgetCart.css({'display': 'flex'});
       vidgetLink.addClass('hoverCardRef');
 
-      $('.cart-dropdown.dropdown').hover(function () {
+      $('.main .cart-dropdown.dropdown').hover(function () {
           vidgetCart.css({'display': 'flex'});
           vidgetLink.addClass('hoverCardRef');
         },

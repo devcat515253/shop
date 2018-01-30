@@ -68,9 +68,17 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getCities();
 
     this.scrollToTop();
+
+    if (isPlatformBrowser(this.platformId)) {
+      $('header, footer').fadeOut(0);
+    }
   }
   ngOnDestroy() {
     clearInterval(this.intervalId);
+
+    if (isPlatformBrowser(this.platformId)) {
+      $('header, footer').fadeIn(200);
+    }
   }
 
   searchCity() {
@@ -211,7 +219,7 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   cityChange(event) {
     // console.log(this.selectedCity);
-    this.selectedOffice = '';
+    this.selectedOffice = null;
 
     this.getOffices();
   }

@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class ProductService {
       // Products: Product[];
-      baseUrl  = 'http://localhost:8000';
+      baseUrl  = 'http://192.168.0.106:8000';
   constructor(private http: HttpClient) { }
 
 
@@ -75,6 +75,17 @@ export class ProductService {
     return this.http.post<any>(`${this.baseUrl}/api/deleteProd`, prod );
   }
 
+  getAllProducts() {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getAllProduct` );
+  }
+
+  getByVendor(vendor) {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getByVendor/${vendor}` );
+  }
+
+  getRandomProds() {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getRandomProds` );
+  }
 
 }
 

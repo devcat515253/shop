@@ -22,6 +22,12 @@ export class Product {
   product_date_add: Date;
   product_ispromo: boolean;
   product_promo_price: number;
+  subcategory_url: string;
+  category_description_seo: string;
+  category_keywords_seo: string;
+  subcategory_description_seo: string;
+  subcategory_keywords_seo: string;
+  avalible_in_group: number;
   product_options: [{
     option_category: string,
     option_id: number,

@@ -14,6 +14,8 @@ declare var $: any;
 
 
 import { trigger, state, animate, transition, style } from '@angular/animations';
+import {Meta, Title} from '@angular/platform-browser';
+import {SeoService} from '../services/seo.service';
 
 @Component({
   selector: 'app-product-details',
@@ -29,40 +31,100 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   selectedProduct: Product;
 
 
+  idProduct: number;
 
-  constructor(private activateRoute: ActivatedRoute,
+
+
+  constructor(private seoService: SeoService,
+              private activateRoute: ActivatedRoute,
               @Inject(PLATFORM_ID) private platformId: string,
               private productService: ProductService,
-              private cartService: CartService
+              private cartService: CartService,
+              public meta: Meta, public title: Title
              ) {}
 
   ngOnInit() {
     this.activateRoute.params.subscribe(params => {
       this.nameProduct = params['nameProduct'];
+      this.idProduct = params['idProduct'];
 
       // console.log(this.nameProduct);
 
       this.getProductItem();
+
+
+
       // window.scrollTo(0, 0);
       if (isPlatformBrowser(this.platformId)) {
-        $(document).ready(function() {
+        $(document).ready(() => {
           $('html, body').animate({scrollTop: 0}, 500);
-          $('.container').css({'opacity' : '0'});
-          $('.container').animate({opacity: 1}, 800);
+          if (!this.idProduct) {
+            $('.container').css({'opacity': '0'});
+            $('.container').animate({opacity: 1}, 800);
+          }
         });
       }
     });
   }
 
+seo (prod) {
 
+  // Sets the <title></title>
+  this.title.setTitle(prod.product_name);
+
+  // Sets the <meta> tag for the page
+  this.meta.addTags([
+    { name: 'author', content: 'Shisha.com.ua' },
+    { name: 'description', content: prod.product_description_seo },
+    { name: 'keywords', content: prod.product_keywords_seo }
+  ]);
+
+}
 
   getProductItem() {
     this.productService.getProductItem(this.nameProduct)
       .subscribe(
         (resp) => {
           this.products = resp;
-          this.selectedProduct = this.products[0];
-          // console.log(this.products);
+          // this.selectedProduct = this.products[0];
+           // console.log(this.products);
+          // this.seo(this.selectedProduct);
+          if (this.products.length == 0)
+            return;
+
+
+          if (this.idProduct) {
+            this.selectedProduct = this.products.filter(prod => prod.product_id == this.idProduct)[0];
+
+            this.seoService.setTitle(this.selectedProduct.product_name);
+            this.seoService.setDescKeyw(this.selectedProduct.product_description_seo, this.selectedProduct.product_keywords_seo);
+
+            if (isPlatformBrowser(this.platformId)) {
+              $(document).ready(() => {
+
+                this.products.forEach( (prod, index) => {
+                  if (prod.product_color === this.selectedProduct.product_color) {
+
+                    setTimeout(function () {
+                      $('.carousel-container.prod .carousel').flickity( 'select', index);
+                    }, 800);
+
+
+                  }
+                });
+
+              });
+            }
+
+          } else {
+            this.selectedProduct = this.products[0];
+
+            this.seoService.setTitle(this.selectedProduct.product_name);
+            this.seoService.setDescKeyw(this.selectedProduct.product_description_seo, this.selectedProduct.product_keywords_seo);
+          }
+
+
+
 
         },
         (err) => {
@@ -105,11 +167,15 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
 
   colorChange(color) {
+    // this.seo(this.selectedProduct);
     // console.log('select' + this.selectedProduct.product_color);
     // console.log(color);
+    // this.seoService.setTitle(this.selectedProduct.product_name);
+    // this.seoService.setDescKeyw(this.selectedProduct.product_description_seo, this.selectedProduct.product_keywords_seo);
+
     this.products.forEach( (prod, index) => {
       if (prod.product_color === this.selectedProduct.product_color) {
-        $('.carousel').flickity( 'select', index);
+        $('.carousel-container.prod .carousel').flickity( 'select', index);
       }
     });
   }

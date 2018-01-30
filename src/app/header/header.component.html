@@ -20,7 +20,7 @@
           <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
           <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
           <a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
-          <a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+          <a href="#" style="display: none"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
           <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
           <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
           <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
@@ -40,7 +40,7 @@
         </a>
       </div>
 
-      <div class="top-line__cart">
+      <div class="top-line__cart main">
         <div class="cart-dropdown dropdown">
 
         <div class="cart-dropdown__rel">
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <div class="header__nav">
+  <div class="header__nav nav_main" >
    <div class="main_menu">
 
       <div class="main_menu__left">
@@ -71,93 +71,18 @@
        <nav class="top-menu">
 
          <ul >
-           <li class="dropdown-menu">
-             <a [routerLink]="['/collections', 'shisha' ]"   routerLinkActive="active" >shiha</a>
+           <li class="dropdown-menu" *ngFor="let cat of categories" [class.no-drop]="cat.subcategories.length == 0">
+             <a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" >{{ cat.category_name }}</a>
 
-             <ul class="data-dropdown" #nav>
-               <li><a href="#">starbuzz</a></li>
-               <li><a  routerLink="/products/Khalil Mamoon Cafe Style Hookah"  routerLinkActive="active">KHALIL MAMOON</a></li>
-               <li><a [routerLink]="['/collections', 'shisha', 'Khalil Mamoon']"  routerLinkActive="active" >KHALIL MAMOON</a></li>
-               <li><a href="#"  routerLinkActive="active">SHISHAGEAR S&V</a></li>
-               <li><a href="#"  routerLinkActive="active">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
+             <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
+               <li *ngFor="let subCat of cat.subcategories" >
+                 <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
+               </li>
+
              </ul>
 
            </li>
-           <li class="dropdown-menu">
-             <a  [routerLink]="['/collections', 'кальян1' ]"  routerLinkActive="active">flavours</a>
 
-             <ul class="data-dropdown">
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-             </ul>
-           </li>
-           <li class="dropdown-menu">
-             <a href="#">charcoal</a>
-
-             <ul class="data-dropdown">
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-             </ul>
-           </li>
-           <li class="dropdown-menu">
-             <a href="#">accessories</a>
-
-             <ul class="data-dropdown">
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-             </ul>
-           </li>
-           <li class="dropdown-menu">
-             <a href="#">vaping</a>
-
-             <ul class="data-dropdown">
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-             </ul>
-           </li>
-           <li class="dropdown-menu">
-             <a href="#">e-liquid</a>
-
-             <ul class="data-dropdown">
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-               <li><a href="#">starbuzz</a></li>
-               <li><a href="#">KHALIL MAMOON</a></li>
-               <li><a href="#">SHISHAGEAR S&V</a></li>
-               <li><a href="#">APPLE ON TOP</a></li>
-               <li><a href="#">GLASS HOOKAH</a></li>
-               <li><a href="#">STEMS ONLY</a></li>
-               <li><a href="#">SAHARA SMOKE</a></li>
-             </ul>
-           </li>
            <li class="search-form">
 
              <form action="#">
@@ -176,6 +101,11 @@
 
        </nav>
 
+
+
+
+
+
      </div>
    </div>
   </div>
@@ -183,4 +113,90 @@
 
 
 
+
+  <div class="header__nav fixed-menu">
+    <div class="main_menu">
+
+      <div class="main_menu__left">
+        <a href="#" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
+      </div>
+
+      <div class="main_menu__right">
+        <nav class="top-menu" style="display: none">
+
+          <ul >
+            <li class="dropdown-menu" *ngFor="let cat of categories" [class.no-drop]="cat.subcategories.length == 0">
+              <a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" >{{ cat.category_name }}</a>
+
+              <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
+                <li *ngFor="let subCat of cat.subcategories" >
+                  <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
+                </li>
+
+              </ul>
+
+            </li>
+
+            <li class="search-form">
+
+              <form action="#">
+                <label class="input-search">
+                  <input type="text" class="input-search search-input" placeholder="Search">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+
+                </label>
+              </form>
+            </li>
+            <li class="search-icon-link">
+              <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+
+            </li>
+          </ul>
+
+        </nav>
+
+        <nav class="top-menu">
+
+          <ul >
+            <li class="dropdown-menu" *ngFor="let cat of categories" [class.no-drop]="cat.subcategories.length == 0">
+              <a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" >{{ cat.category_name }}</a>
+
+              <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
+                <li *ngFor="let subCat of cat.subcategories" >
+                  <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
+                </li>
+
+              </ul>
+
+            </li>
+
+            <li class="search-icon-link">
+              <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+
+            </li>
+          </ul>
+
+        </nav>
+
+        <div class="top-line__cart">
+          <div class="cart-dropdown dropdown">
+
+            <div class="cart-dropdown__rel">
+              <a [routerLink]="['/cart']" class="cart-ref">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <span class="count">{{allCountInCart}}</span>
+              </a>
+            </div>
+
+            <div class="cart-dropdown__content data-dropdown animated fadeIn">
+              <app-cart-widget></app-cart-widget>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
 </div>

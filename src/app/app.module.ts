@@ -30,6 +30,9 @@ import { AdminOrderDelailComponent } from './admin-order-delail/admin-order-dela
 import { AdminProdAddComponent } from './admin-prod-add/admin-prod-add.component';
 import {CategoryService} from './services/category.service';
 import { AdminProdUpdateComponent } from './admin-prod-update/admin-prod-update.component';
+import {SeoService} from './services/seo.service';
+import { PromoSliderComponent } from './promo-slider/promo-slider.component';
+import { QuickviewSliderComponent } from './quickview-slider/quickview-slider.component';
 
 
 @NgModule({
@@ -51,7 +54,9 @@ import { AdminProdUpdateComponent } from './admin-prod-update/admin-prod-update.
     AdminOrdersComponent,
     AdminOrderDelailComponent,
     AdminProdAddComponent,
-    AdminProdUpdateComponent
+    AdminProdUpdateComponent,
+    PromoSliderComponent,
+    QuickviewSliderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),
@@ -68,7 +73,8 @@ import { AdminProdUpdateComponent } from './admin-prod-update/admin-prod-update.
     CartService,
     NovaPoshtaService,
     OrderService,
-    CategoryService
+    CategoryService,
+    SeoService
   ],
   bootstrap: [AppComponent]
 })

@@ -15,7 +15,10 @@ declare var $: any;
 })
 export class AdminProdsComponent implements OnInit, AfterViewInit {
 
-  products: Product[];
+  allSplitedForScroll: any;
+  generator: any ;
+
+  products: any = [];
   selectedProdForDelete: any;
 
   selectedTypeProd: any;
@@ -29,7 +32,8 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
 
   constructor(private productService: ProductService,
               private router: Router,
-              @Inject(PLATFORM_ID) private platformId: string) { }
+              @Inject(PLATFORM_ID) private platformId: string) {
+  }
 
   ngOnInit() {
     this.getProdTypes();
@@ -162,7 +166,14 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     this.productService.getLastProds()
       .subscribe(
         (resp) => {
-          this.products = resp;
+          // this.products = resp;
+          // let res = [];
+          // for (let i=0;i<1000;i++) {
+          //    res = resp.concat(res) ;
+          // }
+          // console.log(res);
+          this.splitForScroll(resp);
+
           // console.log( this.products );
           if (isPlatformBrowser(this.platformId)) {
             this.initialMagnific();
@@ -178,7 +189,8 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     this.productService.getProdsByType(this.selectedTypeProd.product_types_name)
       .subscribe(
         (resp) => {
-          this.products = resp;
+          this.splitForScroll(resp);
+          // this.products = resp;
            // console.log( this.products );
           if (isPlatformBrowser(this.platformId)) {
             this.initialMagnific();
@@ -262,6 +274,9 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.initialMagnific();
+
+      this.infiniteScroll();
+
     }
   }
 
@@ -296,4 +311,65 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     $('.mfp-close').trigger('click');
   }
+
+  infiniteScroll() {
+    $(window).scroll(() => {
+
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 80;
+
+      if  ( percentScrolled > percent )  {
+          this.fillItemsPage();
+      }
+
+    });
+  }
+
+  splitForScroll(arr) {
+
+    // let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //массив, можно использовать массив объектов
+    let array = arr; //массив, можно использовать массив объектов
+    let size = 20; //размер подмассива
+    let subarray = []; //массив в который будет выведен результат.
+    for (let i = 0; i <Math.ceil(array.length/size); i++) {
+      subarray[i] = array.slice((i*size), (i*size) + size);
+    }
+    // console.log(subarray);
+    this.allSplitedForScroll = subarray;
+    this.products = [];
+    this.generator = generateNewPage(this.allSplitedForScroll);
+
+
+    this.fillItemsPage();
+  }
+
+
+  fillItemsPage() {
+
+     let pageItems;
+    try {
+      pageItems = this.generator.next();
+    } catch (er) { return; }
+
+
+    if (!pageItems.done) {
+      // this.products = this.products.concat(pageItems.value);
+
+      for (let item of pageItems.value) {
+        this.products.push(item);
+      }
+    }
+  }
+
+
+
+}
+
+function* generateNewPage(arr) {
+  for (let page of arr) {
+    yield page;
+
+  }
+  return 'array end';
 }

@@ -20,4 +20,8 @@ export class CategoryService {
   getCatByIdSubCat(sub_category_id) {
     return this.http.get<any>(`${this.baseUrl}/api/getCatByIdSubCat/${sub_category_id}` );
   }
+
+  getCatWithSubCat() {
+    return this.http.get<any>(`${this.baseUrl}/api/getCatWithSubCat` );
+  }
 }

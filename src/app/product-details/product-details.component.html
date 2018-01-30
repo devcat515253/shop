@@ -6,11 +6,18 @@
         <ul>
           <li><a routerLink="/">Главная</a></li>
           <!--<li><a  routerLink="/collections/{{selectedProduct?.category_name}}">{{selectedProduct?.category_name}}</a></li>-->
-          <li><a routerLink="/collections/{{selectedProduct?.category_url}}/{{selectedProduct?.subcategory_name}}">{{selectedProduct?.category_name}} - {{selectedProduct?.subcategory_name}}</a></li>
+          <li><a routerLink="/collections/{{selectedProduct?.category_url}}/{{selectedProduct?.subcategory_url}}">{{selectedProduct?.category_name}} - {{selectedProduct?.subcategory_name}}</a></li>
           <li>{{selectedProduct?.product_name}}</li>
         </ul>
+
+        <div class="links" style="position: absolute; opacity: 0">
+            <a *ngFor="let produc of products"   [routerLink]="['/products', produc.product_name, produc.product_id]" style="margin-right: 1rem;"> {{produc.product_name}} {{produc.product_id}}</a>
+        </div>
+
       </div>
     </div>
+
+
 
     <div class="product-details__content">
       <div class="content">
@@ -26,14 +33,20 @@
         </div>
         <div class="content__description">
           <div class="description">
-            <div class="description__product-vendor"><a href="#">{{selectedProduct?.product_manufacturer}}</a></div>
+            <div *ngIf="selectedProduct?.product_promo_price" class="banner__rt-wr posr"> <div class="banner__sale">Sale</div></div>
+            <div class="description__product-vendor">
+              <a *ngIf="selectedProduct" [routerLink]="['/collections/vendor', selectedProduct?.product_manufacturer]" (click)="closePopup()">{{selectedProduct?.product_manufacturer}}</a>
+
+            </div>
             <div class="description__product-code"><span>{{selectedProduct?.product_id}}</span></div>
             <div class="description__product-name">
               <h1 class="product-name">{{selectedProduct?.product_name}}</h1>
               <div class="under-line"></div>
             </div>
-            <div class="description__product-price">
+            <div class="description__product-price" *ngIf="selectedProduct?.product_available">
               <!--<span class="price">£{{selectedProduct?.product_price}}</span>-->
+
+
 
               <div *ngIf="!selectedProduct?.product_promo_price; else promoPrice" class="item__price">
                 <!--<span class="price">£39.99</span>-->
@@ -50,6 +63,11 @@
 
 
             </div>
+
+            <div class="description__product-price" *ngIf="!selectedProduct?.product_available">
+              <span class="sold">Продано</span>
+            </div>
+
             <div class="description__product-colors">
               <label>Colors</label>
 
@@ -71,7 +89,7 @@
               </div>
             </div>
 
-            <span *ngIf="!selectedProduct?.product_available">Продано</span>
+
 
             <div class="description__product-quantity" [class.disabled]="!selectedProduct?.product_available">
               <div class="quantity__qty" >
@@ -116,4 +134,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="promo-slider">
+  <app-promo-slider></app-promo-slider>
 </div>

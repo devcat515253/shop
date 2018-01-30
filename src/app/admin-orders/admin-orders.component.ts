@@ -16,6 +16,9 @@ declare var $: any;
 })
 export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
+  allSplitedForScroll: any;
+  generator: any ;
+
   allOrders: any;
 
   searchInput: string = '';
@@ -73,6 +76,9 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
 
+
+      this.infiniteScroll();
+
       $( '#phone').on('keyup input', () => {
         this.searchInputPhone =  $('#phone').val();
 
@@ -85,6 +91,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
       $(document).ready( () => {
         $('#phone').mask('+38 (999) 999-99-99');
+
+
       });
 
     }
@@ -130,7 +138,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.orderService.getNewOrder()
       .subscribe(
         (resp) => {
-          this.allOrders = resp;
+          // this.allOrders = resp;
+          this.splitForScroll(resp);
           // console.log(this.allOrders);
         },
         (err) => {
@@ -143,7 +152,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.orderService.getAllOrder()
       .subscribe(
         (resp) => {
-          this.allOrders = resp;
+          // this.allOrders = resp;
+          this.splitForScroll(resp);
           // console.log(this.allOrders);
         },
         (err) => {
@@ -156,7 +166,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.orderService.getProcessingOrder()
       .subscribe(
         (resp) => {
-          this.allOrders = resp;
+          // this.allOrders = resp;
+          this.splitForScroll(resp);
         },
         (err) => {
           console.log('Не удалось получить заказы в обработке');
@@ -168,7 +179,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.orderService.getDoneOrder()
       .subscribe(
         (resp) => {
-          this.allOrders = resp;
+          // this.allOrders = resp;
+          this.splitForScroll(resp);
         },
         (err) => {
           console.log('Не удалось получить завершенные заказы');
@@ -180,7 +192,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.orderService.getRejectedOrder()
       .subscribe(
         (resp) => {
-          this.allOrders = resp;
+          this.splitForScroll(resp);
+          // this.allOrders = resp;
         },
         (err) => {
           console.log('Не удалось получить откланенные заказы');
@@ -227,4 +240,64 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     this.router.navigate(['admin/orders', order.order_id]);
   }
 
+  infiniteScroll() {
+    $(window).scroll(() => {
+
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 70;
+
+      if  ( percentScrolled > percent )  {
+        this.fillItemsPage();
+      }
+
+    });
+  }
+
+
+  splitForScroll(arr) {
+
+    // let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //массив, можно использовать массив объектов
+    let array = arr; //массив, можно использовать массив объектов
+    let size = 20; //размер подмассива
+    let subarray = []; //массив в который будет выведен результат.
+    for (let i = 0; i <Math.ceil(array.length/size); i++) {
+      subarray[i] = array.slice((i*size), (i*size) + size);
+    }
+    // console.log(subarray);
+    this.allSplitedForScroll = subarray;
+    this.allOrders = [];
+    this.generator = generateNewPage(this.allSplitedForScroll);
+
+
+    this.fillItemsPage();
+  }
+
+
+  fillItemsPage() {
+
+    let pageItems;
+    try {
+      pageItems = this.generator.next();
+    } catch (er) { return; }
+
+
+    if (!pageItems.done) {
+      // this.products = this.products.concat(pageItems.value);
+
+      for (let item of pageItems.value) {
+        this.allOrders.push(item);
+      }
+    }
+  }
+
+}
+
+
+function* generateNewPage(arr) {
+  for (let page of arr) {
+    yield page;
+
+  }
+  return 'array end';
 }

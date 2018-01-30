@@ -1,0 +1,103 @@
+<div class="shopping-list fadeInRouter" *ngIf="products?.length > 0">
+  <!--<div class="container">-->
+    <!--&lt;!&ndash;<div class="shopping-list__breadcrumbs">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="breadcrumbs">&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li><a routerLink="/">Главная</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;<li *ngIf="!subCategory"><a  routerLink="/collections/{{category}}">{{category}}</a></li>&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<li *ngIf="!subCategory"><a *ngIf="products"  routerLink="/collections/{{category}}">{{products[0]?.category_name}}</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li *ngIf="subCategory"><a  *ngIf="products" routerLink="/collections/{{category}}/{{subCategory}}">{{products[0]?.category_name}} - {{products[0]?.subcategory_name}}</a></li>&ndash;&gt;-->
+          <!--&lt;!&ndash;<li>Страница 1 из 4</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="shopping-list__title">-->
+      <!--<h1 *ngIf="!subCategory" class="title"><span *ngIf="products">{{products[0]?.category_name}}</span></h1>-->
+      <!--<h1 *ngIf="subCategory" class="title"><span *ngIf="products">{{products[0]?.category_name}}</span> - {{subCategory}}</h1>-->
+      <!--<div class="sort-method">-->
+        <!--<div  class="select-wrapper">-->
+          <!--<select [(ngModel)]="sort"  (ngModelChange)="sortChange($event)">-->
+            <!--<option value="Тип" selected disabled>Тип сортировки</option>-->
+            <!--<option value="возростанию">По возрастанию цены</option>-->
+            <!--<option value="убыванию">По убыванию цены</option>-->
+            <!--<option value="названию">По названию</option>-->
+          <!--</select>-->
+          <!--<div class="select-arrow-1"></div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <div class="shopping-list__title">
+    <h2  class="title"><span >Предложенные продукты</span></h2>
+  </div>
+
+    <div class="shopping-list__under-title"> <div class="under-line"></div></div>
+
+    <div class="shopping-list__items promo-slider">
+      <div class="items carousel">
+
+        <div *ngFor="let product of products" class="item carousel-cell">
+          <div class="item__image">
+
+            <!--<div *ngIf="product.product_promo_price" class="banner__rt-wr"> <div class="banner__sale">Sale</div></div>-->
+
+            <div class="image">
+              <div class="image__img">
+                <!--<img class="img-responsive" [src]="assets/img/DSC_6678_300x.jpg" alt="">-->
+                <img class="img-responsive" [src]="product.images_middle" alt="">
+              </div>
+              <div class="image__overlay">
+                <a href="#small-dialog-promo-slider"  class="popup-with-zoom-anim" (click)="showShortInfo(product.product_name)">
+                  <div *ngIf="product.product_promo_price" class="banner__rt-wr"> <div class="banner__sale">Sale</div></div>
+                  <div class="overlay">
+                    <a href="#small-dialog-promo-slider" class="popup-with-zoom-anim btn btn-white" (click)="showShortInfo(product.product_name)">Quick View</a>
+
+                  </div>
+                </a>
+
+              </div>
+            </div>
+          </div>
+          <a [routerLink]="['/products', product.product_name, product.product_id]" class="item__description">
+            <div class="item__name">
+              <!--<span class="title">Khalil Mamoon Cafe Style Hookah</span>-->
+              <span class="title">{{product.product_name}}</span>
+            </div>
+
+            <div *ngIf="product.avalible_in_group">
+              <div *ngIf="!product.product_promo_price; else promoPrice" class="item__price">
+                <!--<span class="price">£39.99</span>-->
+                <span class="price">£{{product.product_price}}</span>
+              </div>
+              <ng-template #promoPrice>
+                <div class="item__price promo">
+                  <small> <em>От</em></small>
+                  <span class="price promo-price">£{{product.product_promo_price}}</span>
+                  <span class="price was-price">£{{product.product_price}}</span>
+                </div>
+              </ng-template>
+            </div>
+
+            <div *ngIf="!product.avalible_in_group" >
+              <span class="sold">Продано</span>
+            </div>
+
+          </a>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="shopping-list__btn-load"></div>
+</div>
+
+
+
+
+<!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+<div id="small-dialog-promo-slider" class="zoom-anim-dialog mfp-hide small-dialog-product">
+  <app-quick-view *ngIf="quickNameProduct"   [nameProduct]="quickNameProduct"></app-quick-view>
+</div>

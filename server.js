@@ -42,6 +42,35 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist-server/mai
 const app = express();
 const port = 8000;
 const baseUrl = `http://localhost:${port}`;
+// const baseUrl = `http://192.168.0.106:${port}`;
+
+
+// // Add headers
+// app.use(function (req, res, next) {
+//
+//   // Website you wish to allow to connect
+//   res.setHeader('Access-Control-Allow-Origin', `*`);
+//
+//   // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//
+//   // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//
+//   // Pass to next layer of middleware
+//   next();
+// });
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -186,6 +215,24 @@ app.engine('html', ngExpressEngine({
     provideModuleMap(LAZY_MODULE_MAP)
   ]
 }));
+
+
+//получить   категории всесте с подкатегориями
+app.get('/api/getCatWithSubCat', function(req, res) {
+
+  sequelize.query("SELECT * FROM shop.category",  {  type: sequelize.QueryTypes.SELECT }).then(function(categories) {
+    return sequelize.Promise.map(categories, function (cat) {
+      return sequelize.query("SELECT * FROM shop.subcategory WHERE category_id = " + cat.category_id + ' order by subcategory_name',  {  type: sequelize.QueryTypes.SELECT }).then(function(subcategories) {
+        cat.subcategories = subcategories;
+      });
+    }).then(function() {
+      res.send(categories);
+    })
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
 
 
 //получить   категории по ид subcategory
@@ -981,7 +1028,7 @@ app.get('/api/getFromCategory/:category_name', function(req, res) {
   // sequelize.query(`SELECT * FROM ((shop.product inner join shop.subcategory on product.subcategory_id=subcategory.subcategory_id) inner join shop.category on subcategory.category_id=category.category_id)
   //                 inner join shop.images on images.product_id=product.product_id
   //                 where category.category_name= ? group by product.product_name`,{ replacements: [category_name], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
-  sequelize.query(`SELECT * FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
+  sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
                   where category_url=? and product_status='Опубликован' group by product_name`,{ replacements: [category_url], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
     //console.log(products);
@@ -1000,11 +1047,11 @@ app.get('/api/getFromCategory/:category_name', function(req, res) {
 //выборка из подкатегории
 app.get('/api/getFromSubCategory/:subcategory_name', function(req, res) {
 
-  let subCategory_name = req.params.subcategory_name;// decodeURIComponent(req.params.product_type.toString());
+  let subCategory_utl = req.params.subcategory_name;// decodeURIComponent(req.params.product_type.toString());
 
-  sequelize.query(`SELECT * FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
+  sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
-                  where subcategory_name=? and product_status='Опубликован' group by product_name `,{ replacements: [subCategory_name], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+                  where subcategory_url=? and product_status='Опубликован' group by product_name `,{ replacements: [subCategory_utl], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
 
     res.send(products);
 
@@ -1054,7 +1101,7 @@ app.get('/api/getItemProd/:prod_name', function(req, res) {
 
 });
 
-//выборка из подкатегории
+//выборка всех продуктов
 app.get('/api/getAllProduct', function(req, res) {
 
   sequelize.query(`SELECT * FROM shop.product inner join shop.images on images.product_id=product.product_id`,{  type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
@@ -1094,6 +1141,45 @@ app.get('/api/getProdFromIdNoImg/:prod_id', function(req, res) {
 
 
 });
+
+
+//выборка по производителю
+app.get('/api/getByVendor/:vendor', function(req, res) {
+
+  let vendor = req.params.vendor;// decodeURIComponent(req.params.product_type.toString());
+
+  sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
+                  inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
+                  where product_manufacturer=? and product_status='Опубликован' group by product_name `,{ replacements: [vendor], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+
+    res.send(products);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+
+});
+
+//выборка продукта рандом
+app.get('/api/getRandomProds', function(req, res) {
+
+ // let vendor = req.params.vendor;// decodeURIComponent(req.params.product_type.toString());
+
+  sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
+                  inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
+                  where product_status='Опубликован' group by product_name ORDER BY RAND() limit 30`,{ type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+
+    res.send(products);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+
+});
+
+
 
 
 

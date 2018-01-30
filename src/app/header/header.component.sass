@@ -124,7 +124,7 @@
   ul
     display: none
     position: absolute
-    z-index: 9
+    z-index: 99
     top: 100%
     left: 0
     right: 0
@@ -164,6 +164,11 @@
     //animation: fadeIn 0.3s linear none
 
 .dropdown-menu
+  &.no-drop
+    >a
+      padding-right: 0rem!important
+      &:after,&:before
+        display: none
   &:hover
     >a
       color: white!important
@@ -190,7 +195,7 @@
       width: 100%
       top: 100%
       left: 0
-      height: 25px
+      height: 2.2rem
     &:after
       content: ""
       position: absolute
@@ -201,6 +206,7 @@
       border-right: 1px solid #d9d9d9
       border-bottom: 1px solid #d9d9d9
       transform: rotate(45deg) translate(-50%,-50%)
+
       //margin-left: .7rem
   ul
     //display: none
@@ -268,11 +274,13 @@
 
 
 .search-form
+  display: none
   width: 20%
 .search-icon-link
-  display: none
   a
     border-bottom: solid 1px transparent
+    padding-left: 1rem!important
+    padding-right: 1rem!important
   &:hover
     >a
       color: white!important
@@ -292,7 +300,6 @@
     color: #d9d9d9
     background-color: transparent
     padding-right: 35px
-    border-radius: 0
     border-color: #d9d9d9
     border-radius: 3px
   i
@@ -319,5 +326,44 @@
   //  font-size: 2rem
   //  color: #d9d9d9
   //  z-index: 1
+
+.fixed-menu
+  display: none
+  position: fixed
+  left: 0
+  top: 0
+  width: 100%
+  z-index: 99
+  .logo
+    img
+      max-height: 45px
+  .data-dropdown
+    padding-top: 1rem!important
+    li
+      a
+        padding: 1rem 2rem!important
+  .top-menu
+    >ul
+      padding: 2px 0
+      >li
+        >a
+          line-height: 1.5rem
+          &:before
+            height: 4px
+
+
+.header_absolute
+  .nav_main
+      position: relative
+      &:hover
+        .main_menu
+          background: rgba(21, 21, 21, 0.9)
+      .main_menu
+        background: transparent
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        z-index: 1
 
 

@@ -4,6 +4,7 @@ import {ProductService} from '../services/product.service';
 import {Product} from '../entity/product';
 import {isPlatformBrowser} from '@angular/common';
 import {Location} from '@angular/common';
+import {SeoService} from '../services/seo.service';
 
 declare var $: any;
 
@@ -22,7 +23,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   sort: string  = 'Тип';
 
-  constructor(private activateRoute: ActivatedRoute,
+  constructor(private seoService: SeoService,
+              private activateRoute: ActivatedRoute,
               @Inject(PLATFORM_ID) private platformId: string,
               private productService: ProductService,
               private router: Router,
@@ -36,12 +38,13 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.nameSubCategory = params['nameSubCategory'];
       this.category = this.categoryUrl;
       this.subCategory = this.nameSubCategory;
-      // console.log(params);
-      // console.log(this.nameCategory);
-      // console.log(this.nameSubCategory);
-      // this.sort = 'Тип';
-      // console.log(this.sort);
 
+
+      if (this.categoryUrl == 'vendor' && this.categoryUrl && this.nameSubCategory  ) {
+        // console.log('vendor');
+        this.getByVendor();
+        return;
+      }
 
       if (this.categoryUrl && this.nameSubCategory) {
         this.getProdFromSubCategory();
@@ -73,12 +76,47 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   }
 
+  getByVendor() {
+    this.productService.getByVendor(this.nameSubCategory)
+      .subscribe(
+        (resp) => {
+          this.fadeIn();
+          this.products = resp;
+
+          if (this.products.length == 0)
+            return;
+
+          this.seoService.setTitle(this.products[0].category_name);
+          this.seoService.setDescKeyw(this.products[0].category_description_seo, this.products[0].category_keywords_seo);
+
+
+          setTimeout(() => {
+            if (isPlatformBrowser(this.platformId)) {
+              this.initialMagnific();
+            }
+          }, 50);
+
+        },
+        (err) => {
+          console.log('Не удалось получить данные по производителю');
+          console.log(err);
+        });
+  }
+
   getProdFromCategory() {
     this.productService.getProdFromCategory(this.categoryUrl)
       .subscribe(
         (resp) => {
           this.fadeIn();
           this.products = resp;
+
+          if (this.products.length == 0)
+            return;
+
+          this.seoService.setTitle(this.products[0].category_name);
+          this.seoService.setDescKeyw(this.products[0].category_description_seo, this.products[0].category_keywords_seo);
+
+
           setTimeout(() => {
             if (isPlatformBrowser(this.platformId)) {
               this.initialMagnific();
@@ -98,6 +136,12 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         (resp) => {
           this.fadeIn();
           this.products = resp;
+
+          if (this.products.length == 0)
+            return;
+
+          this.seoService.setTitle(this.products[0].subcategory_name);
+          this.seoService.setDescKeyw(this.products[0].subcategory_description_seo, this.products[0].subcategory_keywords_seo);
 
           setTimeout(() => {
             if (isPlatformBrowser(this.platformId)) {
@@ -140,26 +184,14 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
           close: () => {  $('body').removeAttr( 'style' ); $('body').removeClass('blockScroll'); }
         }
       });
-      // $('body').on('click', '.mfp-close', function () {
-      //   $('body').removeClass('blockScroll');
-      //   $('body').css({marginRight: 0 + 'px'});
-      //   // $('body').addClass('mr0');
-      //   // console.log('bg');
-      // });
 
-      // $('body').on('click', '.mfp-bg.my-mfp-zoom-in.mfp-ready', function () {
-      //  // $('body').removeClass('blockScroll');
-      //  // $('body').css({marginRight: 0 + 'px'});
-      //   // $('body').addClass('mr0');
-      //   console.log('bg');
-      // });
 
     });
 
   }
 
   overlayClick(event, nameProd) {
-    // event.preventDefault();
+     event.preventDefault();
     // event.stopPropagation();
     // console.log(event.target.classList.contains('btn-white'));
 
