@@ -227,13 +227,40 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
       if ( this.sort === 'возростанию') {
         this.products.sort(function (a, b) {
+          if (!a.avalible_in_group) {
+            return 1;
+          }
            return +a.product_price - +b.product_price;
         });
+
+        // проданные в крнец
+        this.products.sort(function (a, b) {
+          if (!a.avalible_in_group) {
+            return 1;
+          }
+          else {
+            return -1;
+          }
+        });
+
       }
 
       if ( this.sort === 'убыванию') {
         this.products.sort(function (a, b) {
+          if (!a.avalible_in_group ) {
+            return 1;
+          }
           return +b.product_price - +a.product_price;
+        });
+
+          // проданные в крнец
+        this.products.sort(function (a, b) {
+          if (!a.avalible_in_group) {
+            return 1;
+          }
+          else {
+            return -1;
+          }
         });
       }
 

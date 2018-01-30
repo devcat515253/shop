@@ -35,7 +35,7 @@
           <div class="description">
             <div *ngIf="selectedProduct?.product_promo_price" class="banner__rt-wr posr"> <div class="banner__sale">Sale</div></div>
             <div class="description__product-vendor">
-              <a *ngIf="selectedProduct" [routerLink]="['/collections/vendor', selectedProduct?.product_manufacturer]" (click)="closePopup()">{{selectedProduct?.product_manufacturer}}</a>
+              <a *ngIf="selectedProduct" [routerLink]="['/collections/vendor', selectedProduct?.product_manufacturer]">{{selectedProduct?.product_manufacturer}}</a>
 
             </div>
             <div class="description__product-code"><span>{{selectedProduct?.product_id}}</span></div>
