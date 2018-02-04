@@ -18,7 +18,7 @@ export class CartService {
   shortCart: ShortCartItem[] = [];
   fullCart: FullCartItem[] = [];
   products: Product[];
-  baseUrl  = 'http://localhost:8000';
+  // baseUrl  = 'http://localhost:8000';
   allCount: number;
   allSum: number;
   observableAllCount = new BehaviorSubject<number>(0);
@@ -179,6 +179,15 @@ export class CartService {
 
   openQuickCart() {
     if (isPlatformBrowser(this.platformId)) {
+
+      if (window.matchMedia('(max-width: 991px)').matches) {
+        let vidgetCart = $('.fixed-menu .cart-dropdown .data-dropdown');
+        let vidgetLink = $('.fixed-menu .cart-dropdown .cart-ref');
+
+        vidgetCart.css({'display': 'flex'});
+        vidgetLink.addClass('hoverCardRef');
+        return;
+      }
 
       let vidgetCart = $('.main .cart-dropdown .data-dropdown');
       let vidgetLink = $('.main .cart-dropdown .cart-ref');

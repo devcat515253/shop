@@ -6,7 +6,7 @@ footer
   color: #6b6b6b
   .container
     margin: 0 auto
-    padding: 2rem 0
+    padding: 2rem 1rem
 .footer-wr
   display: flex
 .footer
@@ -72,3 +72,68 @@ ul
       font-family: 'Roboto',sans-serif
       &:hover
         color: white
+
+
+
+
+@media only screen and (max-width : 767px)
+  .footer-wr
+    flex-direction: column
+    align-items: center
+    nav
+      display: none
+    .column
+      width: 420px
+      &:nth-last-child(2)
+        border-bottom: 1px solid #7f8c8d
+        margin-bottom: 11px
+    .footer__logo
+      display: flex
+      align-items: center
+      justify-content: center
+      margin-bottom: 3rem
+    .title
+      border-top: 1px solid #7f8c8d
+      margin-bottom: 5px
+      padding: 10px 20px 7px
+      position: relative
+
+      &:after
+        content: ""
+        position: absolute
+        top: 51%
+        right: 2.3rem
+        width: 10px
+        height: 10px
+        border-right: 1px solid #d9d9d9
+        border-bottom: 1px solid #d9d9d9
+        -webkit-transform: rotate(45deg) translate(-50%, -50%)
+        transform: rotate(45deg) translate(-50%, -50%)
+
+    ul
+      padding-left: 20px
+      li
+        margin-bottom: 13px
+    .social-icons
+      justify-content: center
+      padding: 15px 0
+  .footer__credits
+    display: flex
+    justify-content: center
+    .credits
+      width: 420px
+      text-align: center
+      display: inline-block
+
+
+@media only screen and (max-width : 539px)
+  .footer-wr
+    nav
+      display: none
+    .column
+      width: 300px
+      margin: 0
+    .footer__credits
+      .credits
+        width: 300px
+

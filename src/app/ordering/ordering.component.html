@@ -7,12 +7,14 @@
 
     <div class="shopping-list__under-title"> <div class="under-line"></div></div>
     <div class="shopping-list__order" *ngIf="!hideForm">
-      <p class="delivery-info">Доставка осуществляется Новой Почтой, наложеным платежем <br>
-        при закасе свыше 200 грн доставка бесплатно,
-        при закасе менее 200 грн стоимость доставки 50 грн, Одесса и Киев бесплатно
+      <p class="delivery-info" *ngIf="cart.length > 0">Доставка осуществляется Новой Почтой, наложеным платежем <br>
+        при закасе свыше 200 грн доставка бесплатно <br>
+        при закасе менее 200 грн стоимость доставки 50 грн <br> Одесса и Киев бесплатно
       </p>
       <div class="order" *ngIf="cart.length > 0; else empty">
               <div class="order__info">
+
+
 
                 <div class="info">
 
@@ -50,7 +52,7 @@
                         </mat-form-field>
                     </div>
 
-                  <div class="office">
+                  <div class="office" [class.disabled]="offices.length == 0">
                     <mat-form-field>
                       <mat-select placeholder="Отделение Новой Почты" [(value)]="selectedOffice" (ngModelChange)="officeChange($event)">
                         <mat-option *ngFor="let office of offices" [value]="office.DescriptionRu">
@@ -85,15 +87,39 @@
                   </div>
 
                   <div class="order_confirm">
+
+                    <a href="#" class=" btn btn-back" (click)="goToBack($event)">
+                      <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path></svg>
+                      <span>Вернуться назад</span></a>
+
+
+
                     <!--<a [class.disabled]="hasError || emailCheck.invalid"-->
-                    <a [class.disabled]="hasError"
-                       (click)="confirmOrder()" class=" btn btn-confirm">Заказ подтверждаю</a>
+                    <a href="#" [class.disabled]="hasError"
+                       (click)="confirmOrder($event)" class=" btn btn-confirm">Заказ подтверждаю</a>
+
+
 
                   </div>
 
                 </div>
               </div>
               <div class="order__cart">
+
+                <div class="order__cart-mobile">
+                  <div class="wrap">
+                    <a href="#" class="cart-mobile-detail" (click)="$event.preventDefault();">
+                      <svg width="20" height="19" xmlns="http://www.w3.org/2000/svg" class="icon-cart">
+                        <path d="M17.178 13.088H5.453c-.454 0-.91-.364-.91-.818L3.727 1.818H0V0h4.544c.455 0 .91.364.91.818l.09 1.272h13.45c.274 0 .547.09.73.364.18.182.27.454.18.727l-1.817 9.18c-.09.455-.455.728-.91.728zM6.27 11.27h10.09l1.454-7.362H5.634l.637 7.362zm.092 7.715c1.004 0 1.818-.813 1.818-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817zm9.18 0c1.004 0 1.817-.813 1.817-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817z"></path>
+                      </svg>
+                      <span>Показать продукты заказа</span>
+                      <svg width="11" height="6" xmlns="http://www.w3.org/2000/svg" class="icon-cart__dropdown" fill="#000"><path d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z"></path></svg>
+                    </a>
+                    <span><strong>{{allSumInCart}} грн</strong></span>
+
+                  </div>
+                </div>
+
                 <div class="cart">
                   <div class="cart__items">
 
@@ -151,18 +177,25 @@
 
 
       <ng-template #empty>
-        <div class="cart-widget">
-          <div class="empty-cart">
-            <h2>Ваша корзина пуста</h2>
+        <div class="empty-cart-wr" >
+          <div class="cart-widget">
+            <div class="empty-cart">
+              <h2>Ваша корзина пуста</h2>
+              <a routerLink="/" class=" btn btn-confirm">На главную</a>
+            </div>
           </div>
         </div>
       </ng-template>
 
     </div>
 
-    <div class="cart-widget fadeInRouter" *ngIf="orderSuccess">
-      <div class="empty-cart">
-        <h2>Спасибо за заказ. Наш менеджер свяжется с Вами в ближайшее время</h2>
+    <div class="empty-cart-wr" *ngIf="orderSuccess">
+      <div class="cart-widget fadeInRouter" >
+        <div class="empty-cart">
+          <h2>Спасибо за заказ. <br> <span>Номер вашего заказа {{ successOrder_id }}</span> <br>Наш менеджер свяжется с Вами в ближайшее время</h2>
+
+          <a routerLink="/" class=" btn btn-confirm">На главную</a>
+        </div>
       </div>
     </div>
 

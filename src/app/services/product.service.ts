@@ -6,7 +6,8 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class ProductService {
       // Products: Product[];
-      baseUrl  = 'http://192.168.0.106:8000';
+  // baseUrl  = 'http://localhost:8000';
+      baseUrl  = 'http://192.168.0.150:8000';
   constructor(private http: HttpClient) { }
 
 
@@ -85,6 +86,31 @@ export class ProductService {
 
   getRandomProds() {
     return this.http.get<Product[]>(`${this.baseUrl}/api/getRandomProds` );
+  }
+
+
+  getProdsForMainSearch() {
+    return this.http.get<Product[]>(`${this.baseUrl}/api/getProdsForMainSearch` );
+  }
+
+  checkImg(imgName) {
+    return this.http.get<any>(`${this.baseUrl}/api/checkImg/${imgName}` );
+  }
+
+  checkNameColor(name, color) {
+    let nameColor = {
+      name: name,
+      color: color
+    };
+    return this.http.post<any>(`${this.baseUrl}/api/checkNameColor`, nameColor);
+  }
+
+  updateAvailable(product_id, product_available) {
+    let body = {
+      product_id: product_id,
+      product_available: product_available
+    };
+    return this.http.post<any>(`${this.baseUrl}/api/updateAvailable`, body);
   }
 
 }

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {CartService} from '../services/cart.service';
 import {FullCartItem} from '../entity/full-cart-item';
 import {ShortCartItem} from '../entity/short-cart-item';
+import {isPlatformBrowser} from '@angular/common';
+
+declare var $: any;
 
 @Component({
   selector: 'app-cart-widget',
@@ -14,12 +17,19 @@ export class CartWidgetComponent implements OnInit {
   allCountInCart: number;
   allSumInCart: number;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,
+              @Inject(PLATFORM_ID) private platformId: string) { }
 
   ngOnInit() {
    this.getCart();
   }
 
+  removeBlockScroll() {
+    if (isPlatformBrowser(this.platformId)) {
+      $('body').removeClass('blockScroll');
+    }
+
+  }
 
   getCart() {
     this.cartService.getCarttObs().subscribe( (resp) => {

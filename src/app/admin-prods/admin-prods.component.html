@@ -54,14 +54,14 @@
 
         <td data-label="">
           <label >
-            <input [(ngModel)]="product.product_available" (ngModelChange)="isPromoProdChange(product)" type="checkbox" disabled/>
+            <input [(ngModel)]="product.product_available" (ngModelChange)="isAvailableProdChange(product)" type="checkbox" />
             <span class="checkbox__text"></span>
           </label>
         </td>
         <td data-label="">
           <label>
-            <input [(ngModel)]="product.product_ispromo" (ngModelChange)="isPromoProdChange(product)" type="checkbox" disabled/>
-            <span class="checkbox__text"></span>
+            <input [(ngModel)]="product.product_ispromo" (ngModelChange)="isPromoProdChange(product)" type="checkbox" disabled />
+            <span class="checkbox__text" style="opacity: .5"></span>
           </label>
         </td>
 

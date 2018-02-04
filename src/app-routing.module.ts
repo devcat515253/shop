@@ -12,6 +12,7 @@ import {AdminProdsComponent} from './app/admin-prods/admin-prods.component';
 import {AdminOrderDelailComponent} from './app/admin-order-delail/admin-order-delail.component';
 import {AdminProdAddComponent} from './app/admin-prod-add/admin-prod-add.component';
 import {AdminProdUpdateComponent} from './app/admin-prod-update/admin-prod-update.component';
+import {SearchComponent} from './app/search/search.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'products/:nameProduct/:idProduct', component: ProductDetailsComponent },
   { path: 'cart', component: ShoppingCartComponent },
   { path: 'ordering', component: OrderingComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'admin', component: AdminComponent,
     children: [
       { path: '', redirectTo: '/admin/orders', pathMatch: 'full'},

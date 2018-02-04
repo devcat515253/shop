@@ -51,6 +51,7 @@
     width: 250px
     margin-bottom: 5rem
     margin-top: 5rem
+    padding: 0 4px
     &:hover
       .overlay
         opacity: 1
@@ -113,6 +114,8 @@
         max-height: 150px
 
 
+
+
 .image
   // height: 168px
   &__img
@@ -123,3 +126,43 @@
 
 .image__overlay
   height: 0
+
+.shopping-list__under-title
+  display: flex
+  justify-content: center
+.under-line
+  width: 75%
+
+
+
+.items .item:hover .overlay
+  opacity: 0
+.items .item .overlay
+  cursor: pointer
+  .btn-white
+    display: none
+
+
+
+
+
+
+
+@media only screen and (max-width : 1199px)
+  .shopping-list .shopping-list__title .title
+    font-size: 2.5rem
+
+
+
+@media only screen and (max-width : 767px)
+  .flickity-prev-next-button
+    display: none
+
+@media only screen and (max-width : 479px)
+  .under-line
+    width: 100%
+  .items
+    .item
+      width: 200px
+      .title
+        font-size: 13px

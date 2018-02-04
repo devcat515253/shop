@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {ProductService} from '../services/product.service';
 import {Product} from '../entity/product';
@@ -12,7 +12,7 @@ declare var $: any;
   styleUrls: ['./promo-slider.component.sass'],
   // encapsulation: ViewEncapsulation.None
 })
-export class PromoSliderComponent implements OnInit {
+export class PromoSliderComponent implements OnInit, AfterViewInit {
 
   products: Product[];
 
@@ -24,6 +24,14 @@ export class PromoSliderComponent implements OnInit {
 
   ngOnInit() {
     this.getRandomProds();
+  }
+
+  ngAfterViewInit() {
+    // if (isPlatformBrowser(this.platformId)) {
+    //   $('.popup-with-zoom-anim').on(function (event) {
+    //     event.preventDefault();
+    //   });
+    // }
   }
 
   getRandomProds() {
@@ -39,7 +47,7 @@ export class PromoSliderComponent implements OnInit {
 
           setTimeout(() => {
             if (isPlatformBrowser(this.platformId)) {
-              this.initialMagnific();
+              // this.initialMagnific();
               this.initSlider();
             }
           }, 50);
@@ -68,6 +76,12 @@ export class PromoSliderComponent implements OnInit {
         midClick: true,
         removalDelay: 300,
         mainClass: 'my-mfp-zoom-in',
+        disableOn: function() {
+          // if ( $(window).width() < 768 ) {
+          //   return false;
+          // }
+          return false;
+        },
         callbacks: {
           beforeOpen: () => { $('body').css({marginRight: this.scrollbarWidth() + 'px' });  $('body').addClass('blockScroll'); },
           close: () => {  $('body').removeAttr( 'style' ); $('body').removeClass('blockScroll'); }
@@ -85,8 +99,11 @@ export class PromoSliderComponent implements OnInit {
     return scrollbarWidth;
   }
 
-  showShortInfo(product_name: string) {
+  showShortInfo(product_name: string, event) {
+    event.preventDefault();
     this.quickNameProduct = product_name;
+
+    this.router.navigate(['/products', product_name]);
 
   }
 

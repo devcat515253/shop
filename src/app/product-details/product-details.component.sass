@@ -8,13 +8,17 @@
 
   ul
     display: flex
+    flex-wrap: wrap
     li
       text-transform: uppercase
       line-height: 2.5rem
-      &+li:before
+      &:after
         margin: 0 8px
         color: #03a196
         content: "/\00a0"
+      &:last-child
+        &:after
+          display: none
   a
     color: #03a196
     font-size: 14px
@@ -119,11 +123,11 @@
 
 
 .promo-price
-  color: #d54d4d
+  color: #d54d4d!important
   margin-right: .5rem
 .was-price
   text-decoration: line-through
-  color: #8c8b8b
+  color: #8c8b8b!important
   //text-shadow: none
   //font-weight: normal
 
@@ -212,4 +216,70 @@
     border-right: 1px solid gray
     border-bottom: 1px solid gray
     transform: rotate(45deg) translate(-50%, -50%)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width : 1199px)
+  .description span
+    font-size: 2.2rem
+    line-height: 3.5rem
+    color: #333333
+
+  .description .price
+    font-size: 2.3rem
+    line-height: 3.5rem
+
+
+@media only screen and (max-width : 991px)
+  //.shopping-list
+  //  .container
+  //    padding-left: 3rem
+  //    padding-right: 3rem
+  .breadcrumbs
+    font-size: 13px
+    a
+      font-size: 13px
+
+
+
+@media only screen and (max-width : 767px)
+  .container
+    width: 436px
+  .content
+    flex-direction: column
+  .description .product-name
+    font-size: 22px
+    line-height: 30px
+  .content__slider
+    margin-right: 0
+  .content__description
+    margin-left: 0
+
+  .description__product-colors, .description__product-quantity
+    max-width: 100%
+
+@media only screen and (max-width : 539px)
+  //
+
+
+@media only screen and (max-width : 479px)
+  .btn-green
+    font-size: 12px
+  .quantity__qty
+    margin-right: 1.5rem
+  .container
+    width: 316px
+    //width: 100%
+
 

@@ -34,7 +34,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   idProduct: number;
 
 
-
   constructor(private seoService: SeoService,
               private activateRoute: ActivatedRoute,
               @Inject(PLATFORM_ID) private platformId: string,
@@ -44,6 +43,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
              ) {}
 
   ngOnInit() {
+
     this.activateRoute.params.subscribe(params => {
       this.nameProduct = params['nameProduct'];
       this.idProduct = params['idProduct'];
@@ -89,8 +89,9 @@ seo (prod) {
           // this.selectedProduct = this.products[0];
            // console.log(this.products);
           // this.seo(this.selectedProduct);
-          if (this.products.length == 0)
+          if (this.products.length == 0){
             return;
+          }
 
 
           if (this.idProduct) {
@@ -122,7 +123,6 @@ seo (prod) {
             this.seoService.setTitle(this.selectedProduct.product_name);
             this.seoService.setDescKeyw(this.selectedProduct.product_description_seo, this.selectedProduct.product_keywords_seo);
           }
-
 
 
 

@@ -7,7 +7,7 @@
               <!--<li *ngIf="!subCategory"><a  routerLink="/collections/{{category}}">{{category}}</a></li>-->
               <li *ngIf="!subCategory"><a *ngIf="products"  routerLink="/collections/{{category}}">{{products[0]?.category_name}}</a></li>
               <li *ngIf="subCategory"><a  *ngIf="products" routerLink="/collections/{{category}}/{{subCategory}}">{{products[0]?.category_name}} - {{products[0]?.subcategory_name}}</a></li>
-              <li>Страница 1 из 4</li>
+              <li>Страница {{ currentPage }} из {{ countPages }}</li>
             </ul>
 
           </div>

@@ -48,7 +48,7 @@
                 <img class="img-responsive" [src]="product.images_middle" alt="">
               </div>
               <div class="image__overlay">
-                <a href="#small-dialog-promo-slider"  class="popup-with-zoom-anim" (click)="showShortInfo(product.product_name)">
+                <a href="#small-dialog-promo-slider"  class="popup-with-zoom-anim" (click)="showShortInfo(product.product_name, $event)">
                   <div *ngIf="product.product_promo_price" class="banner__rt-wr"> <div class="banner__sale">Sale</div></div>
                   <div class="overlay">
                     <a href="#small-dialog-promo-slider" class="popup-with-zoom-anim btn btn-white" (click)="showShortInfo(product.product_name)">Quick View</a>

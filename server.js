@@ -41,8 +41,8 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist-server/mai
 
 const app = express();
 const port = 8000;
-const baseUrl = `http://localhost:${port}`;
-// const baseUrl = `http://192.168.0.106:${port}`;
+// const baseUrl = `http://localhost:${port}`;
+ const baseUrl = `http://192.168.0.150:${port}`;
 
 
 // // Add headers
@@ -845,7 +845,7 @@ app.post('/api/updateOrder', function(req, res) {
             for (orderProduct of order.cart){
               let newPromice = sequelize.query(
                 `INSERT INTO shop.order_prod(order_id, product_id, order_prod_count, order_prod_price, order_prod_promo_price) 
-                  values ('${order.order_id}', '${orderProduct.product.product_id}' , '${orderProduct.count}', '${orderProduct.product.product_price}', '${orderProduct.product.product_promo_price}')`,
+                  values (${order.order_id}, ${orderProduct.product.product_id} , ${orderProduct.count}, ${orderProduct.product.product_price}, ${orderProduct.product.product_promo_price})`,
                 { type: sequelize.QueryTypes.INSERT, transaction: transaction },{ model: Order_prod }
               );
               promises.push(newPromice);
@@ -906,6 +906,9 @@ app.post('/api/addOrder', function(req, res) {
    // + ' ' + ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) +':'+ ('0' + now.getSeconds()).slice(-2);
    let formated_date = getCurrentDateTime();
 
+
+   let order_id = 0;
+
   // console.log(order);
   // sequelize.query(
   //   `INSERT INTO shop.order(order_date,order_city,order_office,order_name_customer,order_phone_customer,order_email_customer,order_sum, order_status)
@@ -914,27 +917,34 @@ app.post('/api/addOrder', function(req, res) {
   return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
 
 
-          sequelize.query(
+         return sequelize.query(
             `INSERT INTO shop.order(order_date, order_city, order_office, order_name_customer, order_famil_customer, order_phone_customer, order_email_customer, order_sum, order_status) 
             values ('${formated_date}', :selectedCity, :selectedOffice, :name, :famil, :phone, :email, :allSumInCart, 'Новый' )`,
             { replacements: { selectedCity: order.selectedCity,  selectedOffice: order.selectedOffice, name: order.name, famil: order.famil, phone: order.phone,  email: order.email, allSumInCart: order.allSumInCart }},
             { type: sequelize.QueryTypes.INSERT , transaction: transaction},{ model: Order }
           ).then(function (orderInsertId) {
             // console.log(orderInsertId[0]);
+            order_id = orderInsertId[0];
 
             let promises = [];
 
               for (orderProduct of order.cart){
                 let newPromice = sequelize.query(
                   `INSERT INTO shop.order_prod(order_id, product_id, order_prod_count, order_prod_price, order_prod_promo_price) 
-                  values ('${orderInsertId[0]}', '${orderProduct.product.product_id}' , '${orderProduct.count}', '${orderProduct.product.product_price}', '${orderProduct.product.product_promo_price}')`,
-                  { type: sequelize.QueryTypes.INSERT , transaction: transaction },{ model: Order_prod }
+                  values (${orderInsertId[0]}, :product_id , :count, :product_price, :product_promo_price)`,
+                  {replacements: {
+                      product_id: orderProduct.product.product_id,
+                      count: orderProduct.count,
+                      product_price: orderProduct.product.product_price,
+                      product_promo_price: orderProduct.product.product_promo_price,
+                    },
+                    type: sequelize.QueryTypes.INSERT , transaction: transaction },{ model: Order_prod }
                 );
                 promises.push(newPromice);
               }
 
             return Promise.all(promises).then(function(res) {
-              console.log(res);
+              // console.log(res);
             }).catch(error =>{
               throw new Error(error);
             });
@@ -948,7 +958,8 @@ app.post('/api/addOrder', function(req, res) {
     //console.log(result);
     // transaction has been committed. Do something after the commit if required.
     let result = {
-      status: 'ok'
+      status: 'ok',
+      order_id: order_id
     };
     res.send(result);
   }).catch(err => {
@@ -1030,7 +1041,7 @@ app.get('/api/getFromCategory/:category_name', function(req, res) {
   //                 where category.category_name= ? group by product.product_name`,{ replacements: [category_name], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
   sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
-                  where category_url=? and product_status='Опубликован' group by product_name`,{ replacements: [category_url], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+                  where category_url=? and product_status='Опубликован' group by product_name order by product_available desc`,{ replacements: [category_url], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
     //console.log(products);
 
     res.send(products);
@@ -1051,7 +1062,7 @@ app.get('/api/getFromSubCategory/:subcategory_name', function(req, res) {
 
   sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
-                  where subcategory_url=? and product_status='Опубликован' group by product_name `,{ replacements: [subCategory_utl], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+                  where subcategory_url=? and product_status='Опубликован' group by product_name order by product_available desc`,{ replacements: [subCategory_utl], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
 
     res.send(products);
 
@@ -1150,7 +1161,7 @@ app.get('/api/getByVendor/:vendor', function(req, res) {
 
   sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
-                  where product_manufacturer=? and product_status='Опубликован' group by product_name `,{ replacements: [vendor], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+                  where product_manufacturer=? and product_status='Опубликован' group by product_name order by product_available desc`,{ replacements: [vendor], type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
 
     res.send(products);
 
@@ -1168,7 +1179,7 @@ app.get('/api/getRandomProds', function(req, res) {
 
   sequelize.query(`SELECT *, max(product_available) as 'avalible_in_group' FROM (select * from((shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)) 
                   inner join shop.images using (product_id) GROUP BY product_name , IF(product_promo_price IS NULL,1,0), IF(product_promo_price = 0,1,0), product_promo_price  asc) as t
-                  where product_status='Опубликован' group by product_name ORDER BY RAND() limit 30`,{ type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+                  where product_status='Опубликован' group by product_name ORDER BY RAND() limit 20`,{ type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
 
     res.send(products);
 
@@ -1179,7 +1190,95 @@ app.get('/api/getRandomProds', function(req, res) {
 
 });
 
+//выборка продуктов для основного поиска
+app.get('/api/getProdsForMainSearch', function(req, res) {
 
+
+  sequelize.query(`SELECT *  FROM (shop.product inner join shop.subcategory using (subcategory_id)) inner join shop.category using (category_id)
+                  inner join shop.images using (product_id) 
+                  where product_status='Опубликован'`,{ type: sequelize.QueryTypes.SELECT }, { model: Product }).then(products => {
+
+    res.send(products);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+
+});
+
+//проверить картинку
+app.get('/api/checkImg/:nameImg', function(req, res) {
+
+  let nameImg = req.params.nameImg;
+  nameImg = `assets/img/products/${nameImg}`;
+
+  sequelize.query(`SELECT *  FROM  shop.images 
+                  where images_mini='${nameImg}' or images_middle='${nameImg}' or images_large='${nameImg}'` , { type: sequelize.QueryTypes.SELECT  }).then(images => {
+
+    res.send(images);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
+
+//проверить имя продукта и цвет на дубликат
+app.post('/api/checkNameColor', function(req, res) {
+
+  let name = req.body.name;
+  let color = req.body.color;
+
+  sequelize.query(`SELECT *  FROM  shop.product
+                  where product_name='${name}' and product_color='${color}'` , { type: sequelize.QueryTypes.SELECT  }).then(prod => {
+
+    res.send(prod);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
+
+// update в наличии
+app.post('/api/updateAvailable', function(req, res) {
+
+  let product_id = req.body.product_id;
+  let product_available = req.body.product_available;
+
+  sequelize.query(`UPDATE shop.product
+                      SET 
+                          product_available  = ${product_available}
+                      where
+                            product_id=${product_id}
+                          
+                    ` , { type: sequelize.QueryTypes.UPDATE  }).then(prod => {
+
+    res.send(prod);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
+
+//проверить логин админа
+app.post('/api/checkLoginAdmin', function(req, res) {
+
+  let login = req.body.login;
+  let pas = req.body.pas;
+
+  sequelize.query(`SELECT *  FROM  shop.login_admin
+                  where login_admin_login='${login}' and login_admin_pas='${pas}'` , { type: sequelize.QueryTypes.SELECT  }).then(prod => {
+
+    res.send(prod);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
 
 
 

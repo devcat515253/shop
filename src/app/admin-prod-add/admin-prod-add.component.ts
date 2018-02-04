@@ -4,6 +4,9 @@ import {Product} from '../entity/product';
 import {isPlatformBrowser} from '@angular/common';
 import {CategoryService} from '../services/category.service';
 
+import 'rxjs/add/operator/mergeMap';
+import {of} from 'rxjs/observable/of';
+
 declare var $: any;
 
 @Component({
@@ -127,6 +130,11 @@ export class AdminProdAddComponent implements OnInit {
   fileChange(event) {
     let fileList: FileList = event.target.files;
 
+
+    // if (fileList.length > 0) {
+    //
+    // }
+
     if (isPlatformBrowser(this.platformId)) {
 
       if (fileList.length > 0) {
@@ -222,21 +230,81 @@ export class AdminProdAddComponent implements OnInit {
     this.formData.set('data', JSON.stringify(this.product));
 
 
-    this.productService.addNewProd(this.formData).subscribe((resp) => {
-        // console.log(resp);
-        let status = resp.status;
+    let nameImg: any = this.formData.get('photo');
+    nameImg = nameImg.name;
 
-        if (status === 'ok') {
-          this.scrollToTop();
-          alert('Продукт добквлен, можете добавить еще');
-        }
-        else {
-          this.scrollToTop();
-          alert('Произошла ошибка добавления продукта, возможно заполнены не все поля');
-          console.log('Произошла ошибка добавления продукта, возможно заполнены не все поля');
-        }
-    },
-      error => console.log(error) );
+
+     this.product.product_name = this.product.product_name.trim();                                                 // удаляем лишние пробелы с начала и конца строки
+     this.product.product_name = this.product.product_name .replace(/ +/g, ' ');            // удаляем лишние пробелы между словами
+
+    this.product.product_color = this.product.product_color.trim();
+
+    // цепочка проверок и в случае успеха добавление
+    this.productService.checkImg(nameImg)
+      .flatMap((isImg) => {
+            // console.log(isImg);
+            if (isImg.length > 0) {
+              alert('Картинка с таким именем уже существует \nпереименуйтие новую картинку или выберите другую');
+              return of();
+            }
+
+          return this.productService.checkNameColor(this.product.product_name, this.product.product_color);
+      })
+      .flatMap((isNameColor) => {
+          // console.log(isNameColor);
+          if (isNameColor.length > 0) {
+            alert('Продукт с таким именем и цветом уже существует');
+            return of();
+          }
+
+          return this.productService.addNewProd(this.formData);
+    })
+      .subscribe( (resp) => {
+
+            let status = resp.status;
+
+            if (status === 'ok') {
+              this.scrollToTop();
+              alert('Продукт добавлен, можете добавить еще');
+
+              if (isPlatformBrowser(this.platformId)) {  // очистка картинки
+                this.formData.delete('photo');
+                this.selectImg = '';
+              }
+            }
+            else {
+              this.scrollToTop();
+              alert('Произошла ошибка добавления продукта, возможно заполнены не все поля');
+              console.log('Произошла ошибка добавления продукта, возможно заполнены не все поля');
+            }
+
+
+      }, error => console.log(error) );
+
+
+
+
+    // this.productService.addNewProd(this.formData).subscribe((resp) => {
+    //     // console.log(resp);
+    //     let status = resp.status;
+    //
+    //     if (status === 'ok') {
+    //       this.scrollToTop();
+    //       alert('Продукт добавлен, можете добавить еще');
+    //
+    //       if (isPlatformBrowser(this.platformId)) {  // очистка картинки
+    //         this.formData.delete('photo');
+    //         this.selectImg = '';
+    //       }
+    //     }
+    //     else {
+    //       this.scrollToTop();
+    //       alert('Произошла ошибка добавления продукта, возможно заполнены не все поля');
+    //       console.log('Произошла ошибка добавления продукта, возможно заполнены не все поля');
+    //     }
+    // },
+    //   error => console.log(error) );
+
 
 
     // console.log(this.product);

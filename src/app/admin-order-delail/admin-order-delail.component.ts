@@ -167,6 +167,15 @@ export class AdminOrderDelailComponent implements OnInit , AfterViewInit{
             return;
           }
 
+          if (!newItemProd.product_available ) {
+            alert('Продукта нет на складе');
+            return;
+          }
+          if (newItemProd.product_status == 'Скрыт') {
+            alert('Этот продукт скрыт');
+            return;
+          }
+
           newItemProd.order_prod_count = 1;
           newItemProd.order_prod_price = newItemProd.product_price;
 

@@ -55,6 +55,7 @@
 
 
 
+
 .login
   font-size: 12px
   display: flex
@@ -97,7 +98,7 @@
     color: #f4f4f4
 
 .hoverCardRef
-  background: white
+  background: white!important
   color: #333333!important
 
 .header
@@ -328,15 +329,23 @@
   //  z-index: 1
 
 .fixed-menu
+  a
+    font-family: "Open Sans" ,sans-serif
   display: none
   position: fixed
   left: 0
   top: 0
   width: 100%
   z-index: 99
+  .main_menu
+    align-items: stretch
+    .top-menu
+      >ul
+        height: 100%
   .logo
+    width: 205px
     img
-      max-height: 45px
+      max-height: 40px
   .data-dropdown
     padding-top: 1rem!important
     li
@@ -367,3 +376,194 @@
         z-index: 1
 
 
+
+
+
+
+
+
+
+
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1199px)
+ .dropdown-menu > a
+    padding-right: 2.5rem!important
+
+
+@media only screen and (max-width: 1100px) and (min-width: 992px)
+  .fixed-menu
+    .main_menu .top-menu > ul
+      margin: 0
+    .logo
+      width: 165px
+    .top-menu > ul > li > a
+      font-size: 13px
+      padding-right: 2.2rem !important
+    .top-menu > ul .dropdown-menu.no-drop > a
+      padding-right: 0 !important
+    .data-dropdown li a
+      font-size: 13px
+    .top-menu > ul li
+      padding: 0 1rem
+    .dropdown-menu > a:after
+      width: 8px
+      height: 8px
+      top: 46%
+
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 991px)
+
+  .dropdown-menu:hover > a
+    border-bottom: 1px solid transparent
+
+  .nav_main
+    display: none
+  .header__baner
+    display: none
+  .header__top-line
+    display: none
+
+  .fixed-menu
+    .cart-dropdown .cart-ref
+      width: 125px
+      display: flex
+      align-items: center
+      justify-content: center
+    .hiddenData-wr
+      display: none
+    .header__baner
+      display: block
+    .mobile_nav
+      display: block
+    .mobile_nav-link
+      display: flex
+      align-items: center
+      padding-left: 2rem
+      user-select: none
+      width: 125px
+
+      .menu_title
+        color: #f4f4f4
+        display: inline
+        padding-left: 2rem
+        position: relative
+        font-weight: bold
+        font-size: 14px
+    .main_menu__left
+      display: none
+    .top-logo
+      display: flex
+      a
+        display: flex
+        align-items: center
+        justify-content: center
+        padding-left: 0
+    .main_menu__right
+      position: relative
+      justify-content: space-between
+      background-color: #383838
+    .top-menu
+      display: none
+      position: absolute
+      left: 0
+      top: 100%
+      width: 100%
+      background: rgba(21,21,21,0.9)
+      overflow-y: auto
+      max-height: calc(100vh - 88px)
+      ul
+        //display: block
+        padding-top: 2rem
+        li
+          position: relative
+          width: 100%
+          text-align: left
+          a
+            width: 100%
+          //&:hover
+          //  .data-dropdown
+          //    display: block
+
+
+      .data-dropdown
+        display: block
+        position: relative
+        padding-top: 0!important
+        padding-left: 2rem
+        a
+          font-size: 13px
+      .dropdown-menu ul
+        background: transparent
+
+
+
+    .top-menu .dropdown-menu  a
+      padding: 0
+      &:before
+        display: none
+      .spanBlock
+        padding: 1.2rem 0
+        line-height: 2.2rem
+
+
+@media only screen and (max-width : 479px)
+  .fixed-menu .mobile_nav-link
+    padding-left: 1rem
+    width: 90px
+    .menu_title
+      padding-left: 1rem
+      font-size: 11px
+  .fixed-menu .cart-dropdown .cart-ref
+    width: 90px
+  .fixed-menu .top-logo a
+    width: 100px
+  .fixed-menu
+    max-width: 100vw
+
+
+
+
+
+
+@media only screen and (min-width : 992px)
+  .fixed-menu
+    .header__baner
+      display: none
+    .mobile_nav-link
+      display: none
+    .top-logo
+      display: none
+    //.dropdown-menu .data-dropdown
+    //  display: none
+    //.dropdown-menu:hover .data-dropdown
+    //  display: flex
+
+
+
+@media only screen and (max-width : 767px)
+  .fixed-menu
+    .cart-dropdown.dropdown:hover
+      .cart-ref:hover
+        background-color: #d54d4d
+        color: white
+      .data-dropdown
+        display: none
+    .cart-dropdown.dropdown .cart-ref
+      padding: 0
+      >span
+        display: flex
+        align-items: center
+        justify-content: center
+        padding: 0 2.5rem
+        height: 100%
+        width: 100%
+
+
+
+@media only screen and (min-width : 992px)
+  .cart-dropdown.dropdown:hover
+  .data-dropdown
+    display: flex

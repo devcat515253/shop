@@ -5,8 +5,8 @@ import {Product} from '../entity/product';
 
 @Injectable()
 export class NovaPoshtaService {
-
-  baseUrl  = 'http://192.168.0.106:8000';
+  // baseUrl  = 'http://localhost:8000';
+  baseUrl  = 'http://192.168.0.150:8000';
 
   constructor(private http: HttpClient) { }
 

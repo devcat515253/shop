@@ -11,7 +11,6 @@ declare var $: any;
 })
 export class HomeComponent implements OnInit , AfterViewInit, OnDestroy {
 
-
   constructor(meta: Meta, title: Title,
               @Inject(PLATFORM_ID) private platformId: string) {
 
@@ -40,7 +39,6 @@ export class HomeComponent implements OnInit , AfterViewInit, OnDestroy {
       //   });
       //
       // });
-
 
     }
   }

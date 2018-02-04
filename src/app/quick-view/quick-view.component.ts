@@ -12,7 +12,7 @@ declare var $: any;
   selector: 'app-quick-view',
   templateUrl: './quick-view.component.html',
   styleUrls: ['./quick-view.component.sass'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() nameProduct: string;
@@ -20,6 +20,8 @@ export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
 
   products: Product[];
   selectedProduct: Product;
+
+
   constructor(@Inject(PLATFORM_ID) private platformId: string,
               private productService: ProductService,
               private cartService: CartService) { }
@@ -37,10 +39,12 @@ export class QuickViewComponent implements OnInit, AfterViewInit, OnChanges {
         (resp) => {
           this.products = resp;
 
-          if (this.products.length == 0)
+          if (this.products.length == 0) {
             return;
+          }
 
           this.selectedProduct = this.products[0];
+
           // console.log(this.nameProduct);
           // console.log(this.products);
         },

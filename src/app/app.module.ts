@@ -33,6 +33,8 @@ import { AdminProdUpdateComponent } from './admin-prod-update/admin-prod-update.
 import {SeoService} from './services/seo.service';
 import { PromoSliderComponent } from './promo-slider/promo-slider.component';
 import { QuickviewSliderComponent } from './quickview-slider/quickview-slider.component';
+import { LinkStopDirective } from './link-stop.directive';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { QuickviewSliderComponent } from './quickview-slider/quickview-slider.co
     AdminProdAddComponent,
     AdminProdUpdateComponent,
     PromoSliderComponent,
-    QuickviewSliderComponent
+    QuickviewSliderComponent,
+    LinkStopDirective,
+    SearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),

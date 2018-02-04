@@ -38,6 +38,7 @@
 .description
   padding-top: 6rem
   padding-bottom: 7rem
+  background-color: #f6f7f9
   .container
     padding: 0 1rem
   p
@@ -50,7 +51,8 @@
     display: block
     letter-spacing: 3px
     font-size: 2.2rem
-    line-height: 2.5rem
+    //line-height: 2.5rem
+    line-height: 3.6rem
     margin: 0 auto 1.5rem
     padding-top: 4px
 
@@ -115,4 +117,77 @@
         background: transparent
         transition: width .5s ease, background-color .5s ease
         margin: 1.5rem auto auto auto
+
+
+
+
+
+
+
+
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 959px)
+  .image-menu .item .title
+    font-size: 2.9rem
+
+
+@media only screen and (max-width : 767px)
+  .image-menu .items
+    flex-wrap: wrap
+    .item
+      width: 50%
+      .item__details
+        display: block
+        .details
+          opacity: 1
+  .image-menu .item .details__description
+    font-size: 18px
+  .btn-green-base
+    font-size: 15px
+  .image-menu .item a
+    background-color: rgba(0, 0, 0, 0.5)
+  .description .container
+    padding: 0 3rem
+
+
+@media only screen and (max-width : 639px)
+  .info .title
+    font-size: 33px
+    line-height: 6.2rem
+  .info .sub-title
+    font-size: 20px
+    line-height: 4.2rem
+
+@media only screen and (max-width : 539px)
+  .header__info
+    position: relative
+    top: 0
+    left: 0
+    transform: translate(0%, 0)
+    padding: 3rem 1rem
+  .info .title
+    color: #333333
+  .info .sub-title
+    color: #333333
+  .btn-white-base
+    color: #333333
+    border-color: #333333
+    background-color: transparent
+  .image-menu .items .item
+    width: 100%
+    .item__img
+      img
+        width: 100%
+  .description__title
+    font-size: 2rem
+
+@media only screen and (max-width : 479px)
+  .description
+    padding: 5rem 0
+    .container
+      padding: 0 1rem
+
+
 

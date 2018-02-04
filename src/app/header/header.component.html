@@ -33,14 +33,14 @@
 
       <div class="top-line__currency"></div>
 
-      <div class="top-line__login">
-        <a href="#" class="login">
+      <div class="top-line__login" style="display: none">
+        <a [routerLink]="['/']" class="login">
           <i class="fa fa-user-o" aria-hidden="true"></i>
           <span>Login</span>
         </a>
       </div>
 
-      <div class="top-line__cart main">
+      <div class="top-line__cart main mla">
         <div class="cart-dropdown dropdown">
 
         <div class="cart-dropdown__rel">
@@ -64,7 +64,7 @@
    <div class="main_menu">
 
       <div class="main_menu__left">
-        <a href="#" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
+        <a [routerLink]="['/']" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
       </div>
 
      <div class="main_menu__right">
@@ -94,7 +94,7 @@
              </form>
            </li>
            <li class="search-icon-link">
-             <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+             <a routerLink="/search" (click)="clickSearch()"><i class="fa fa-search" aria-hidden="true"></i></a>
 
            </li>
          </ul>
@@ -115,76 +115,79 @@
 
 
   <div class="header__nav fixed-menu">
+
+    <div class="header__baner">
+
+      <div   class="baner" [ngClass]="{show: !banerShow}">
+        <span>FREE SHIPPING ON ORDERS OVER £50</span>
+        <div  class="btn btn-close" (click)="banerShow=!banerShow"></div>
+      </div>
+      <!--  <div #baner   class="baner" [ngClass]="{show: !banerShow}">
+          <span>FREE SHIPPING ON ORDERS OVER £50</span>
+          <div  class="btn btn-close" (click)="baner.classList.toggle('show')"></div>
+        </div> -->
+    </div>
+
     <div class="main_menu">
 
       <div class="main_menu__left">
-        <a href="#" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
+        <a [routerLink]="['/']" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
       </div>
 
       <div class="main_menu__right">
-        <nav class="top-menu" style="display: none">
-
-          <ul >
-            <li class="dropdown-menu" *ngFor="let cat of categories" [class.no-drop]="cat.subcategories.length == 0">
-              <a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" >{{ cat.category_name }}</a>
-
-              <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
-                <li *ngFor="let subCat of cat.subcategories" >
-                  <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
-                </li>
-
-              </ul>
-
-            </li>
-
-            <li class="search-form">
-
-              <form action="#">
-                <label class="input-search">
-                  <input type="text" class="input-search search-input" placeholder="Search">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-
-                </label>
-              </form>
-            </li>
-            <li class="search-icon-link">
-              <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
-
-            </li>
-          </ul>
-
-        </nav>
 
         <nav class="top-menu">
 
           <ul >
             <li class="dropdown-menu" *ngFor="let cat of categories" [class.no-drop]="cat.subcategories.length == 0">
-              <a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" >{{ cat.category_name }}</a>
+              <a  [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active" (click)="clickSearch()"><span class="spanBlock">{{ cat.category_name }}</span></a>
+              <!--<a [routerLink]="['/collections', cat.category_url ]"   routerLinkActive="active"  appLinkStop>{{ cat.category_name }}</a>-->
 
-              <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
-                <li *ngFor="let subCat of cat.subcategories" >
-                  <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
-                </li>
+                <div class="hiddenData-wr">
+                  <ul class="data-dropdown" *ngIf="cat.subcategories.length != 0">
+                    <li *ngFor="let subCat of cat.subcategories" >
+                      <a [routerLink]="['/collections', cat.category_url, subCat.subcategory_url ]" routerLinkActive="active">{{ subCat.subcategory_name }}</a>
+                    </li>
 
-              </ul>
 
+                  </ul>
+                </div>
             </li>
 
             <li class="search-icon-link">
-              <a href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+              <a routerLink="/search" (click)="clickSearch()"><i class="fa fa-search" aria-hidden="true"></i></a>
 
             </li>
           </ul>
 
         </nav>
+
+
+        <a href="#" class="mobile_nav-link">
+
+          <div  class="hamburger hamburger--collapse-r">
+            <div class="hamburger-box">
+              <div class="hamburger-inner"></div>
+            </div>
+          </div>
+
+          <span class="menu_title">Меню</span>
+        </a>
+
+        <div class="top-logo">
+          <a [routerLink]="['/']" class="logo"><img class="img-responsive" src="assets/img/logo_home.png" alt=""></a>
+        </div>
 
         <div class="top-line__cart">
           <div class="cart-dropdown dropdown">
 
             <div class="cart-dropdown__rel">
               <a [routerLink]="['/cart']" class="cart-ref">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <span>
+                   <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                 <span class="count">{{allCountInCart}}</span>
+                </span>
+
               </a>
             </div>
 

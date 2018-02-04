@@ -5,6 +5,7 @@ import {Product} from '../entity/product';
 import {isPlatformBrowser} from '@angular/common';
 import {Location} from '@angular/common';
 import {SeoService} from '../services/seo.service';
+import {CategoryService} from '../services/category.service';
 
 declare var $: any;
 
@@ -14,6 +15,14 @@ declare var $: any;
   styleUrls: ['./shopping-list.component.sass']
 })
 export class ShoppingListComponent implements OnInit, AfterViewInit {
+  allSplitedForScroll: any;
+  generator: any ;
+  currentPage: number = 0;
+  countPages: number = 0;
+
+  allProdForSort: Product[] ;
+
+
   private categoryUrl: string;
   private nameSubCategory: string;
   category: string;
@@ -23,16 +32,25 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   sort: string  = 'Тип';
 
+  categories: any;
+
+
+
   constructor(private seoService: SeoService,
               private activateRoute: ActivatedRoute,
               @Inject(PLATFORM_ID) private platformId: string,
               private productService: ProductService,
               private router: Router,
-              private location: Location) {
+              private location: Location,
+              private categoryService: CategoryService) {
 
   }
 
   ngOnInit() {
+
+    //this.getCatWithSubCat();
+
+
     this.activateRoute.params.subscribe(params => {
       this.categoryUrl = params['categoryUrl'];
       this.nameSubCategory = params['nameSubCategory'];
@@ -40,33 +58,69 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.subCategory = this.nameSubCategory;
 
 
-      if (this.categoryUrl == 'vendor' && this.categoryUrl && this.nameSubCategory  ) {
-        // console.log('vendor');
-        this.getByVendor();
-        return;
-      }
-
-      if (this.categoryUrl && this.nameSubCategory) {
-        this.getProdFromSubCategory();
-        return;
-      }
+      this.categoryService.getCatWithSubCat()
+        .subscribe(
+          (resp) => {
+            this.categories = resp;
+            // console.log(this.categories);
 
 
-      if (this.categoryUrl) {
-        this.getProdFromCategory();
-      }
 
-      if (isPlatformBrowser(this.platformId)) {
-        $(document).ready(() => {
-          $('html, body').animate({scrollTop: 0}, 500);
-         this.fadeIn();
-        });
-      }
+
+
+            if (this.categoryUrl == 'vendor' && this.categoryUrl && this.nameSubCategory  ) {
+              // console.log('vendor');
+              this.getByVendor();
+              return;
+            }
+
+            if (this.categoryUrl && this.nameSubCategory) {
+              this.getProdFromSubCategory();
+
+              const subCategory = this.categories.filter(el => el.subcategories.subcategory_url == this.nameSubCategory);
+
+              if (subCategory.length != 0) {
+                this.seoService.setTitle(subCategory[0].subcategory_name);
+                this.seoService.setDescKeyw(subCategory[0].subcategory_description_seo, subCategory[0].subcategory_keywords_seo);
+              }
+
+              return;
+            }
+
+
+            if (this.categoryUrl) {
+              this.getProdFromCategory();
+
+              const category = this.categories.filter(el => el.category_url == this.categoryUrl);
+
+              if (category.length != 0) {
+                this.seoService.setTitle(category[0].category_name);
+                this.seoService.setDescKeyw(category[0].category_description_seo, category[0].category_keywords_seo);
+              }
+
+            }
+
+            if (isPlatformBrowser(this.platformId)) {
+              $(document).ready(() => {
+                $('html, body').animate({scrollTop: 0}, 500);
+                this.fadeIn();
+              });
+            }
+
+
+
+
+
+
+          });
+
 
     });
 
 
   }
+
+
 
   fadeIn() {
     if (isPlatformBrowser(this.platformId)) {
@@ -81,13 +135,21 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       .subscribe(
         (resp) => {
           this.fadeIn();
-          this.products = resp;
+          //this.products = resp;
 
-          if (this.products.length == 0)
+
+          if (resp.length == 0) {
             return;
+          }
 
-          this.seoService.setTitle(this.products[0].category_name);
-          this.seoService.setDescKeyw(this.products[0].category_description_seo, this.products[0].category_keywords_seo);
+          this.allProdForSort = resp;
+          this.splitForScroll(resp);
+
+
+
+
+          // this.seoService.setTitle(this.products[0].category_name);
+          // this.seoService.setDescKeyw(this.products[0].category_description_seo, this.products[0].category_keywords_seo);
 
 
           setTimeout(() => {
@@ -108,13 +170,21 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       .subscribe(
         (resp) => {
           this.fadeIn();
-          this.products = resp;
+          // this.products = resp;
 
-          if (this.products.length == 0)
+          if (resp.length == 0) {
             return;
+          }
 
-          this.seoService.setTitle(this.products[0].category_name);
-          this.seoService.setDescKeyw(this.products[0].category_description_seo, this.products[0].category_keywords_seo);
+          this.allProdForSort = resp;
+          this.splitForScroll(resp);
+          // setTimeout( () => {
+          //   this.splitForScroll(resp);
+          // }, 5000);
+
+
+
+
 
 
           setTimeout(() => {
@@ -135,13 +205,15 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       .subscribe(
         (resp) => {
           this.fadeIn();
-          this.products = resp;
+          // this.products = resp;
 
-          if (this.products.length == 0)
+          if (resp.length == 0) {
             return;
+          }
 
-          this.seoService.setTitle(this.products[0].subcategory_name);
-          this.seoService.setDescKeyw(this.products[0].subcategory_description_seo, this.products[0].subcategory_keywords_seo);
+          this.allProdForSort = resp;
+          this.splitForScroll(resp);
+
 
           setTimeout(() => {
             if (isPlatformBrowser(this.platformId)) {
@@ -159,6 +231,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.initialMagnific();
+
+      this.infiniteScroll();
     }
   }
 
@@ -178,6 +252,12 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         midClick: true,
         removalDelay: 300,
         mainClass: 'my-mfp-zoom-in',
+        disableOn: function() {
+          if ( $(window).width() < 768 ) {
+            return false;
+          }
+          return true;
+        },
         callbacks: {
           beforeOpen: () => { $('body').css({marginRight: this.scrollbarWidth() + 'px' });  $('body').addClass('blockScroll'); },
           // close: () => {  $('body').css({marginRight: this.scrollbarWidth() + 'px' }); $('body').removeClass('blockScroll'); }
@@ -226,7 +306,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     try {
 
       if ( this.sort === 'возростанию') {
-        this.products.sort(function (a, b) {
+        this.allProdForSort.sort(function (a, b) {
           if (!a.avalible_in_group) {
             return 1;
           }
@@ -234,7 +314,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         });
 
         // проданные в крнец
-        this.products.sort(function (a, b) {
+        this.allProdForSort.sort(function (a, b) {
           if (!a.avalible_in_group) {
             return 1;
           }
@@ -243,10 +323,12 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
           }
         });
 
+        this.splitForScroll( this.allProdForSort);
+
       }
 
       if ( this.sort === 'убыванию') {
-        this.products.sort(function (a, b) {
+        this.allProdForSort.sort(function (a, b) {
           if (!a.avalible_in_group ) {
             return 1;
           }
@@ -254,7 +336,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         });
 
           // проданные в крнец
-        this.products.sort(function (a, b) {
+        this.allProdForSort.sort(function (a, b) {
           if (!a.avalible_in_group) {
             return 1;
           }
@@ -262,14 +344,28 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
             return -1;
           }
         });
+
+        this.splitForScroll( this.allProdForSort);
       }
 
       if ( this.sort === 'названию') {
-        this.products.sort(function (a, b) {
+        this.allProdForSort.sort(function (a, b) {
           let compA = a.product_name.toUpperCase();
           let compB = b.product_name.toUpperCase();
           return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
         });
+
+        // проданные в крнец
+        this.allProdForSort.sort(function (a, b) {
+          if (!a.avalible_in_group) {
+            return 1;
+          }
+          else {
+            return -1;
+          }
+        });
+
+        this.splitForScroll( this.allProdForSort);
       }
 
       if (isPlatformBrowser(this.platformId)) {
@@ -284,4 +380,83 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   }
 
 
+
+
+
+
+
+  infiniteScroll() {
+    $(window).scroll(() => {
+
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 80;
+
+      if  ( percentScrolled > percent )  {
+        this.fillItemsPage();
+      }
+
+    });
+  }
+
+  splitForScroll(arr) {
+
+    // let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; //массив, можно использовать массив объектов
+    let array = arr; //массив, можно использовать массив объектов
+    let size = 20; //размер подмассива
+    let subarray = []; //массив в который будет выведен результат.
+    for (let i = 0; i <Math.ceil(array.length/size); i++) {
+      subarray[i] = array.slice((i*size), (i*size) + size);
+    }
+     // console.log(subarray);
+    this.allSplitedForScroll = subarray;
+    this.products = [];
+    this.currentPage = 0;
+    this.countPages = this.allSplitedForScroll.length;
+    this.generator = generateNewPage(this.allSplitedForScroll);
+
+
+    this.fillItemsPage();
+  }
+
+
+  fillItemsPage() {
+
+    let pageItems;
+    try {
+      pageItems = this.generator.next();
+    } catch (er) { return; }
+
+
+    if (!pageItems.done) {
+      // this.products = this.products.concat(pageItems.value);
+      this.currentPage++;
+
+      for (let item of pageItems.value) {
+        this.products.push(item);
+      }
+
+      setTimeout(() => {
+        if (isPlatformBrowser(this.platformId)) {
+          this.initialMagnific();
+        }
+      }, 50);
+    }
+
+  }
+
+
+
+}
+
+
+
+
+
+function* generateNewPage(arr) {
+  for (let page of arr) {
+    yield page;
+
+  }
+  return 'array end';
 }

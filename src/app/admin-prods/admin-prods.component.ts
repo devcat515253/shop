@@ -230,6 +230,11 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     // console.log(product);
   }
 
+  isAvailableProdChange(product) {
+    this.productService.updateAvailable(product.product_id, product.product_available)
+      .subscribe(prodId => alert(`В наличии у продукта ${product.product_id} изменено на ${product.product_available}`), error => console.log(error)      );
+  }
+
 
 
   edit(product) {
@@ -359,6 +364,12 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
       for (let item of pageItems.value) {
         this.products.push(item);
       }
+
+      setTimeout(() => {
+        if (isPlatformBrowser(this.platformId)) {
+          this.initialMagnific();
+        }
+      }, 50);
     }
   }
 
