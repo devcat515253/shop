@@ -505,8 +505,30 @@
       &:before
         display: none
       .spanBlock
-        padding: 1.2rem 0
+        padding: 1.2rem 2rem
         line-height: 2.2rem
+    .top-menu > ul li
+      padding: 0
+
+  .fixed-menu .top-menu > ul
+    margin: 0
+
+  .fixed-menu .top-menu .data-dropdown
+    padding: 0
+    li
+      a
+        padding: 1rem 4rem!important
+
+  .fixed-menu .search-icon-link a
+      padding-left: 2rem !important
+      padding-right: 2rem !important
+  .fixed-menu .dropdown-menu > a
+    padding-right: 4rem !important
+    &:after
+      right: 2rem
+
+
+
 
 
 @media only screen and (max-width : 479px)

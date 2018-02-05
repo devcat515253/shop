@@ -116,7 +116,7 @@
               <br>
               <!--<span>Brand - Khalil Mamoon</span>-->
 
-              <span *ngFor=" let option of selectedProduct?.product_options"> {{option.option_name}} - {{option.option_value}} <br> </span>
+              <span *ngFor=" let option of selectedProduct?.product_options"><span *ngIf="option.option_name && option.option_value">{{option.option_name}} - {{option.option_value}} <br> </span>   </span>
 
               <!--<span>Design - Cafe Style</span>-->
               <!--<br>-->

@@ -35,6 +35,9 @@ import { PromoSliderComponent } from './promo-slider/promo-slider.component';
 import { QuickviewSliderComponent } from './quickview-slider/quickview-slider.component';
 import { LinkStopDirective } from './link-stop.directive';
 import { SearchComponent } from './search/search.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import {AuthAdminLoginService} from './services/auth-admin-login.service';
+import {AuthAdminGuard} from './_guards/auth-admin.guard';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { SearchComponent } from './search/search.component';
     PromoSliderComponent,
     QuickviewSliderComponent,
     LinkStopDirective,
-    SearchComponent
+    SearchComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),
@@ -78,7 +82,9 @@ import { SearchComponent } from './search/search.component';
     NovaPoshtaService,
     OrderService,
     CategoryService,
-    SeoService
+    SeoService,
+    AuthAdminGuard,
+    AuthAdminLoginService
   ],
   bootstrap: [AppComponent]
 })

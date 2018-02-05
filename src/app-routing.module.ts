@@ -13,6 +13,8 @@ import {AdminOrderDelailComponent} from './app/admin-order-delail/admin-order-de
 import {AdminProdAddComponent} from './app/admin-prod-add/admin-prod-add.component';
 import {AdminProdUpdateComponent} from './app/admin-prod-update/admin-prod-update.component';
 import {SearchComponent} from './app/search/search.component';
+import {AdminLoginComponent} from './app/admin-login/admin-login.component';
+import {AuthAdminGuard} from './app/_guards/auth-admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +27,9 @@ const routes: Routes = [
   { path: 'cart', component: ShoppingCartComponent },
   { path: 'ordering', component: OrderingComponent },
   { path: 'search', component: SearchComponent },
-  { path: 'admin', component: AdminComponent,
+  {  path: 'adminLogin', component: AdminLoginComponent },
+
+  { path: 'admin', component: AdminComponent,  canActivate: [AuthAdminGuard],
     children: [
       { path: '', redirectTo: '/admin/orders', pathMatch: 'full'},
        { path: 'prods' ,  component: AdminProdsComponent},

@@ -1,5 +1,10 @@
 require('zone.js/dist/zone-node');
 require('reflect-metadata');
+
+const bcrypt = require('bcrypt');
+const CryptoJS = require("crypto-js");
+const crypto = require('crypto');
+
 const express = require('express');
 
 const bodyParser = require('body-parser');
@@ -541,28 +546,7 @@ app.post('/api/addNewProd', upload.single('photo') , function(req, res) {
             throw new Error(error);
           });
 
-        // for (productOpt of product.product_options){
-        //   sequelize.query(
-        //     `INSERT INTO shop.product_option(product_id, option_id, option_value)
-        //       values ('${prodInsertedId[0]}', '${productOpt.option_id}' , '${productOpt.value}')`,
-        //     { type: sequelize.QueryTypes.INSERT }
-        //   ).then(function (product_optionId) {
-        //     // console.log(product_optionId[0]);
-        //   }).catch(error =>{
-        //     throw new Error(error);
-        //   });
-        // }
-        //
-        //
-        //   sequelize.query(
-        //     `INSERT INTO shop.images(product_id, images_mini, images_middle, images_large )
-        //       values ('${prodInsertedId[0]}', 'assets/img/products/${photo.originalname}' , 'assets/img/products/${photo.originalname}', 'assets/img/products/${photo.originalname}')`,
-        //     { type: sequelize.QueryTypes.INSERT }
-        //   ).then(function (product_optionId) {
-        //     // console.log(product_optionId[0]);
-        //   }).catch(error =>{
-        //     throw new Error(error);
-        //   });
+
 
 
       }).catch(error =>{
@@ -1263,16 +1247,69 @@ app.post('/api/updateAvailable', function(req, res) {
 
 });
 
+
+// /* create hashed password */
+// app.post('/api/createPassword', function(req, res) {
+//   let password = req.body.pass;
+//   /* create hashed password */
+//
+//     bcrypt.hash(password, 10, function(err, hash) {
+//       // Store hash in database
+//       res.send(hash);
+//
+//     });
+// });
+
 //проверить логин админа
 app.post('/api/checkLoginAdmin', function(req, res) {
 
-  let login = req.body.login;
-  let pas = req.body.pas;
 
-  sequelize.query(`SELECT *  FROM  shop.login_admin
-                  where login_admin_login='${login}' and login_admin_pas='${pas}'` , { type: sequelize.QueryTypes.SELECT  }).then(prod => {
+  let encLogin = req.body.login;
+  let encPas = req.body.pas;
 
-    res.send(prod);
+  // decrypt login and password <
+    let decryptedBytesLog = CryptoJS.AES.decrypt(encLogin,  'MyLogin_');
+    let login = decryptedBytesLog.toString(CryptoJS.enc.Utf8);
+
+    let decryptedBytesPas = CryptoJS.AES.decrypt(encPas,  'MyPassword_');
+    let pas = decryptedBytesPas.toString(CryptoJS.enc.Utf8);
+  // decrypt login and password >
+  console.log(login);
+  console.log(pas);
+
+  sequelize.query(`SELECT *  FROM  shop.login_admin where login_admin_login=:login  limit 1` ,
+    { replacements: { login: login } , type: sequelize.QueryTypes.SELECT  }).then(users => {
+
+    let user = {};
+    if (users.length > 0){
+       user =  users[0];
+
+            // To verify the password later on:
+            bcrypt.compare(pas, user.login_admin_pas, function(err1, res1) {
+              if(res1) {
+                // Passwords match
+                  console.log('ok админ найден');
+                  console.log(res1);
+
+                  if (res) {
+                    user.token = crypto.randomBytes(64).toString('hex');
+                    res.send(user);
+                    return;
+                  }
+
+              } else {
+                // Passwords don't match
+                  console.log('error админа с таким логином паролем не существует');
+                  res.send({});
+                  return;
+              }
+            });
+
+    }
+    else {
+      res.send({});
+    }
+
 
   }).catch(error =>{
     throw new Error(error);
