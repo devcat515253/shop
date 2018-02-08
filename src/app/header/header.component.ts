@@ -101,6 +101,7 @@ export class HeaderComponent implements OnInit , AfterViewInit {
       else {
         $('body').removeClass('blockScroll');
         $(menuBlock).find('.hiddenData-wr').slideUp();
+        $('.dropdown-menu >a').removeClass('rotateAfter');
       }
 
       menuBlock.fadeToggle(300);
@@ -251,9 +252,11 @@ export class HeaderComponent implements OnInit , AfterViewInit {
 
         if ($(hiddenData).css('display') == 'none') {
             $(hiddenData).slideDown(500);
+            li.find('>a').addClass('rotateAfter');
         }
         else {
             $(hiddenData).slideUp(300);
+            li.find('>a').removeClass('rotateAfter');
         }
 
          return false;
@@ -265,6 +268,7 @@ export class HeaderComponent implements OnInit , AfterViewInit {
         $('.top-menu').hide();
         $('.hamburger').toggleClass('is-active');
         $('body').removeClass('blockScroll');
+        $('.dropdown-menu >a').removeClass('rotateAfter');
       });
 
       $('.top-menu .dropdown-menu.no-drop span').off('click');
@@ -287,6 +291,7 @@ export class HeaderComponent implements OnInit , AfterViewInit {
       $('.top-menu').removeAttr( 'style' );      // убираем у меню стили примененные js
       $('.hiddenData-wr').removeAttr( 'style' );
       $('.dropdown-menu .data-dropdown').removeAttr( 'style' );
+      $('.dropdown-menu >a').removeClass('rotateAfter');
       $('body').removeClass('blockScroll');                    // удаляем блок скрола при открытом меню
 
       $('.top-menu .dropdown-menu a').click(function (event) {

@@ -1,0 +1,52 @@
+<div class="title-wr">
+  <h1  class="title">Типы продуктов</h1>
+
+</div>
+
+<div class="under-line"></div>
+
+
+<div class="table-base">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Наименование типа</th>
+      <th>удалить</th>
+      <th>сохранить</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor=" let productType of productTypes">
+      <td data-label="ID"> {{ productType.product_types_id }}</td>
+      <td data-label="дата">
+        <label >
+          <input type="text" class="base-input" placeholder="Имя типа продукта" [(ngModel)]="productType.product_types_name ">
+        </label>
+      </td>
+
+      <td data-label="дата"><a href="#" (click)="askDel(productType, $event)" class=" btn btn-confirm">Удалить</a></td>
+      <td data-label="дата"><a href="#" (click)="updateType(productType, $event)" class=" btn btn-confirm">Обновить</a></td>
+
+    </tr>
+
+
+    <tr >
+      <td data-label="ID" colspan="2"><a href="#" class="btn btn-confirm" (click)="addProdType($event)">Добавить новый</a></td>
+      <td data-label="дата" colspan="2">
+          <label >
+            <input type="text" class="base-input" placeholder="Имя типа продукта" [(ngModel)]="newTypeProd">
+         </label>
+
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+

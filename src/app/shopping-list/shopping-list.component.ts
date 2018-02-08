@@ -48,9 +48,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    //this.getCatWithSubCat();
-
-
     this.activateRoute.params.subscribe(params => {
       this.categoryUrl = params['categoryUrl'];
       this.nameSubCategory = params['nameSubCategory'];
@@ -232,7 +229,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.initialMagnific();
 
-      this.infiniteScroll();
+      // this.infiniteScroll();
     }
   }
 
@@ -446,6 +443,20 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
   }
 
 
+
+  infiniteOnScroll(event) {
+    if (isPlatformBrowser(this.platformId)) {
+
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 70;
+
+      if  ( percentScrolled > percent )  {
+        this.fillItemsPage();
+      }
+    }
+
+  }
 
 }
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {OrderService} from '../services/order.service';
 import {Subject} from 'rxjs/Subject';
@@ -14,10 +14,11 @@ declare var $: any;
   styleUrls: ['./admin-orders.component.sass'],
   // encapsulation: ViewEncapsulation.None
 })
-export class AdminOrdersComponent implements OnInit, AfterViewInit {
+export class AdminOrdersComponent implements OnInit, AfterViewInit  {
 
-  allSplitedForScroll: any;
-  generator: any ;
+  allSplitedForScroll = [];
+  generator: any;
+
 
   allOrders: any;
 
@@ -35,6 +36,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   constructor(private orderService: OrderService,
               private router: Router,
               @Inject(PLATFORM_ID) private platformId: string) { }
+
+
 
   ngOnInit() {
     this.getNewOrder();
@@ -76,8 +79,8 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
 
+      //this.infiniteScroll();
 
-      this.infiniteScroll();
 
       $( '#phone').on('keyup input', () => {
         this.searchInputPhone =  $('#phone').val();
@@ -249,6 +252,7 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
 
       if  ( percentScrolled > percent )  {
         this.fillItemsPage();
+        //console.log('next');
       }
 
     });
@@ -264,31 +268,48 @@ export class AdminOrdersComponent implements OnInit, AfterViewInit {
     for (let i = 0; i <Math.ceil(array.length/size); i++) {
       subarray[i] = array.slice((i*size), (i*size) + size);
     }
-    // console.log(subarray);
+     // console.log(subarray);
+
     this.allSplitedForScroll = subarray;
     this.allOrders = [];
     this.generator = generateNewPage(this.allSplitedForScroll);
-
 
     this.fillItemsPage();
   }
 
 
+
   fillItemsPage() {
 
     let pageItems;
-    try {
+     try {
       pageItems = this.generator.next();
-    } catch (er) { return; }
+     } catch (er) { return; }
+
 
 
     if (!pageItems.done) {
-      // this.products = this.products.concat(pageItems.value);
+       // this.allOrders = this.allOrders.concat(pageItems.value);
 
       for (let item of pageItems.value) {
         this.allOrders.push(item);
       }
     }
+
+  }
+
+  infiniteOnScroll(event) {
+    if (isPlatformBrowser(this.platformId)) {
+
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 70;
+
+      if  ( percentScrolled > percent )  {
+        this.fillItemsPage();
+      }
+    }
+
   }
 
 }

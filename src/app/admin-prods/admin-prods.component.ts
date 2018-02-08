@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewEncapsulation} from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {Product} from '../entity/product';
 import {Router} from '@angular/router';
@@ -41,6 +41,8 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     this.inputNameChange();
     this.inputIdChange();
   }
+
+
 
   inputIdChange() {
     this.searchInputByIdChanged
@@ -280,7 +282,7 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.initialMagnific();
 
-      this.infiniteScroll();
+      // this.infiniteScroll();
 
     }
   }
@@ -346,8 +348,10 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
     this.generator = generateNewPage(this.allSplitedForScroll);
 
 
+
     this.fillItemsPage();
   }
+
 
 
   fillItemsPage() {
@@ -374,7 +378,19 @@ export class AdminProdsComponent implements OnInit, AfterViewInit {
   }
 
 
+  infiniteOnScroll(event) {
+    if (isPlatformBrowser(this.platformId)) {
 
+      let percentScrolled = $(window).scrollTop() / ($(document).height() - $(window).height()) * 100 ;
+      percentScrolled = Math.round(percentScrolled);
+      const percent = 70;
+
+      if  ( percentScrolled > percent )  {
+        this.fillItemsPage();
+      }
+    }
+
+  }
 }
 
 function* generateNewPage(arr) {

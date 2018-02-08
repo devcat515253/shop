@@ -1,0 +1,131 @@
+<div class="title-wr">
+  <h1  class="title">Список категорий</h1>
+
+
+  <!--<div class="select-wrapper">-->
+    <!--<select  [(ngModel)]="selectedSort"  (ngModelChange)="sortChange($event)">-->
+      <!--<option  *ngFor="let category of categories"   [ngValue]="item">{{ item }}</option>-->
+
+    <!--</select>-->
+  <!--</div>-->
+</div>
+
+<div class="under-line"></div>
+
+
+<div class="categories">
+
+  <div class="item" *ngFor="let category of categories">
+    <div class="table">
+        <div class="row">
+          <div class="cell w30"> ID - {{category.category_id}}</div>
+          <div class="cell w30">
+            <label >
+              <input type="text" class="base-input" placeholder="Имя категории" [(ngModel)]="category.category_name">
+            </label>
+          </div>
+
+          <div class="cell w30">
+            <label >
+              <input type="text" class="base-input" placeholder="URL категории" [(ngModel)]="category.category_url">
+            </label>
+          </div>
+
+
+        </div>
+    </div>
+    <div class="w100">
+
+
+          <label >
+            <textarea class="base-input" placeholder="Keywords seo"  [(ngModel)]="category.category_keywords_seo" maxlength="255" rows="5"> </textarea>
+          </label>
+
+
+
+
+    </div>
+    <div class="w100">
+
+
+        <label >
+          <textarea class="base-input" placeholder="Description seo"  [(ngModel)]="category.category_description_seo" maxlength="255" rows="5"> </textarea>
+        </label>
+
+    </div>
+
+
+    <div class="content__btn">
+      <div class="order_confirm">
+        <a href="#" (click)="ask(category, $event)" class=" btn btn-confirm">Удалить</a>
+
+
+        <a href="#" (click)="updateCat(category, $event)" class=" btn btn-confirm">Обновить</a>
+
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="item" >
+    <div class="table">
+      <div class="row">
+        <div class="cell w30">Добавить новую категорию</div>
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="Имя категории" [(ngModel)]="newCategory.category_name">
+          </label>
+        </div>
+
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="URL категории" [(ngModel)]="newCategory.category_url">
+          </label>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Keywords seo"  [(ngModel)]="newCategory.category_keywords_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+
+
+
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Description seo"  [(ngModel)]="newCategory.category_description_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+    </div>
+
+
+    <div class="content__btn">
+      <div class="order_confirm">
+        <a href="#" (click)="addCat( $event)" class=" btn btn-confirm">Добавить</a>
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>

@@ -440,4 +440,6 @@ export class OrderingComponent implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault();
     this.location.back();
   }
+
+
 }

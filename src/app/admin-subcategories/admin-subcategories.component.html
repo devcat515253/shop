@@ -1,0 +1,131 @@
+<div class="title-wr">
+  <h1  class="title">Список подкатегорий</h1>
+
+
+  <div class="select-wrapper">
+  <select  [(ngModel)]="selectedCat"  (ngModelChange)="catChange()">
+  <option  *ngFor="let category of categories"   [ngValue]="category">{{ category.category_name }}</option>
+
+  </select>
+  </div>
+</div>
+
+<div class="under-line"></div>
+
+
+<div class="categories">
+
+  <div class="item" *ngFor="let subCategory of subCategories">
+    <div class="table">
+      <div class="row">
+        <div class="cell w30"> ID - {{subCategory.subcategory_id}}</div>
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="Имя категории" [(ngModel)]="subCategory.subcategory_name">
+          </label>
+        </div>
+
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="URL категории" [(ngModel)]="subCategory.subcategory_url">
+          </label>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Keywords seo"  [(ngModel)]="subCategory.subcategory_keywords_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+
+
+
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Description seo"  [(ngModel)]="subCategory.subcategory_description_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+    </div>
+
+
+    <div class="content__btn">
+      <div class="order_confirm">
+        <a href="#" (click)="ask(subCategory, $event)" class=" btn btn-confirm">Удалить</a>
+
+
+        <a href="#" (click)="updateSubCat(subCategory, $event)" class=" btn btn-confirm">Обновить</a>
+
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="item"  *ngIf="selectedCat">
+    <div class="table">
+      <div class="row">
+        <div class="cell w30">Добавить новую подкатегорию</div>
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="Имя категории" [(ngModel)]="newSubCategory.subcategory_name">
+          </label>
+        </div>
+
+        <div class="cell w30">
+          <label >
+            <input type="text" class="base-input" placeholder="URL категории" [(ngModel)]="newSubCategory.subcategory_url">
+          </label>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Keywords seo"  [(ngModel)]="newSubCategory.subcategory_keywords_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+
+
+
+    </div>
+    <div class="w100">
+
+
+      <label >
+        <textarea class="base-input" placeholder="Description seo"  [(ngModel)]="newSubCategory.subcategory_description_seo" maxlength="255" rows="5"> </textarea>
+      </label>
+
+    </div>
+
+
+    <div class="content__btn">
+      <div class="order_confirm">
+        <a href="#" (click)="addSubCat( $event)" class=" btn btn-confirm">Добавить</a>
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+  </div>
+</div>

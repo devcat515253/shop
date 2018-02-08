@@ -15,6 +15,10 @@ import {AdminProdUpdateComponent} from './app/admin-prod-update/admin-prod-updat
 import {SearchComponent} from './app/search/search.component';
 import {AdminLoginComponent} from './app/admin-login/admin-login.component';
 import {AuthAdminGuard} from './app/_guards/auth-admin.guard';
+import {AdminCategoriesComponent} from './app/admin-categories/admin-categories.component';
+import {AdminSubcategoriesComponent} from './app/admin-subcategories/admin-subcategories.component';
+import {AdminTypeProdComponent} from './app/admin-type-prod/admin-type-prod.component';
+import {AdminTypeProdPropertyComponent} from './app/admin-type-prod-property/admin-type-prod-property.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,7 +47,11 @@ const routes: Routes = [
       // },
 
       { path: 'orders', component: AdminOrdersComponent },
-      { path: 'orders/:order_id', component: AdminOrderDelailComponent }
+      { path: 'orders/:order_id', component: AdminOrderDelailComponent },
+      { path: 'categories', component: AdminCategoriesComponent },
+      { path: 'subCategories', component: AdminSubcategoriesComponent },
+      { path: 'typeProd', component: AdminTypeProdComponent },
+      { path: 'typeProdProperty', component: AdminTypeProdPropertyComponent }
     ]
   },
   { path: '**', redirectTo: '/'}

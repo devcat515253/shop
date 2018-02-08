@@ -189,7 +189,9 @@ export class AdminProdAddComponent implements OnInit {
 
   }
 
-  saveProduct() {
+  saveProduct(event) {
+    event.preventDefault();
+
     // tslint:disable-next-line:max-line-length
     if (!this.product.product_name || !this.product.product_description || !this.product.product_short_description || !this.product.product_count || !this.product.product_price || !this.product.product_color || !this.product.product_keywords_seo || !this.product.product_description_seo || !this.product.product_manufacturer) {
       alert('Заполните все поля');

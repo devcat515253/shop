@@ -222,6 +222,519 @@ app.engine('html', ngExpressEngine({
 }));
 
 
+
+// удалить тип продукта
+app.post('/api/deleteType', function(req, res) {
+
+  let productType = req.body.productType;
+
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+    let promises = [];
+
+    let delType = sequelize.query(`Delete from shop.product_types   where product_types_id=${productType.product_types_id}`,{type: sequelize.QueryTypes.DELETE, transaction: transaction});
+    let delType_property = sequelize.query(`DELETE FROM shop.option_list where option_category_type=${productType.product_types_id}`,{type: sequelize.QueryTypes.DELETE, transaction: transaction});
+
+    promises.push(delType);
+    promises.push(delType_property);
+
+
+    return Promise.all(promises).then(function(res) {
+      console.log(res);
+    }).catch(error =>{
+      throw new Error(error);
+    });
+
+    // your transactions
+  }).then(result1 => {
+
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok',
+    };
+    res.send(result);
+
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+
+
+});
+
+
+
+// проверка на наличие товаров у типа продукта
+app.post('/api/checkProdsFromType', function(req, res) {
+  let productType = req.body.productType;
+
+  sequelize.query(`SELECT * FROM shop.product where product_type=${productType.product_types_id}`,
+    {  type: sequelize.QueryTypes.SELECT }).then(prods => {
+    res.send(prods);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
+
+
+// обновить тип продукта
+app.post('/api/updateType', function(req, res) {
+
+  let productType = req.body.productType;
+
+  sequelize.query(`UPDATE shop.product_types
+                                      SET 
+                                        product_types_name = '${productType.product_types_name}'
+                                      where
+                                            product_types_id=${productType.product_types_id}`,
+    {type: sequelize.QueryTypes.UPDATE }).then(options => {
+
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+
+  }).catch(error => {
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+
+// удалить характеристику
+app.post('/api/deleteProperty', function(req, res) {
+
+  let id_option = req.body.id_option;
+
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+    let promises = [];
+
+    let delProperty = sequelize.query(`Delete from shop.option_list   where option_id=${id_option}`,{type: sequelize.QueryTypes.DELETE, transaction: transaction});
+    let delProd_options_property = sequelize.query(`DELETE FROM shop.product_option where option_id=${id_option}`,{type: sequelize.QueryTypes.DELETE, transaction: transaction});
+
+    promises.push(delProperty);
+    promises.push(delProd_options_property);
+
+
+    return Promise.all(promises).then(function(res) {
+      console.log(res);
+    }).catch(error =>{
+      throw new Error(error);
+    });
+
+    // your transactions
+  }).then(result1 => {
+
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok',
+    };
+    res.send(result);
+
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+
+
+});
+
+// обновить характеристику
+app.post('/api/updateProperty', function(req, res) {
+
+  let nameProperty = req.body.nameProperty;
+  let id_option = req.body.id_option;
+
+  sequelize.query(`UPDATE shop.option_list
+                                      SET 
+                                        option_name = '${nameProperty}'
+                                      where
+                                            option_id=${id_option}`,
+    {type: sequelize.QueryTypes.UPDATE }).then(options => {
+
+      let result = {
+        status: 'ok'
+      };
+      res.send(result);
+
+  }).catch(error => {
+      let result = {
+        status: 'error'
+      };
+      res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+// добавить характеристику
+app.post('/api/addProperty', function(req, res) {
+
+  let newProperty = req.body.newProperty;
+  let prod_type_id = req.body.prod_type_id;
+
+  sequelize.query(`INSERT INTO shop.option_list(option_name, option_category_type)
+                                    VALUES('${newProperty}', ${prod_type_id})
+                                      `,
+    {type: sequelize.QueryTypes.UPDATE }).then(options => {
+
+      let result = {
+        status: 'ok'
+      };
+      res.send(result);
+
+  }).catch(error => {
+      let result = {
+        status: 'error'
+      };
+      res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+
+// добавить тип продукта
+app.post('/api/addProdType', function(req, res) {
+
+  let newTypeProd = req.body.newTypeProd;
+
+  sequelize.query(`INSERT INTO shop.product_types(product_types_name)
+                                    VALUES('${newTypeProd}')
+                                      `,
+    {type: sequelize.QueryTypes.UPDATE }).then(options => {
+
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+
+  }).catch(error => {
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+
+
+// добавить подкатегорию
+app.post('/api/addSubCat', function(req, res) {
+  let subcategory = req.body;
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+    return sequelize.query(`INSERT INTO shop.subcategory(
+                                        subcategory_name,
+                                        subcategory_url,
+                                        subcategory_keywords_seo,
+                                        subcategory_description_seo,
+                                        category_id
+                                        )
+                                    VALUES(
+                                        '${subcategory.subcategory_name}',
+                                        '${subcategory.subcategory_url}',
+                                        '${subcategory.subcategory_keywords_seo}',
+                                        '${subcategory.subcategory_description_seo}',
+                                        '${subcategory.category_id}'
+                                    )
+                                      `,
+      {type: sequelize.QueryTypes.UPDATE, transaction: transaction }).then(options => {
+
+
+
+    }).catch(error => {
+      throw new Error(error);
+    });
+
+    // your transactions
+  }).then(result1 => {
+    //console.log(result);
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+});
+
+
+// проверка на наличие товаров
+app.post('/api/checkSubCat', function(req, res) {
+  let subcategory = req.body;
+
+  sequelize.query(`SELECT * FROM shop.product where subcategory_id=${subcategory.subcategory_id}`,
+    {  type: sequelize.QueryTypes.SELECT }, { model: SubCategory }).then(subcategory => {
+    res.send(subcategory);
+
+  }).catch(error =>{
+    throw new Error(error);
+  });
+
+});
+
+//  удаление подкатегории
+app.post('/api/deleteSubCat', function(req, res) {
+  let subcategory = req.body;
+
+
+
+  sequelize.query(`delete FROM shop.subcategory where subcategory_id=${subcategory.subcategory_id}`,
+    {  type: sequelize.QueryTypes.DELETE }).then(subcategory => {
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+
+  }).catch(error =>{
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+//обновить подкатегорию
+app.post('/api/updateSubCat', function(req, res) {
+
+  let subcategory = req.body;
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+
+    return sequelize.query(`UPDATE shop.subcategory
+                                      SET 
+                                        subcategory_name = '${subcategory.subcategory_name}',
+                                        subcategory_url = '${subcategory.subcategory_url}', 
+                                        subcategory_keywords_seo = '${subcategory.subcategory_keywords_seo}', 
+                                        subcategory_description_seo = '${subcategory.subcategory_description_seo}'
+                                       
+                                      where
+                                            subcategory_id=${subcategory.subcategory_id}`,
+      {type: sequelize.QueryTypes.UPDATE, transaction: transaction }).then(options => {
+
+
+
+    }).catch(error => {
+      throw new Error(error);
+    });
+
+
+    // your transactions
+  }).then(result1 => {
+    //console.log(result);
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// добавить категорию
+app.post('/api/addCat', function(req, res) {
+  let category = req.body;
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+    return sequelize.query(`INSERT INTO shop.category(
+                                        category_name,
+                                        category_url,
+                                        category_keywords_seo,
+                                        category_description_seo
+                                        )
+                                    VALUES(
+                                        '${category.category_name}',
+                                        '${category.category_url}',
+                                        '${category.category_keywords_seo}',
+                                        '${category.category_description_seo}'
+                                    )
+                                      `,
+      {type: sequelize.QueryTypes.UPDATE, transaction: transaction }).then(options => {
+
+
+
+    }).catch(error => {
+      throw new Error(error);
+    });
+
+    // your transactions
+  }).then(result1 => {
+    //console.log(result);
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+});
+
+
+// проверка на наличие подкатегории
+app.post('/api/checkCat', function(req, res) {
+  let category = req.body;
+
+    sequelize.query(`SELECT * FROM shop.subcategory where category_id=${category.category_id}`,
+      {  type: sequelize.QueryTypes.SELECT }, { model: SubCategory }).then(subcategory => {
+      res.send(subcategory);
+
+    }).catch(error =>{
+      throw new Error(error);
+    });
+
+});
+
+// проверка на наличие подкатегории
+app.post('/api/deleteCat', function(req, res) {
+  let category = req.body;
+
+
+
+  sequelize.query(`delete FROM shop.category where category_id=${category.category_id}`,
+    {  type: sequelize.QueryTypes.DELETE }).then(subcategory => {
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+
+  }).catch(error =>{
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+    throw new Error(error);
+  });
+
+});
+
+
+//обновить категорию
+app.post('/api/updateCat', function(req, res) {
+
+  let category = req.body;
+
+  return sequelize.transaction({isolationLevel: "SERIALIZABLE", autocommit: true}, transaction => {
+
+
+    return sequelize.query(`UPDATE shop.category
+                                      SET 
+                                        category_name = '${category.category_name}',
+                                        category_url = '${category.category_url}', 
+                                        category_keywords_seo = '${category.category_keywords_seo}', 
+                                        category_description_seo = '${category.category_description_seo}'
+                                       
+                                      where
+                                            category_id=${category.category_id}`,
+      {type: sequelize.QueryTypes.UPDATE, transaction: transaction }).then(options => {
+
+
+
+      }).catch(error => {
+        throw new Error(error);
+      });
+
+
+    // your transactions
+  }).then(result1 => {
+    //console.log(result);
+    // transaction has been committed. Do something after the commit if required.
+    let result = {
+      status: 'ok'
+    };
+    res.send(result);
+  }).catch(err => {
+    console.error(err);
+    // do something with the err.
+    let result = {
+      status: 'error'
+    };
+    res.send(result);
+  });
+
+});
+
 //получить   категории всесте с подкатегориями
 app.get('/api/getCatWithSubCat', function(req, res) {
 
@@ -945,6 +1458,8 @@ app.post('/api/addOrder', function(req, res) {
       status: 'ok',
       order_id: order_id
     };
+
+    sendMail(order,order_id, req, true);
     res.send(result);
   }).catch(err => {
     console.error(err);
@@ -952,10 +1467,102 @@ app.post('/api/addOrder', function(req, res) {
     let result = {
       status: 'error'
     };
+    sendMail(order, order_id, req, false);
     res.send(result);
   });
 
 });
+
+
+
+function sendMail(order,order_id,req, success) {
+  const nodemailer = require('nodemailer'); // отлично работает и с Яндекс
+
+  let output = ``;
+      if (success) {
+         output = `
+                          <p>У вас новый заказ</p>
+                          <h3>Данные клиента</h3>
+                          <ul>  
+                            <li>Имя: ${order.name}</li>
+                            <li>Фамилия: ${order.famil}</li>
+                            <li>Город: ${order.selectedCity}</li>
+                            <li>Адрес: ${order.selectedOffice}</li>
+                            <li>Email: ${order.email}</li>
+                            <li>Phone: ${order.phone}</li>
+                          </ul>
+                          <h3>Message</h3>
+                          <p>Заказ номер ${order_id} добавлен в базу, можете его обработать</p>
+                          <h3>Headers</h3>
+                          <ul>  
+                            <li>cookie: ${req.headers.cookie}</li>
+                            <li>user-agent: ${req.headers["user-agent"]}</li>
+                            <li>referer: ${req.headers["referer"]}</li>
+                            <li>IP: ${req.ip}</li>
+                          </ul>
+                            `;
+      } else{
+        output = `
+                          <p>У вас новый заказ</p>
+                          <h3>Данные клиента</h3>
+                          <ul>  
+                            <li>Имя: ${order.name}</li>
+                            <li>Фамилия: ${order.famil}</li>
+                             <li>Город: ${order.selectedCity}</li>
+                            <li>Адрес: ${order.selectedOffice}</li>
+                            <li>Email: ${order.email}</li>
+                            <li>Phone: ${order.phone}</li>
+                          </ul>
+                          <h3>Message</h3>
+                          <p>Произошла ошибка, заказ номер ${order_id} не добавлен в базу</p>
+                          <h3>Headers</h3>
+                          <ul>  
+                            <li>cookie: ${req.headers.cookie}</li>
+                            <li>user-agent: ${req.headers["user-agent"]}</li>
+                            <li>referer: ${req.headers["referer"]}</li>
+                            <li>IP: ${req.ip}</li>
+                          </ul>
+                            `;
+      }
+
+
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";   // Ignore invalid self-signed ssl certificate in node.js with https.request убирает эту ошибку но вроде как не безопасно
+
+  let smtpTransport;
+  try {
+    smtpTransport = nodemailer.createTransport({
+      host: 'smtp.yandex.ru',
+      port: 465,
+      secure: true, // true for 465, false for other ports 587
+      auth: {
+        user: "v.poet@yandex.ru",
+        pass: "921f3f3v3r"
+      }
+    });
+  } catch (e) {
+    return console.log('Error: ' + e.name + ":" + e.message);
+  }
+
+  let mailOptions = {
+    from: 'v.poet@yandex.ru', // sender address
+    to: 'v.poet@yandex.ru, v.poet@yandex.ru', // list of receivers
+    subject: 'Обращение с сайта shisha', // Subject line
+    text: 'Обращение с сайта shisha', // plain text body
+    html: output // html body
+  };
+
+
+  smtpTransport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+       return console.log(error);
+      // return console.log('Error');
+    } else {
+      console.log('Message sent: %s', info.messageId);
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    }
+  });
+
+}
 
 //города новой почты
 app.get('/api/getCities', function(req, res) {

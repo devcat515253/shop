@@ -1,3 +1,6 @@
+
+<div  (window:scroll)="infiniteOnScroll($event)" >
+
 <div class="title-wr">
   <h1  class="title">Список заказов</h1>
   <input class="baseInp focus-green-border" type="text" placeholder="Search by id" [(ngModel)]="searchInput"  (ngModelChange)="searchChange($event)">
@@ -13,6 +16,7 @@
 <div class="under-line"></div>
 
 <!--{{ allOrders | json}}-->
+
 
 <div class="orders">
   <div class="table-base">
@@ -32,7 +36,7 @@
       </thead>
       <tbody>
 
-      <tr *ngFor=" let order of allOrders" (click)="oderDetail(order)">
+      <tr *ngFor=" let order of allOrders " (click)="oderDetail(order)">
         <td data-label="ID"> {{ order.order_id }}</td>
         <td data-label="дата">{{ order.order_date | date: 'dd-MM-yyyy' }}</td>
         <!--<td data-label="дата">{{ order.order_date | date: 'dd-MM-yyyy HH:mm:ss ': '+0000' }}</td>-->
@@ -57,3 +61,4 @@
 
 
 
+</div>

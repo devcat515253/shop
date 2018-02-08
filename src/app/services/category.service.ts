@@ -25,4 +25,38 @@ export class CategoryService {
   getCatWithSubCat() {
     return this.http.get<any>(`${this.baseUrl}/api/getCatWithSubCat` );
   }
+
+  updateCat(category) {
+    return this.http.post<any>(`${this.baseUrl}/api/updateCat`, category );
+  }
+
+  checkCat(category) {
+    return this.http.post<any>(`${this.baseUrl}/api/checkCat`, category );
+  }
+
+  deleteCat(category) {
+    return this.http.post<any>(`${this.baseUrl}/api/deleteCat`, category );
+  }
+
+  addCat(category) {
+    return this.http.post<any>(`${this.baseUrl}/api/addCat`, category );
+  }
+
+
+  updateSubCat(subcategory) {
+    return this.http.post<any>(`${this.baseUrl}/api/updateSubCat`, subcategory );
+  }
+
+  checkSubCat(subcategory) {
+    return this.http.post<any>(`${this.baseUrl}/api/checkSubCat`, subcategory );
+  }
+
+  deleteSubCat(subcategory) {
+    return this.http.post<any>(`${this.baseUrl}/api/deleteSubCat`, subcategory );
+  }
+
+  addSubCat(subcategory) {
+    return this.http.post<any>(`${this.baseUrl}/api/addSubCat`, subcategory );
+  }
+
 }

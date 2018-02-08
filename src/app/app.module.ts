@@ -38,6 +38,11 @@ import { SearchComponent } from './search/search.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import {AuthAdminLoginService} from './services/auth-admin-login.service';
 import {AuthAdminGuard} from './_guards/auth-admin.guard';
+import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
+import { AdminSubcategoriesComponent } from './admin-subcategories/admin-subcategories.component';
+import { AdminTypeProdComponent } from './admin-type-prod/admin-type-prod.component';
+import {ProductTypesService} from './services/product-types.service';
+import { AdminTypeProdPropertyComponent } from './admin-type-prod-property/admin-type-prod-property.component';
 
 
 @NgModule({
@@ -64,7 +69,11 @@ import {AuthAdminGuard} from './_guards/auth-admin.guard';
     QuickviewSliderComponent,
     LinkStopDirective,
     SearchComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    AdminCategoriesComponent,
+    AdminSubcategoriesComponent,
+    AdminTypeProdComponent,
+    AdminTypeProdPropertyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'shop'}),
@@ -84,7 +93,8 @@ import {AuthAdminGuard} from './_guards/auth-admin.guard';
     CategoryService,
     SeoService,
     AuthAdminGuard,
-    AuthAdminLoginService
+    AuthAdminLoginService,
+    ProductTypesService
   ],
   bootstrap: [AppComponent]
 })
