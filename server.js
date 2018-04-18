@@ -47,7 +47,7 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist-server/mai
 const app = express();
 const port = 8000;
 // const baseUrl = `http://localhost:${port}`;
- const baseUrl = `http://192.168.0.150:${port}`;
+ const baseUrl = `https://107.181.175.121:${port}`;
 
 
 // // Add headers
@@ -87,7 +87,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('shop', 'root', 'admin', {
+const sequelize = new Sequelize('shop', 'admin', 'adminadmin', {
   host: 'localhost',
   dialect: 'mysql',
   define: {
