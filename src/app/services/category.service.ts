@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 export class CategoryService {
 
   // baseUrl  = 'http://localhost:8000';
- baseUrl  = 'https://107.181.175.121:8000';
+ baseUrl  = 'http://107.181.175.121:8000';
 
   constructor(private http: HttpClient) { }
 

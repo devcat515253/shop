@@ -47,7 +47,7 @@ const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist-server/mai
 const app = express();
 const port = 8000;
 // const baseUrl = `http://localhost:${port}`;
- const baseUrl = `https://107.181.175.121:${port}`;
+ const baseUrl = `http://107.181.175.121:${port}`;
 
 
 // // Add headers
