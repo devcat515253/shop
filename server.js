@@ -88,7 +88,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('shop', 'admin', 'adminadmin', {
+const sequelize = new Sequelize('shop', 'root', 'admin', {
   host: 'localhost',
   dialect: 'mysql',
   define: {
