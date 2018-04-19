@@ -6,7 +6,7 @@ import {FullCartItem} from '../entity/full-cart-item';
 @Injectable()
 export class OrderService {
   // baseUrl  = 'http://localhost:8000';
-  baseUrl  = 'http://107.181.175.121:8000';
+  baseUrl  = 'http://192.168.0.140:8000';
 
   constructor(private http: HttpClient) { }
 
